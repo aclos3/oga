@@ -1,0 +1,7 @@
+{
+  "name": "OregonGardening",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
