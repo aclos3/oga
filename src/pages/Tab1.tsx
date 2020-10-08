@@ -1,9 +1,11 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
+import './Tab1.css';
+import { isConstructorDeclaration } from 'typescript';
 
-const Home: React.FC = () => {
+
+const Tab1: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -11,16 +13,16 @@ const Home: React.FC = () => {
           <IonTitle>Oregon Gardening</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Geolocation</IonTitle>
+            <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer />
+        <ExploreContainer/>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Home;
+export default Tab1;
