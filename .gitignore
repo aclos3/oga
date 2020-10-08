@@ -1,0 +1,14 @@
+
+.vscode
+env
+
+DEV_NOTES.md
+
+node_modules
+
+__pycache__
+
+sandbox
+uploader-data
+
+.DS_Store
