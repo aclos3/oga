@@ -7,7 +7,11 @@ import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import moment, { Moment } from "moment-timezone"
 import { momentToDate } from "../utils/utils"
 import { MomentModule } from 'ngx-moment';
+import { ɵgetInjectableDef } from '@angular/core';
 
+
+var d = new Date()
+const THIS_YEAR = d.getFullYear()
 
 
 interface ContainerProps { 
@@ -120,12 +124,14 @@ const DataOutput: React.FC<ContainerProps> = () => {
             state.setSpr32(myData.results[5].value);
             
             //fix leap years
-            //var i;
-            //for(i = 0; i < myData.results.length; i++ ) {
-                
-            //    if(myData.results[i].value >)
-            //}
-            
+            var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
+            //console.log(`is leap: `, isLeap)
+            if(isLeap) {
+                var i;
+                for(i = 0; i < myData.results.length; i++ ) {
+                    if(myData.results[i].value > 59) { myData.results[i].value += 1}
+                }
+            }
             state.setfall24Date(momentToDate(moment([2020]).add(myData.results[0].value - 1, 'd')))
             state.setfall28Date(momentToDate(moment([2020]).add(myData.results[1].value - 1, 'd')))
             state.setfall32Date(momentToDate(moment([2020]).add(myData.results[2].value - 1, 'd')))
@@ -140,27 +146,6 @@ const DataOutput: React.FC<ContainerProps> = () => {
             console.error(error);
         });
     }
-
-    const fetcher = async () => {
-        await getData();
-        console.log(`mainFun: `, state.fall28);
-
-        
-        
-        
-        //return state.fall28
-    }
-
-    
-    const convertToDate: any = () => {
-        console.log(`Hi`)
-
-    };
-
-    //console.log(`fetcher: `, fetcher())
-
-    
-    console.log(`outer typeof: `, typeof(state.fall28));
     return (
 
         <div>
