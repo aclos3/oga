@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ExploreContainer.css';
+import './SubmitButton.css';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 
@@ -9,7 +9,7 @@ interface LocationError {
     message?: string;
 }
 
-const ExploreContainer: React.FC<ContainerProps> = () => {
+const SubmitButton: React.FC<ContainerProps> = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<LocationError>({ showError: false });
     const [position, setPosition] = useState<Geoposition>();
@@ -34,7 +34,7 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
     //  <strong>Ready to create an app?</strong>
     //  <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
     //</div>
-        <div className="container">
+        <div>
             <IonLoading
                 isOpen={loading}
                 onDidDismiss={() => setLoading(false)}
@@ -51,4 +51,4 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
   );
 };
 
-export default ExploreContainer;
+export default SubmitButton;

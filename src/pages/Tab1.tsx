@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import SubmitButton from '../components/SubmitButton';
 import './Tab1.css';
 import { isConstructorDeclaration } from 'typescript';
 
@@ -19,7 +19,7 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer/>
+        <SubmitButton/>
       </IonContent>
     </IonPage>
   );
