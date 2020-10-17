@@ -1,7 +1,10 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
-import ExploreContainer from '../components/ExploreContainer';
+import SubmitButton from '../components/SubmitButton';
+import DataOutput from '../components/DataOutput';
 import './Home.css';
+
+
 
 const Home: React.FC = () => {
   return (
@@ -17,9 +20,14 @@ const Home: React.FC = () => {
             <IonTitle size="large">Geolocation</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer />
+        <div className = "container">
+            <SubmitButton/>
+            <DataOutput/>
+        </div>
       </IonContent>
+      
     </IonPage>
+    
   );
 };
 
