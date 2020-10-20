@@ -90,7 +90,6 @@ class DataState {
     setID = (stationID: string) => {
         this.stationID = stationID
     }
-
 }
 
 const DataOutput: React.FC<ContainerProps> = () => { 
@@ -100,7 +99,7 @@ const DataOutput: React.FC<ContainerProps> = () => {
     //const [error, setError] = useState<LocationError>({ showError: false });
     let myData: { results: { value: any; }[]; };
     const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01'
-    let stationStr = '&stationid=GHCND:USC00350265'
+    let stationStr = '&stationid=GHCND:USC00350304'
     
     //gets the day number of 90 percent 28 degree frost probabilty
     const getData = async () => {
