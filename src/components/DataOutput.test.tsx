@@ -3,12 +3,12 @@ import { render } from '@testing-library/react';
 import { screen } from '@testing-library/dom'
 import DataOutput from './DataOutput';
 
-describe('DataOutput', () => {
-    test('renders DataOutput component', async () => {
+describe('DataOutput component', () => {
+    test('renders', async () => {
         const { debug } = render(<DataOutput />);
     });
 
-    test('Spring severe frost value starts at 0', async () => {
+    test('has frost dates starting at 0', async () => {
         const { findByText } = render(<DataOutput />);
         await findByText(/Spring Severe Frost: 0/);
         await findByText(/Spring Moderate Frost: 0/);
