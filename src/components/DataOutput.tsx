@@ -17,10 +17,6 @@ const THIS_YEAR = d.getFullYear()
 interface ContainerProps { 
     //fall28: Number
 }
-interface DataError {
-    showError: boolean;
-    message?: string;
-}
 
 class DataState {
     @observable
@@ -96,8 +92,6 @@ class DataState {
 const DataOutput: React.FC<ContainerProps> = () => { 
     const state = React.useRef(new DataState()).current
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<DataError>({ showError: false });
-    //const [error, setError] = useState<LocationError>({ showError: false });
     let myData: { results: { value: any; }[]; };
     const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01'
     let stationStr = '&stationid=GHCND:USC00350265'
@@ -153,12 +147,6 @@ const DataOutput: React.FC<ContainerProps> = () => {
                 isOpen={loading}
                 onDidDismiss={() => setLoading(false)}
                 message={'Getting Data...'}
-            />
-            <IonToast
-                isOpen={true}
-                onDidDismiss={() => setError({ message: "", showError: false })}
-                message={error.message}
-                duration={3000}
             />
             <IonButton color="primary" onClick={getData}>Make API Call</IonButton>
             <br/> Station: {stationStr} 
