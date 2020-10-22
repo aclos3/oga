@@ -150,12 +150,12 @@ const DataOutput: React.FC<ContainerProps> = () => {
             />
             <IonButton color="primary" onClick={getData}>Make API Call</IonButton>
             <br/> Station: {stationStr} 
-                <h5>Julian Day Number: {state.spr24} - {state.spr24Date.toString()}</h5>
-                <h5>Julian Day Number: {state.spr28} - {state.spr28Date.toString()}</h5>
-                <h5>Julian Day Number: {state.spr32} - {state.spr32Date.toString()}</h5>
-                <h5>Julian Day Number: {state.fall24} - {state.fall24Date.toString()}</h5>
-                <h5>Julian Day Number: {state.fall28} - {state.fall28Date.toString()}</h5>
-                <h5>Julian Day Number: {state.fall32} - {state.fall32Date.toString()}</h5>
+                <h5>Spring Severe Frost: {state.spr24} - {state.spr24Date.toString()}</h5>
+                <h5>Spring Moderate Frost: {state.spr28} - {state.spr28Date.toString()}</h5>
+                <h5>Spring Light Frost: {state.spr32} - {state.spr32Date.toString()}</h5>
+                <h5>Fall Severe Frost: {state.fall24} - {state.fall24Date.toString()}</h5>
+                <h5>Fall Moderate Frost: {state.fall28} - {state.fall28Date.toString()}</h5>
+                <h5>Fall Light Frost: {state.fall32} - {state.fall32Date.toString()}</h5>
             
         </div>
     );
