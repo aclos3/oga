@@ -7,4 +7,11 @@ describe('SubmitButton component', () => {
     test('renders', async () => {
         const { debug } = render(<SubmitButton />);
     });
+
+    test('has a Get Location button', async () => {
+        const { debug, findByRole, findByText } = render(<SubmitButton />);
+        await screen.findByText((content, element) => {
+            return element.tagName.toLowerCase() === 'ion-button' && content === 'Get Location'
+        });
+    });
 });
