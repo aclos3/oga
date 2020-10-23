@@ -2,6 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import React from 'react';
 import SubmitButton from '../components/SubmitButton';
 import DataOutput from '../components/DataOutput';
+import TextEntry from '../components/TextEntry';
 import './Home.css';
 
 
@@ -20,14 +21,13 @@ const Home: React.FC = () => {
             <IonTitle size="large">Geolocation</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <div className = "container">
+        <div className = "homeContainer">
+            <TextEntry/>
             <SubmitButton/>
             <DataOutput/>
         </div>
       </IonContent>
-      
-    </IonPage>
-    
+    </IonPage> 
   );
 };
 

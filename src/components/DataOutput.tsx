@@ -1,18 +1,12 @@
 import React, {useState} from 'react';
 import './DataOutput.css';
-import { from } from 'rxjs';
 import { observable } from "mobx"
-import { State } from 'ionicons/dist/types/stencil-public-runtime';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
-import moment, { Moment } from "moment-timezone"
+import moment from "moment-timezone"
 import { momentToDate } from "../utils/utils"
-import { MomentModule } from 'ngx-moment';
-import { ɵgetInjectableDef } from '@angular/core';
-
 
 var d = new Date()
 const THIS_YEAR = d.getFullYear()
-
 
 interface ContainerProps { 
     //fall28: Number
@@ -23,6 +17,7 @@ interface DataError {
 }
 
 class DataState {
+    //Julian Day number of fall and spring frost severities
     @observable
     fall24 = 0
     setFall24 = (fall24: number) => {
@@ -54,6 +49,7 @@ class DataState {
         this.spr32 = spr32
     }
 
+    //Date of fall and spring frost severities
     @observable
     fall24Date: Date = new Date(new Date().getFullYear(), 0, 1)
     setfall24Date = (fall24Date: Date) => {
@@ -85,24 +81,23 @@ class DataState {
     setspr32Date = (spr32Date: Date) => {
         this.spr32Date = spr32Date
     }
+    //climate normal station ID number
     @observable
     stationID: string = "Station ID:"
     setID = (stationID: string) => {
         this.stationID = stationID
     }
-
 }
 
 const DataOutput: React.FC<ContainerProps> = () => { 
     const state = React.useRef(new DataState()).current
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
-    //const [error, setError] = useState<LocationError>({ showError: false });
     let myData: { results: { value: any; }[]; };
     const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01'
     let stationStr = '&stationid=GHCND:USC00350265'
     
-    //gets the day number of 90 percent 28 degree frost probabilty
+    //gets the day number of 90 percent frost probabilities for spring and fall
     const getData = async () => {
         setLoading(true);
         const headers = new Headers();
@@ -116,6 +111,7 @@ const DataOutput: React.FC<ContainerProps> = () => {
         .then(response => response.json())
         .then(data => {
             myData = data;
+            console.log(`my data: `, myData.results)
             state.setFall24(myData.results[0].value);
             state.setFall28(myData.results[1].value);
             state.setFall32(myData.results[2].value);
@@ -125,7 +121,6 @@ const DataOutput: React.FC<ContainerProps> = () => {
             
             //fix leap years
             var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
-            //console.log(`is leap: `, isLeap)
             if(isLeap) {
                 var i;
                 for(i = 0; i < myData.results.length; i++ ) {
@@ -172,5 +167,4 @@ const DataOutput: React.FC<ContainerProps> = () => {
         </div>
     );
 };
-
 export default DataOutput;
