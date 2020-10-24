@@ -4,6 +4,7 @@ import { observable } from "mobx"
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import moment from "moment-timezone"
 import { momentToDate } from "../utils/utils"
+import get_NOAA_API_Key from './get_NOAA_API_Key';
 
 var d = new Date()
 const THIS_YEAR = d.getFullYear()
@@ -101,7 +102,8 @@ const DataOutput: React.FC<ContainerProps> = () => {
     const getData = async () => {
         setLoading(true);
         const headers = new Headers();
-        headers.append('token', 'dIGnmnvBvpgQMZqGfFFmMJfvoxiBLNif');
+        let API_key = get_NOAA_API_Key();
+        headers.append('token', API_key);
 
 
         await fetch(apiStr + stationStr, {
