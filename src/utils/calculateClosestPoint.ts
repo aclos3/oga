@@ -1,13 +1,13 @@
-export interface Position {
+export interface Coordinates {
     lat: number,
     long: number
 }
 
 // uses Haversine formula, which gives the great-circle distance between two latitude-longitude pairs
 // will have some error from assuming that earth is a perfect sphere
-export const getClosestPoint = (origin: Position, locations: Position[]): Position => {
+export const getClosestPoint = (origin: Coordinates, locations: Coordinates[]): Coordinates => {
     let smallestDistance: number = Infinity;
-    let closestPosition: Position = {
+    let closestPosition: Coordinates = {
         lat: 0,
         long: 0
     };
@@ -25,12 +25,12 @@ export const getClosestPoint = (origin: Position, locations: Position[]): Positi
 
 const convertDegreesToRadians = (degree: number) => {
     return degree * (Math.PI / 180);
-}
+} 
 
 // haversine formula: https://en.wikipedia.org/wiki/Haversine_formula
 // variable names a and c come from formula
 // source of code: https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula/21623206#21623206
-const getDistanceFromLatLongInKm = (pointA: Position, pointB: Position) => {
+const getDistanceFromLatLongInKm = (pointA: Coordinates, pointB: Coordinates) => {
     const earthRadiusInKM: number = 6371;
     const latitudeDifferenceInRadians: number = convertDegreesToRadians(pointB.lat - pointA.lat);
     const longitudeDifferenceInRadians: number = convertDegreesToRadians(pointB.long - pointA.long); 
