@@ -1,4 +1,4 @@
-import { Coordinates, getClosestPoint } from './calculateClosestPoint'
+import { Coordinates, getClosestPoint } from './getClosestPoint'
 
 describe('getClosestPoint', () => {
     const eugene: Coordinates = {lat: 44.032883, long: -123.090570};               // closest: Springfield
