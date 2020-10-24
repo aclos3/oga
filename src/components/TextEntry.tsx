@@ -95,14 +95,14 @@ const TextEntry: React.FC<ContainerProps> = () => {
                 duration={3000} />
              <form onSubmit={handleSubmit(getValid)}>
                 <IonItem>
-                    <IonLabel color="primary">Zip Code: </IonLabel>
+                    <IonLabel color="primary">City, State OR Zipcode: </IonLabel>
                     <Controller 
-                        as={<IonInput type="text" />}
+                        as={<IonInput placeholder="Type Here" type="text" />}
                         name="text"
                         control={control}
                         onChangeName="onIonChange"
                     />    
-                </IonItem>Lat:<span className="latLong">{state.lat}</span>   Long: <span className="latLong">{state.long}</span><br/>
+                </IonItem>Lat:<span className="latLong" >{state.lat}</span>   Long: <span className="latLong">{state.long}</span><br/>
                 <IonButton color="primary" type="submit">Submit</IonButton>
             </form>
         </div>
