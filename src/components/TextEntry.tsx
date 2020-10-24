@@ -40,13 +40,13 @@ const TextEntry: React.FC<ContainerProps> = () => {
     
     const getData = async () => {
         setLoading(true);
-        await fetch(apiStr + String(state.textEntry.text), {
+        await fetch(apiStr + String(state.textEntry), {
             method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
             myData = data;
-            if(myData.records[0] === undefined) { alert(`Invalid Zipcode. Please check the zipcode for errors.`)}
+            if(myData.records[0] === undefined) { alert(`No results found for your entry. Please check for typos.`)}
             else {
                 if(myData.records[0].fields.geopoint[0] && myData.records[0].fields.geopoint[1]) {
                     state.setLat(myData.records[0].fields.geopoint[0])
@@ -63,11 +63,23 @@ const TextEntry: React.FC<ContainerProps> = () => {
     }
 
     const getValid = (data: any) => {
-        state.setText(data)
-        if(isNaN(state.textEntry.text) || state.textEntry.text.length !== 5) {
-            alert(`Please enter a valid five digit zipcode.`)
+
+        state.setText(data.text)
+        let regExp = /^[\w ]+,[ ]?[A-Za-z]{2}$/ //regex to check if format is comma separated city state pair
+        
+        //determine if the entry is a city/state pair
+        if(regExp.test(state.textEntry)) {
+            console.log(`City state syntax valid!`)
+             //add space after comma
+             state.setText(state.textEntry.replace(/,/g, ', '))
+             getData()
         }
-        else {getData()}
+        //determine if entry is a valid zip code
+        else if(!(isNaN(state.textEntry)) && state.textEntry.length === 5) {
+            console.log(`zip valid`)
+            getData()
+        }
+        else {console.log(`invalid`)}
     }
     return (
         <div className="zipContainer">
