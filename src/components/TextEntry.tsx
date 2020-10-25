@@ -48,9 +48,11 @@ const TextEntry: React.FC<ContainerProps> = () => {
         .then(data => {
             myData = data;
             console.log(`api str: `, state.textEntry)
-            if(myData.records[0] === undefined) { alert(`No results found for your entry. Please check for typos.`)}
+            if(myData.records[0] === undefined) { alert(`No results found for your entry. Please check the validity of your zipcode or city/state pair.`)}
             else {
-                if(myData.records[0].fields.geopoint[0] && myData.records[0].fields.geopoint[1]) {
+                if(myData.records[0].fields.geopoint[0] === undefined) {alert(`Latitude not found.`)}
+                else if(myData.records[0].fields.geopoint[1] === undefined) {alert(`Longitude not found.`)}
+                else if(myData.records[0].fields.geopoint[0] && myData.records[0].fields.geopoint[1]) {
                     state.setLat(myData.records[0].fields.geopoint[0])
                     state.setLong(myData.records[0].fields.geopoint[1])
                 }
