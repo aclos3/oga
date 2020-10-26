@@ -4,11 +4,22 @@ import { observable } from "mobx"
 import { IonInput, IonLabel, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
 import { Controller, useForm } from 'react-hook-form';
 import { setTextRange } from 'typescript';
+import {getCityStateCoordinates, LocationData} from '../utils/getCoordinates';
 
 interface ContainerProps {}
 interface DataError {
     showError: boolean;
     message?: string;
+}
+
+interface CityStateApiData {
+    records: { 
+        fields: { 
+            geo_point_2d: { 
+                value: number; 
+            } []; 
+        }
+    } [];
 }
 
 class EntryData {
@@ -39,7 +50,7 @@ const TextEntry: React.FC<ContainerProps> = () => {
     let myData: { records: { fields: { geopoint: { value: any; } []; }} []; };
     const apiStr = 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-zip-code-latitude-and-longitude&q='
     
-    const getData = async () => {
+    const getZipCodeData = async () => {
         setLoading(true);
         await fetch(apiStr + String(state.textEntry), {
             method: 'GET',
@@ -66,6 +77,22 @@ const TextEntry: React.FC<ContainerProps> = () => {
         });
     }
 
+    const getCityStateData = async () => {
+        setLoading(true);
+        const locationData: LocationData = await getCityStateCoordinates(state.textEntry);
+        
+        if (locationData.hasError) {
+            console.log(locationData.errorMessage);
+            alert('No results found for your entry. Please check the validity of your city/state pair.');
+        }
+        else {
+            state.setLat(locationData.latitude);
+            state.setLong(locationData.longitude);
+        }
+
+        setLoading(false);
+    }
+
     const getValid = (data: any) => {
         state.setText(data.text)
         let regExp = /^[\w ]+,[ ]?[A-Za-z]{2}$/ //regex to check if format is comma separated city state pair
@@ -88,12 +115,12 @@ const TextEntry: React.FC<ContainerProps> = () => {
             //console.log(`City state syntax valid!`)
             state.setText(state.textEntry.replace(/,/g, ',+\''))
             //console.log("replaced spaces after commas: ", state.textEntry)
-            getData()
+            getCityStateData();
         }
         //determine if entry is a valid zip code
         else if(!(isNaN(state.textEntry)) && state.textEntry.length === 5) {
             //console.log(`zip valid`)
-            getData()
+            getZipCodeData();
         }
         //check for more than two characters after comma
         else {alert(`Entry is invalid, please try again. You must use the two letter postal abbreviation for the state.`)}
