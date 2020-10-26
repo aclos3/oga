@@ -4,6 +4,7 @@ import { observable } from "mobx"
 import { IonInput, IonLabel, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
 import { Controller, useForm } from 'react-hook-form';
 import { setTextRange } from 'typescript';
+import {getCityStateCoordinates, LocationData} from '../utils/getCoordinates';
 
 interface ContainerProps {}
 interface DataError {
@@ -78,31 +79,18 @@ const TextEntry: React.FC<ContainerProps> = () => {
 
     const getCityStateData = async () => {
         setLoading(true);
-        const cityApiStr = 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=cities-and-towns-of-the-united-states&q='
-        await fetch(cityApiStr + String(state.textEntry), {
-            method: 'GET',
-        })
-        .then(response => response.json())
-        .then(data => {
-            const cityStateData: CityStateApiData = data;
-            console.log(cityStateData);
-            if(!cityStateData || !cityStateData.records || cityStateData.records[0] === undefined) { alert(`No results found for your entry. Please check the validity of your zipcode or city/state pair.`)}
-            else {
-                console.log(cityStateData);
-                if(cityStateData.records[0].fields.geo_point_2d[0] === undefined) {alert(`Latitude not found.`)}
-                else if(cityStateData.records[0].fields.geo_point_2d[1] === undefined) {alert(`Longitude not found.`)}
-                else if(cityStateData.records[0].fields.geo_point_2d[0] && cityStateData.records[0].fields.geo_point_2d[1]) {
-                    state.setLat(cityStateData.records[0].fields.geo_point_2d[0])
-                    state.setLong(cityStateData.records[0].fields.geo_point_2d[1])
-                }
-                else { alert(`Latitude/Longitude data for the desired zip code was not found.`)}
-            }
-            setLoading(false);
-        })
-        .catch((error) => {
-            setLoading(false)
-            console.error(error)
-        });
+        const locationData: LocationData = await getCityStateCoordinates(state.textEntry);
+        
+        if (locationData.hasError) {
+            console.log(locationData.errorMessage);
+            alert('No results found for your entry. Please check the validity of your city/state pair.');
+        }
+        else {
+            state.setLat(locationData.latitude);
+            state.setLong(locationData.longitude);
+        }
+
+        setLoading(false);
     }
 
     const getValid = (data: any) => {
