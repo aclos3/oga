@@ -6,7 +6,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { setTextRange } from 'typescript';
 import {getCityStateCoordinates, LocationData} from '../utils/getCoordinates';
 
-interface ContainerProps {}
+interface TextEntryProps {
+    initialLat: Number
+    initialLong: Number
+    onSubmit: (homeLat: Number, homeLong: Number) => void
+}
 interface DataError {
     showError: boolean;
     message?: string;
@@ -42,7 +46,7 @@ class EntryData {
     }
 }
 
-const TextEntry: React.FC<ContainerProps> = () => { 
+const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => { 
     const state = React.useRef(new EntryData()).current
     const { control, handleSubmit } = useForm();
     const [loading, setLoading] = useState<boolean>(false);
@@ -50,6 +54,11 @@ const TextEntry: React.FC<ContainerProps> = () => {
     let myData: { records: { fields: { geopoint: { value: any; } []; }} []; };
     const apiStr = 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-zip-code-latitude-and-longitude&q='
     
+    React.useEffect(() => {
+        state.setLat(props.initialLat)
+        state.setLong(props.initialLong)
+    }, [props.initialLat, props.initialLong, state])
+
     const getZipCodeData = async () => {
         setLoading(true);
         await fetch(apiStr + String(state.textEntry), {
@@ -66,6 +75,7 @@ const TextEntry: React.FC<ContainerProps> = () => {
                 else if(myData.records[0].fields.geopoint[0] && myData.records[0].fields.geopoint[1]) {
                     state.setLat(myData.records[0].fields.geopoint[0])
                     state.setLong(myData.records[0].fields.geopoint[1])
+                    props.onSubmit(state.lat, state.long)
                 }
                 else { alert(`Latitude/Longitude data for the desired zip code was not found.`)}
             }
@@ -88,6 +98,7 @@ const TextEntry: React.FC<ContainerProps> = () => {
         else {
             state.setLat(locationData.latitude);
             state.setLong(locationData.longitude);
+            props.onSubmit(state.lat, state.long)
         }
 
         setLoading(false);
@@ -97,16 +108,21 @@ const TextEntry: React.FC<ContainerProps> = () => {
         state.setText(data.text)
         let regExp = /^[\w ]+,[ ]?[A-Za-z]{2}$/ //regex to check if format is comma separated city state pair
         
-        //find comma
-        let idx = 0
-        for(let i = 0; i < state.textEntry.length; i++) {
-            if(state.textEntry.charAt(i) === ',') { idx = i }
+        //catch an empty string being passed
+        if(state.textEntry === undefined) {
+            console.log(`textEntry @ getValid: `, state.textEntry)
         }
-        //remove spaces after comma
-        for(let i = idx; i < state.textEntry.length; i++) {
-            if(state.textEntry.charAt(i) === ' ') {
-                state.setText(state.textEntry.substring(0, i) + state.textEntry.substring(i + 1))
-                i--
+        else {  //find comma
+            let idx = 0
+            for(let i = 0; i < state.textEntry.length; i++) {
+                if(state.textEntry.charAt(i) === ',') { idx = i }
+            }
+            //remove spaces after comma
+            for(let i = idx; i < state.textEntry.length; i++) {
+                if(state.textEntry.charAt(i) === ' ') {
+                    state.setText(state.textEntry.substring(0, i) + state.textEntry.substring(i + 1))
+                    i--
+                }
             }
         }
         //console.log("replaced spaces after commas: ", state.textEntry, `text len: `, state.textEntry.length, `idx: `, idx)
@@ -146,7 +162,8 @@ const TextEntry: React.FC<ContainerProps> = () => {
                         control={control}
                         onChangeName="onIonChange"
                     />    
-                </IonItem>Lat:<span className="latLong" >{state.lat}</span>   Long: <span className="latLong">{state.long}</span><br/>
+                </IonItem>
+                Lat:<span className="latLong" >{state.lat}</span>   Long: <span className="latLong">{state.long}</span><br/>
                 <IonButton color="primary" type="submit">Submit</IonButton>
             </form>
         </div>
