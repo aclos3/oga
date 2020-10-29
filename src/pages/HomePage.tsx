@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/react'
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import SubmitButton from '../components/SubmitButton';
 import TextEntry from '../components/TextEntry';
 import { observable } from "mobx"
-
-//const tempLat = 50
-//const tempLong = -122
 
 class HomePageState {
     @observable
@@ -28,6 +25,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
         state.setLat(lat)
         state.setLong(long)
     }
+    
     return (
     <IonPage>
       <IonHeader>
