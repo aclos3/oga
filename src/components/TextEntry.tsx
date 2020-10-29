@@ -7,9 +7,9 @@ import { setTextRange } from 'typescript';
 import {getCityStateCoordinates, LocationData} from '../utils/getCoordinates';
 
 interface TextEntryProps {
-    initialLat: Number
-    initialLong: Number
-    onSubmit: (homeLat: Number, homeLong: Number) => void
+    initialLat: number
+    initialLong: number
+    onSubmit: (homeLat: number, homeLong: number) => void
 }
 interface DataError {
     showError: boolean;

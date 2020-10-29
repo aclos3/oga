@@ -1,4 +1,4 @@
-import { Coordinates, getClosestPoint, getClosestStation, getDistanceFromLatLongInKm, Station } from './getClosestStation'
+import { Coordinates, getClosestPoint, getClosestStation, getDistanceFromLatLongInKm, getWeatherStations, Station } from './getClosestStation'
 
 const eugene: Coordinates = {lat: 44.032883, long: -123.090570};               // closest: Springfield
 const medford: Coordinates = {lat: 42.282803, long: -122.771226};              // closest: Grants Pass
@@ -13,6 +13,7 @@ const springfield: Coordinates = {lat: 44.0523465, long: -122.9966305};        /
 const grantsPass: Coordinates = {lat: 42.4382946, long: -123.3212346};         // closest: Medford
 
 const locations: Coordinates[] = [eugene, medford, steensMountain, burns, malheurLake, joseph, laGrande, tillamook, oceanside, springfield, grantsPass];
+const stations: Station[] = getWeatherStations();
 
 describe('getClosestStation', () => {
     test("Distance to closest weather station <= 20 KM", () => {

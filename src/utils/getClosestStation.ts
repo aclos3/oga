@@ -1,4 +1,4 @@
-import * as stationsJSON from '../data/station_lat_long.json';
+import stationsJSON from '../data/station_lat_long.json';
 
 export interface Station {
     station: string,
@@ -11,18 +11,19 @@ export interface Coordinates {
     long: number
 }
 
-// prepare stations array: fill with stations from JSON file
-let stations: Station[] = [];
+export function getWeatherStations(): Station[] {
+    const stations: Station[] = stationsJSON.map( (data) => {
+        return {
+            station: data.station,
+            latitude: parseFloat(data.latitude),
+            longitude: parseFloat(data.longitude)
+        };
+    });
 
-for (let key in stationsJSON) {
-    if (stationsJSON.hasOwnProperty(key)) {
-        stations.push({
-            station: stationsJSON[key].station,
-            latitude: parseFloat(stationsJSON[key].latitude),
-            longitude: parseFloat(stationsJSON[key].longitude)
-        });
-    }
+    return stations;
 }
+
+const stations: Station[] = getWeatherStations();
 
 // returns closest weather station (station ID, latitude, and longitude) to a given point (latitude and longitude)
 export function getClosestStation(origin: Coordinates): Station | null {
