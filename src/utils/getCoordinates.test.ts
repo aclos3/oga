@@ -1,5 +1,5 @@
 import {getCityStateCoordinates, LocationData} from '../utils/getCoordinates';
-import {Coordinates} from './getClosestPoint';
+import {Coordinates} from './getClosestStation';
 
 describe('getCityStateCoordinates', () => {
     const bend: Coordinates = {lat: 44.05817280000002, long: -121.31530959999996};
