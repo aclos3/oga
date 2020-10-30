@@ -35,9 +35,11 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
 
       const closestStation: Station | null = getClosestStation({lat: lat, long: long});
 
+
       if (closestStation) {
         state.setWeatherStation(closestStation.station);
         alert(`${state.weatherStation}, ${state.homeLat}, ${state.homeLong}`);
+        history.push('/dashboard/users/{state.weatherStation}');
       }
       else {
         // TODO: error handling: get new input from user
@@ -70,7 +72,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
           <IonItem>
             <IonButton onClick={e => {
               e.preventDefault();
-              history.push('/dashboard/users/GHCND:USC00350265')
+              history.push('/dashboard/users/state.weatherStation')
             }}>
               <IonLabel>Get Results</IonLabel>
             </IonButton>
