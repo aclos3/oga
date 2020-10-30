@@ -25,6 +25,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
       if (closestStation) {
         setWeatherStation(closestStation);
         console.log(`${weatherStation.station}, ${weatherStation.latitude}, ${weatherStation.longitude}`);
+        history.push('/dashboard/users/GHCND:USC00350265');
       }
       else {
         // TODO: error handling: get new input from user
