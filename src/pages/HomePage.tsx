@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/react'
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import SubmitButton from '../components/SubmitButton';
 import TextEntry from '../components/TextEntry';
 import ViewLatLongStation from '../components/DisplayLatLongStation';
@@ -30,6 +30,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
         // TODO: error handling: get new input from user
       }
     }
+    
     return (
     <IonPage>
       <IonHeader>
