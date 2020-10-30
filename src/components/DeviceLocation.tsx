@@ -1,39 +1,60 @@
 import React, { useState } from 'react';
-import './SubmitButton.css';
+import './DeviceLocation.css';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
+import { observable } from "mobx"
+import TextEntry from './TextEntry';
 
-interface ContainerProps { }
+interface DeviceLocationProps {
+    initialLat: number | null;
+    initialLong: number | null;
+    onSubmit: (homeLat: number, homeLong: number) => void
+ }
 interface LocationError {
     showError: boolean;
     message?: string;
 }
 
-const SubmitButton: React.FC<ContainerProps> = () => {
+class DeviceData {
+    @observable
+    lat: any = ""
+    setLat = (lat: any) => {
+        this.lat = lat
+    }
+    @observable
+    long: any = ""
+    setLong = (long: any) => {
+        this.long = long
+    }
+}
+const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProps) => {
+    const state = React.useRef(new DeviceData()).current
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<LocationError>({ showError: false });
     const [position, setPosition] = useState<Geoposition>();
     const geolocation = new Geolocation();
 
+    React.useEffect(() => {
+        state.setLat(props.initialLat)
+        state.setLong(props.initialLong)
+    }, [props.initialLat, props.initialLong, state])
+
     const getLocation = async () => {
         setLoading(true);
-
         try {
             const position = await geolocation.getCurrentPosition();
-            //const position = await Geolocation.getCurrentPosition();
             setPosition(position);
             setLoading(false);
             setError({ showError: false });
+            state.setLat(position.coords.latitude)
+            state.setLong(position.coords.longitude)
+            props.onSubmit(state.lat, state.long)
         } catch (e) {
             setError({ showError: true, message: e.message });
             setLoading(false);
         }
     }
     return (
-    //<div className="container">
-    //  <strong>Ready to create an app?</strong>
-    //  <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-    //</div>
         <div>
             <IonLoading
                 isOpen={loading}
@@ -46,9 +67,8 @@ const SubmitButton: React.FC<ContainerProps> = () => {
                 message={error.message}
                 duration={3000}
             />
-            <IonButton color="primary" onClick={getLocation}>{position ? `${position.coords.latitude} ${position.coords.longitude}` : "Get Location"}</IonButton>
+            <IonButton color="primary" onClick={getLocation}>Get Location</IonButton>
         </div>
   );
 };
-
-export default SubmitButton;
+export default DeviceLocation;

@@ -16,15 +16,15 @@ interface DataError {
     message?: string;
 }
 
-interface CityStateApiData {
-    records: { 
-        fields: { 
-            geo_point_2d: { 
-                value: number; 
-            } []; 
-        }
-    } [];
-}
+//interface CityStateApiData {
+//    records: { 
+//        fields: { 
+//            geo_point_2d: { //
+//                value: number; 
+//            } []; 
+//        }
+//    } [];
+//}
 
 class EntryData {
     @observable

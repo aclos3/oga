@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/react'
 import { RouteComponentProps } from 'react-router-dom';
-import SubmitButton from '../components/SubmitButton';
+import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
 import ViewLatLongStation from '../components/DisplayLatLongStation';
 import { observable } from "mobx"
@@ -16,7 +16,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
       longitude: 0
     });
 
-    const onLatLongChange = (newLat: number, newLong: number) => {
+    const onLatLongChange =  (newLat: number, newLong: number) => {
       setLat(newLat);
       setLong(newLong);
 
@@ -51,7 +51,11 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
                 onSubmit={onLatLongChange}
             ></TextEntry>
             <br></br>
-            <SubmitButton/>
+            <DeviceLocation
+                initialLat={lat}
+                initialLong={long}
+                onSubmit={onLatLongChange}
+            ></DeviceLocation>
         </div>
         <IonList>
           <IonItem>
