@@ -1,46 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import SubmitButton from '../components/SubmitButton';
 import TextEntry from '../components/TextEntry';
+import ViewLatLongStation from '../components/DisplayLatLongStation';
 import { observable } from "mobx"
 import { getClosestStation, Station } from '../utils/getClosestStation'
 
-//const tempLat = 50
-//const tempLong = -122
-
-class HomePageState {
-    @observable
-    homeLat: number = 50
-    setLat = (homeLat: number) => {
-        this.homeLat = homeLat
-        //console.log(`in setLat: `, homeLat, ` this.lat: `, this.homeLat)
-    }
-    @observable
-    homeLong: number = -122
-    setLong = (homeLong: number) => {
-        this.homeLong = homeLong
-    }
-
-    @observable
-    weatherStation: string = ""
-    setWeatherStation = (newStation: string) => {
-      this.weatherStation = newStation;
-    }
-}
-
 const HomePage: React.FC<RouteComponentProps> = ({history}) => {
-    const state = React.useRef(new HomePageState()).current
+    const [lat, setLat] = useState<number>(0);
+    const [long, setLong] = useState<number>(0);
+    const [weatherStation, setWeatherStation] = useState<Station>({
+      station: "",
+      latitude: 0,
+      longitude: 0
+    });
 
-    const onLatLongChange = (lat: number, long: number) => {
-      state.setLat(lat)
-      state.setLong(long)
+    const onLatLongChange = (newLat: number, newLong: number) => {
+      setLat(newLat);
+      setLong(newLong);
 
-      const closestStation: Station | null = getClosestStation({lat: lat, long: long});
+      const closestStation: Station | null = getClosestStation({lat: newLat, long: newLong});
 
       if (closestStation) {
-        state.setWeatherStation(closestStation.station);
-        alert(`${state.weatherStation}, ${state.homeLat}, ${state.homeLong}`);
+        setWeatherStation(closestStation);
+        console.log(`${weatherStation.station}, ${weatherStation.latitude}, ${weatherStation.longitude}`);
       }
       else {
         // TODO: error handling: get new input from user
@@ -55,14 +39,14 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
       </IonHeader>
       <IonContent>
         <div className = "homeContainer">
-            <div>
-              <h1>Lat: {state.homeLat}</h1>
-              <h1>Long: {state.homeLong}</h1>
-              <h1>Station: {state.weatherStation}</h1>
-            </div>
+            <ViewLatLongStation
+              lat={lat}
+              long={long}
+              stationName={weatherStation.station}
+            />
             <TextEntry
-                initialLat={state.homeLat}
-                initialLong={state.homeLong}
+                initialLat={lat}
+                initialLong={long}
                 onSubmit={onLatLongChange}
             ></TextEntry>
             <br></br>
