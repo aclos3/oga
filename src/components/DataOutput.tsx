@@ -9,9 +9,7 @@ import get_NOAA_API_Key from './get_NOAA_API_Key';
 var d = new Date()
 const THIS_YEAR = d.getFullYear()
 
-interface ContainerProps { 
-    //fall28: Number
-}
+interface ContainerProps {}
 interface DataError {
     showError: boolean;
     message?: string;
