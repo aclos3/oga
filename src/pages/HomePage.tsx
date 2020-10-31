@@ -7,6 +7,10 @@ import ViewLatLongStation from '../components/DisplayLatLongStation';
 import { observable } from "mobx"
 import { getClosestStation, Station } from '../utils/getClosestStation'
 
+export interface ExportStation {
+  station: string
+} 
+
 const HomePage: React.FC<RouteComponentProps> = ({history}) => {
     const [lat, setLat] = useState<number>(0);
     const [long, setLong] = useState<number>(0);
@@ -25,7 +29,9 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
       if (closestStation) {
         setWeatherStation(closestStation);
         console.log(`${weatherStation.station}, ${weatherStation.latitude}, ${weatherStation.longitude}`);
-        history.push('/dashboard/users/GHCND:USC00350265');
+        //var station = weatherStation.station
+        
+        history.push('/dashboard/users/ert');
       }
       else {
         // TODO: error handling: get new input from user
@@ -62,7 +68,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
           <IonItem>
             <IonButton onClick={e => {
               e.preventDefault();
-              history.push('/dashboard/users/GHCND:USC00350265')
+              history.push('/dashboard/users/re')
             }}>
               <IonLabel>Get Results</IonLabel>
             </IonButton>
