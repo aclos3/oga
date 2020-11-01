@@ -11,7 +11,7 @@ export interface ExportStation {
   station: string
 } 
 
-const HomePage: React.FC<RouteComponentProps> = ({history}) => {
+const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     const [lat, setLat] = useState<number>(0);
     const [long, setLong] = useState<number>(0);
     const [weatherStation, setWeatherStation] = useState<Station>({
@@ -27,11 +27,9 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
       const closestStation: Station | null = getClosestStation({lat: newLat, long: newLong});
 
       if (closestStation) {
-        setWeatherStation(closestStation);
         console.log(`${weatherStation.station}, ${weatherStation.latitude}, ${weatherStation.longitude}`);
-        //var station = weatherStation.station
-        
-        history.push('/dashboard/users/ert');
+        let noaa_station = closestStation.station;
+        history.push('/dashboard/users/' + noaa_station);
       }
       else {
         // TODO: error handling: get new input from user
@@ -64,16 +62,6 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
                 onSubmit={onLatLongChange}
             ></DeviceLocation>
         </div>
-        <IonList>
-          <IonItem>
-            <IonButton onClick={e => {
-              e.preventDefault();
-              history.push('/dashboard/users/re')
-            }}>
-              <IonLabel>Get Results</IonLabel>
-            </IonButton>
-          </IonItem>
-        </IonList>
       </IonContent>
     </IonPage>
   );

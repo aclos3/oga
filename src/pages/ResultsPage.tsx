@@ -101,8 +101,10 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
   let myData: { results: { value: any; }[]; };
-  const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01'
-  let stationStr = '&stationid=GHCND:USC00350265'
+  const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
+  let stationID = match.params.id;
+  let stationStr = '&stationid=GHCND:' + stationID;
+  
   
   //gets the day number of 90 percent frost probabilities for spring and fall
   const getData = async () => {
@@ -110,7 +112,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
       const headers = new Headers();
       let API_key = get_NOAA_API_Key();
       headers.append('token', API_key);
-
 
       await fetch(apiStr + stationStr, {
       method: 'GET',
@@ -149,6 +150,8 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           console.error(error);
       });
   }
+  
+
   return (
     <IonPage>
       <IonHeader>
@@ -160,8 +163,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <br />
-        Station ID: {match.params.id}
         <div>
           <IonLoading
               isOpen={loading}
