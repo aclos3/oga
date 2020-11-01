@@ -8,7 +8,7 @@ import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import moment from "moment-timezone"
 import { momentToDate } from "../utils/utils"
 import get_NOAA_API_Key from './get_NOAA_API_Key';
-
+//Station
 var d = new Date()
 const THIS_YEAR = d.getFullYear()
 
@@ -95,7 +95,6 @@ class DataState {
   }
 }
 
-
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
   const state = React.useRef(new DataState()).current
   const [loading, setLoading] = useState<boolean>(false);
@@ -104,19 +103,18 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
   const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
   let stationID = match.params.id;
   let stationStr = '&stationid=GHCND:' + stationID;
-  
+  //getData();
   
   //gets the day number of 90 percent frost probabilities for spring and fall
-  const getData = async () => {
+  async function getData () {
       setLoading(true);
       const headers = new Headers();
       let API_key = get_NOAA_API_Key();
       headers.append('token', API_key);
-
       await fetch(apiStr + stationStr, {
-      method: 'GET',
-      headers: headers,
-      })
+        method: 'GET',
+        headers: headers,
+        })
       .then(response => response.json())
       .then(data => {
           myData = data;
@@ -149,6 +147,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           setLoading(false)
           console.error(error);
       });
+    //getData();
   }
   
 
@@ -159,7 +158,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>Freeze Dates</IonTitle>
+          <IonTitle>Frost/Freeze Dates</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -176,7 +175,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               duration={3000}
           />
           <IonButton color="primary" onClick={getData}>Make API Call</IonButton>
-          <br/> Station: {stationStr} 
+          <br/> Station: {match.params.id} 
               <h4>Spring Freeze Dates</h4>
               <h5>Last Severe Freeze: {state.spr24} - {state.spr24Date.toDateString()}</h5>
               <h5>Last Moderate Freeze: {state.spr28} - {state.spr28Date.toDateString()}</h5>
