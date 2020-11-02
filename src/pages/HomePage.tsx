@@ -29,7 +29,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
       if (closestStation) {
         console.log(`${weatherStation.station}, ${weatherStation.latitude}, ${weatherStation.longitude}`);
         let noaa_station = closestStation.station;
-        history.push('/dashboard/users/' + noaa_station);
+        history.push('/dashboard/station/' + noaa_station);
       }
       else {
         // TODO: error handling: get new input from user
