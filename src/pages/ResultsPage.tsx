@@ -108,11 +108,26 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           console.error(error);
       });
     }
-
     getData();
-  }, [stationID]);
+    }, [stationID]);
   
-  return (
+    const checkApiReturn = (dayNum: any, date: any) => {
+        if(dayNum === -4444) {  //-4444 is the code for year round frost risk
+            return "Year-Round Frost Risk"
+        }
+        else if (dayNum === -6666) { //-6666 is the code for undefined parameter/insufficent data
+            return "Insufficient Data"
+        }
+        else if ( dayNum === -7777) { //-7777 is the code for non-zero value that rounds to zero
+            return "0 (rounded)"
+        }
+        else {
+            let retStr = dayNum.toString() + ` - ` + date 
+            return retStr
+        }
+    }
+
+    return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
@@ -138,17 +153,17 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
 
           <br/> Station: {match.params.id} 
               <h4>Spring Freeze Dates</h4>
-              <h5>Last Severe Freeze: {springFrostJulian.severe} - {springFrostDates.severe.toDateString()}</h5>
-              <h5>Last Moderate Freeze: {springFrostJulian.moderate} - {springFrostDates.moderate.toDateString()}</h5>
-              <h5>Last Light Freeze: {springFrostJulian.light} - {springFrostDates.light.toDateString()}</h5>
+              <h5>Last Severe Freeze: <strong>{checkApiReturn(springFrostJulian.severe, springFrostDates.severe.toDateString())}</strong></h5>
+              <h5>Last Moderate Freeze: <strong>{checkApiReturn(springFrostJulian.moderate, springFrostDates.moderate.toDateString())}</strong></h5>
+              <h5>Last Light Freeze: <strong>{checkApiReturn(springFrostJulian.light, springFrostDates.light.toDateString())}</strong></h5>
               <h4>Fall Freeze Dates</h4>
-              <h5>First Severe Freeze: {fallFrostJulian.severe} - {fallFrostDates.severe.toDateString()}</h5>
-              <h5>First Moderate Freeze: {fallFrostJulian.moderate} - {fallFrostDates.moderate.toDateString()}</h5>
-              <h5>First Light Freeze: {fallFrostJulian.light} - {fallFrostDates.light.toDateString()}</h5>
+              <h5>First Severe Freeze: <strong>{checkApiReturn(fallFrostJulian.severe, fallFrostDates.severe.toDateString())}</strong></h5>
+              <h5>First Moderate Freeze: <strong>{checkApiReturn(fallFrostJulian.moderate, fallFrostDates.moderate.toDateString())}</strong></h5>
+              <h5>First Light Freeze: <strong>{checkApiReturn(fallFrostJulian.light, fallFrostDates.light.toDateString())}</strong></h5>
               <h4>Freeze Free Period (days)</h4>
-              <h5>Severe: {frostFreeJulian.severe}</h5>
-              <h5>Moderate: {frostFreeJulian.moderate}</h5>
-              <h5>Light: {frostFreeJulian.light}</h5>
+              <h5>Severe: <strong>{frostFreeJulian.severe}</strong></h5>
+              <h5>Moderate: <strong>{frostFreeJulian.moderate}</strong></h5>
+              <h5>Light: <strong>{frostFreeJulian.light}</strong></h5>
       </div>
       </IonContent>
     </IonPage>
