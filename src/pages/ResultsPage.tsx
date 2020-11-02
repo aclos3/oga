@@ -2,7 +2,7 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { observable } from "mobx"
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import moment from "moment-timezone"
@@ -21,6 +21,12 @@ interface DataError {
 interface ContainerProps extends RouteComponentProps<{
   id: string;
 }> {}
+
+interface FrostDatesJulian {
+  light: number,
+  moderate: number,
+  severe: number
+}
 
 class DataState {
   //Julian Day number of fall and spring frost severities
@@ -96,21 +102,24 @@ class DataState {
 }
 
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
+  const [stationID, setStation] = useState<string>(match.params.id);
   const state = React.useRef(new DataState()).current
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
   let myData: { results: { value: any; }[]; };
   const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
-  let stationID = match.params.id;
-  let stationStr = '&stationid=GHCND:' + stationID;
+  //let stationID = match.params.id;
+  //let stationStr = '&stationid=GHCND:' + stationID;
   //getData();
-  
-  //gets the day number of 90 percent frost probabilities for spring and fall
-  async function getData () {
+
+  // must declare function INSIDE of useEffect to avoid error concerning return of Promise in callback function
+  useEffect( () => {
+    async function getData () {
       setLoading(true);
       const headers = new Headers();
       let API_key = get_NOAA_API_Key();
       headers.append('token', API_key);
+      const stationStr = '&stationid=GHCND:' + stationID;
       await fetch(apiStr + stationStr, {
         method: 'GET',
         headers: headers,
@@ -147,10 +156,11 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           setLoading(false)
           console.error(error);
       });
-    //getData();
-  }
-  
+    }
 
+    getData();
+  }, [stationID]);
+  
   return (
     <IonPage>
       <IonHeader>
@@ -174,7 +184,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               message={error.message}
               duration={3000}
           />
-          <IonButton color="primary" onClick={getData}>Make API Call</IonButton>
+          {/* <IonButton color="primary" onClick={getData}>Make API Call</IonButton> */}
           <br/> Station: {match.params.id} 
               <h4>Spring Freeze Dates</h4>
               <h5>Last Severe Freeze: {state.spr24} - {state.spr24Date.toDateString()}</h5>
