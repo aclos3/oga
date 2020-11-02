@@ -38,13 +38,14 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
   const [stationID, setStation] = useState<string>(match.params.id);
   const [springFrostJulian, setSpringFrostJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
   const [fallFrostJulian, setFallFrostJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
+  const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
   const [springFrostDates, setSpringFrostDates] = useState<FrostDates>({light: new Date(new Date().getFullYear(), 0, 1), moderate: new Date(new Date().getFullYear(), 0, 1), severe: new Date(new Date().getFullYear(), 0, 1)});
   const [fallFrostDates, setFallFrostDates] = useState<FrostDates>({light: new Date(), moderate: new Date(), severe: new Date()});
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
   let myData: { results: { value: any; }[]; };
-  const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
+  const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&datatypeid=ANN-TMIN-PRBGSL-T24FP90&datatypeid=ANN-TMIN-PRBGSL-T28FP90&datatypeid=ANN-TMIN-PRBGSL-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
 
   // fetches frost dates after station ID updates
   // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
@@ -69,6 +70,11 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             light: myData.results[2].value
           });
           setSpringFrostJulian({
+            severe: myData.results[6].value,
+            moderate: myData.results[7].value,
+            light: myData.results[8].value
+          });
+          setFrostFreeJulian({
             severe: myData.results[3].value,
             moderate: myData.results[4].value,
             light: myData.results[5].value
@@ -79,7 +85,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           if(isLeap) {
               var i;
               for(i = 0; i < myData.results.length; i++ ) {
-                  if(myData.results[i].value > 59) { myData.results[i].value += 1}
+                  if(myData.results[i].value > 59 && i !== 3 && i !== 4 && i !== 5) { myData.results[i].value += 1}
               }
           }
 
@@ -90,9 +96,9 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           });
 
           setSpringFrostDates({
-            light: momentToDate(moment([2020]).add(myData.results[5].value - 1, 'd')),
-            moderate: momentToDate(moment([2020]).add(myData.results[4].value - 1, 'd')),
-            severe: momentToDate(moment([2020]).add(myData.results[3].value - 1, 'd'))
+            light: momentToDate(moment([2020]).add(myData.results[8].value - 1, 'd')),
+            moderate: momentToDate(moment([2020]).add(myData.results[7].value - 1, 'd')),
+            severe: momentToDate(moment([2020]).add(myData.results[6].value - 1, 'd'))
           });
 
           setLoading(false);
@@ -139,6 +145,10 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               <h5>First Severe Freeze: {fallFrostJulian.severe} - {fallFrostDates.severe.toDateString()}</h5>
               <h5>First Moderate Freeze: {fallFrostJulian.moderate} - {fallFrostDates.moderate.toDateString()}</h5>
               <h5>First Light Freeze: {fallFrostJulian.light} - {fallFrostDates.light.toDateString()}</h5>
+              <h4>Freeze Free Period (days)</h4>
+              <h5>Severe: {frostFreeJulian.severe}</h5>
+              <h5>Moderate: {frostFreeJulian.moderate}</h5>
+              <h5>Light: {frostFreeJulian.light}</h5>
       </div>
       </IonContent>
     </IonPage>
