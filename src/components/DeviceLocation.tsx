@@ -4,6 +4,7 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { observable } from "mobx"
 import TextEntry from './TextEntry';
+import { errorMonitor } from 'stream';
 
 interface DeviceLocationProps {
     initialLat: number | null;
@@ -40,9 +41,13 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
     }, [props.initialLat, props.initialLong, state])
 
     const getLocation = async () => {
+        let options = {
+            enableHighAccuracy: true,
+            timeout: 5000
+        }
         setLoading(true);
         try {
-            const position = await geolocation.getCurrentPosition();
+            const position = await geolocation.getCurrentPosition(options);
             setPosition(position);
             setLoading(false);
             setError({ showError: false });
