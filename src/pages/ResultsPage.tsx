@@ -103,14 +103,13 @@ class DataState {
 
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
   const [stationID, setStation] = useState<string>(match.params.id);
+  const [springFrostDatesJulian, setSpringFrostDatesJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
+  const [fallFrostDatesJulian, setfallFrostDatesJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
   const state = React.useRef(new DataState()).current
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
   let myData: { results: { value: any; }[]; };
   const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
-  //let stationID = match.params.id;
-  //let stationStr = '&stationid=GHCND:' + stationID;
-  //getData();
 
   // must declare function INSIDE of useEffect to avoid error concerning return of Promise in callback function
   useEffect( () => {
@@ -128,27 +127,37 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
       .then(data => {
           myData = data;
           console.log(`my data: `, myData.results)
-          state.setFall24(myData.results[0].value);
-          state.setFall28(myData.results[1].value);
-          state.setFall32(myData.results[2].value);
-          state.setSpr24(myData.results[3].value);
-          state.setSpr28(myData.results[4].value);
-          state.setSpr32(myData.results[5].value);
+          setfallFrostDatesJulian({
+            severe: myData.results[0].value,
+            moderate: myData.results[1].value,
+            light: myData.results[2].value
+          });
+          setSpringFrostDatesJulian({
+            severe: myData.results[3].value,
+            moderate: myData.results[4].value,
+            light: myData.results[5].value
+          });
+          // state.setFall24(myData.results[0].value);
+          // state.setFall28(myData.results[1].value);
+          // state.setFall32(myData.results[2].value);
+          // state.setSpr24(myData.results[3].value);
+          // state.setSpr28(myData.results[4].value);
+          // state.setSpr32(myData.results[5].value);
           
-          //fix leap years
-          var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
-          if(isLeap) {
-              var i;
-              for(i = 0; i < myData.results.length; i++ ) {
-                  if(myData.results[i].value > 59) { myData.results[i].value += 1}
-              }
-          }
-          state.setfall24Date(momentToDate(moment([2020]).add(myData.results[0].value - 1, 'd')))
-          state.setfall28Date(momentToDate(moment([2020]).add(myData.results[1].value - 1, 'd')))
-          state.setfall32Date(momentToDate(moment([2020]).add(myData.results[2].value - 1, 'd')))
-          state.setspr24Date(momentToDate(moment([2020]).add(myData.results[3].value - 1, 'd')))
-          state.setspr28Date(momentToDate(moment([2020]).add(myData.results[4].value - 1, 'd')))
-          state.setspr32Date(momentToDate(moment([2020]).add(myData.results[5].value - 1, 'd')))
+          // //fix leap years
+          // var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
+          // if(isLeap) {
+          //     var i;
+          //     for(i = 0; i < myData.results.length; i++ ) {
+          //         if(myData.results[i].value > 59) { myData.results[i].value += 1}
+          //     }
+          // }
+          // state.setfall24Date(momentToDate(moment([2020]).add(myData.results[0].value - 1, 'd')))
+          // state.setfall28Date(momentToDate(moment([2020]).add(myData.results[1].value - 1, 'd')))
+          // state.setfall32Date(momentToDate(moment([2020]).add(myData.results[2].value - 1, 'd')))
+          // state.setspr24Date(momentToDate(moment([2020]).add(myData.results[3].value - 1, 'd')))
+          // state.setspr28Date(momentToDate(moment([2020]).add(myData.results[4].value - 1, 'd')))
+          // state.setspr32Date(momentToDate(moment([2020]).add(myData.results[5].value - 1, 'd')))
           
           setLoading(false);
       })
@@ -194,6 +203,15 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               <h5>First Severe Freeze: {state.fall24} - {state.fall24Date.toDateString()}</h5>
               <h5>First Moderate Freeze: {state.fall28} - {state.fall28Date.toDateString()}</h5>
               <h5>First Light Freeze: {state.fall32} - {state.fall32Date.toDateString()}</h5>
+
+              <h4>Spring Freeze Dates</h4>
+              <h5>Last Severe Freeze: {springFrostDatesJulian.severe}</h5>
+              <h5>Last Moderate Freeze: {springFrostDatesJulian.moderate}</h5>
+              <h5>Last Light Freeze: {springFrostDatesJulian.light}</h5>
+              <h4>Fall Freeze Dates</h4>
+              <h5>First Severe Freeze: {fallFrostDatesJulian.severe}</h5>
+              <h5>First Moderate Freeze: {fallFrostDatesJulian.moderate}</h5>
+              <h5>First Light Freeze: {fallFrostDatesJulian.light}</h5>
       </div>
       </IonContent>
     </IonPage>
