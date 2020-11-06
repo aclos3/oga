@@ -46,9 +46,10 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
       </IonHeader>
       <IonContent>
         <div className="home-container">
-          <h3>Enter your location</h3>
+          <h3>Get Your Frost Dates</h3>
           <div className="content-container">
             <div className="content-row">
+              <h6>Use your device's location</h6>
               <DeviceLocation
                     initialLat={lat}
                     initialLong={long}
@@ -56,6 +57,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
               ></DeviceLocation>
             </div>
             <div className="content-row">
+              <h6>Enter your zip code or city, state</h6>
               <TextEntry
                     initialLat={lat}
                     initialLong={long}
