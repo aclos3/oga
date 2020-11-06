@@ -43,7 +43,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
-  let myData: { results: { value: any; }[]; };
+  //let myData: { results: { value: any; }[]; };
   const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&datatypeid=ANN-TMIN-PRBGSL-T24FP90&datatypeid=ANN-TMIN-PRBGSL-T28FP90&datatypeid=ANN-TMIN-PRBGSL-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
 
   // fetches frost dates after station ID updates
@@ -57,46 +57,48 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
         console.log(`station ID: `, latLong)
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
-            const closestStation: Station | null = getClosestStation({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
+            const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
         //set the station string
+            
             if(closestStation) { 
                 setLoading(true); 
-                    console.log(`fall frost: `, myData.results)
+                    console.log(`ready with station: `, closestStation[0].station)
                     setFallFrostJulian({
-                        severe: myData.results[0].value,
-                        moderate: myData.results[1].value,
-                        light: myData.results[2].value
+                        severe: 1,
+                        moderate: 1,
+                        light: 1
                     });
                     setSpringFrostJulian({
-                        severe: myData.results[6].value,
-                        moderate: myData.results[7].value,
-                        light: myData.results[8].value
+                        severe: 1,
+                        moderate: 1,
+                        light: 1
                     });
                     setFrostFreeJulian({
-                        severe: myData.results[3].value,
-                        moderate: myData.results[4].value,
-                        light: myData.results[5].value
+                        severe: 1,
+                        moderate: 1,
+                        light: 1
                     });
                     //fix leap years
-                    var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
-                    if(isLeap) {
-                        var i;
-                        for(i = 0; i < myData.results.length; i++ ) {
-                            if(myData.results[i].value > 59 && i !== 3 && i !== 4 && i !== 5) { myData.results[i].value += 1}
-                        }
-                    }
+                    //var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
+                    //if(isLeap) {
+                    //   var i;
+                    //    for(i = 0; i < myData.results.length; i++ ) {
+                    //        if(myData.results[i].value > 59 && i !== 3 && i !== 4 && i !== 5) { myData.results[i].value += 1}
+                    //    }
+                    //}
                     setFallFrostDates({
-                        light: momentToDate(moment([2020]).add(myData.results[2].value - 1, 'd')),
-                        moderate: momentToDate(moment([2020]).add(myData.results[1].value - 1, 'd')),
-                        severe: momentToDate(moment([2020]).add(myData.results[0].value - 1, 'd'))
+                        light: momentToDate(moment([2020]).add(11 - 1, 'd')),
+                        moderate: momentToDate(moment([2020]).add(11 - 1, 'd')),
+                        severe: momentToDate(moment([2020]).add(11 - 1, 'd'))
                     });
                     setSpringFrostDates({
-                        light: momentToDate(moment([2020]).add(myData.results[8].value - 1, 'd')),
-                        moderate: momentToDate(moment([2020]).add(myData.results[7].value - 1, 'd')),
-                        severe: momentToDate(moment([2020]).add(myData.results[6].value - 1, 'd'))
+                        light: momentToDate(moment([2020]).add(11 - 1, 'd')),
+                        moderate: momentToDate(moment([2020]).add(11- 1, 'd')),
+                        severe: momentToDate(moment([2020]).add(11 - 1, 'd'))
                     });
                     setLoading(false);
             }
+            else { console.log(`closest is null`)}
         }
     }, [stationID]);
   
