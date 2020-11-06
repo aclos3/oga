@@ -72,7 +72,7 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
                 message={error.message}
                 duration={3000}
             />
-            <IonButton color="primary" onClick={getLocation}>Get Location</IonButton>
+            <IonButton color="primary" onClick={getLocation}>Use My Location</IonButton>
         </div>
   );
 };

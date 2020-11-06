@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react'
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
 import ViewLatLongStation from '../components/DisplayLatLongStation';
 import { observable } from "mobx"
 import { getClosestStation, Station } from '../utils/getClosestStation'
+import './HomePage.css';
 
 export interface ExportStation {
   station: string
@@ -44,23 +45,24 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className = "homeContainer">
-            <ViewLatLongStation
-              lat={lat}
-              long={long}
-              stationName={weatherStation.station}
-            />
-            <TextEntry
-                initialLat={lat}
-                initialLong={long}
-                onSubmit={onLatLongChange}
-            ></TextEntry>
-            <br></br>
-            <DeviceLocation
-                initialLat={lat}
-                initialLong={long}
-                onSubmit={onLatLongChange}
-            ></DeviceLocation>
+        <div className="home-container">
+          <h3>Enter your location</h3>
+          <div className="content-container">
+            <div className="content-row">
+              <DeviceLocation
+                    initialLat={lat}
+                    initialLong={long}
+                    onSubmit={onLatLongChange}
+              ></DeviceLocation>
+            </div>
+            <div className="content-row">
+              <TextEntry
+                    initialLat={lat}
+                    initialLong={long}
+                    onSubmit={onLatLongChange}
+                ></TextEntry>
+            </div> 
+          </div>
         </div>
       </IonContent>
     </IonPage>

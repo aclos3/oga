@@ -1,4 +1,4 @@
-.homeContainer {
+/* .homeContainer {
     text-align: center;
     position: relative;
     left: 0;
@@ -21,4 +21,25 @@
   
   .homeContainer a {
     text-decoration: none;
+  } */
+
+  .home-container {
+    text-align: center;
+    height: 100%;
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 90%;
+  }
+
+  .content-row {
+    margin: 20px;
+  }
+
+  #form-instructions {
+    margin: 20px;
   }

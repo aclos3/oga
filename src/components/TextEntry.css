@@ -3,3 +3,12 @@
     padding-right: 2em;   
     font-weight: bold;
 }
+
+.location-form {
+    --background: var(--ion-color-light);
+    --color: var(--ion-color-primary);
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid black;
+}
