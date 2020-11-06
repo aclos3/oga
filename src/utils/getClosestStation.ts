@@ -1,9 +1,24 @@
 import stationsJSON from '../data/station_lat_long.json';
+import frostJSON from '../data/frost_data.json';
 
 export interface Station {
     station: string,
     latitude: number,
-    longitude: number
+    longitude: number,
+    distance: number
+}
+
+export interface FrostData {
+    station: string,
+    fst_t24fp90: number,
+    fst_t28fp90: number,
+    fst_t32fp90: number,
+    lst_t24fp90: number,
+    lst_t28fp90: number,
+    lst_t32fp90: number,
+    gsl_t24fp90: number,
+    gsl_t28fp90: number,
+    gsl_t32fp90: number
 }
 
 export interface Coordinates {
@@ -11,33 +26,73 @@ export interface Coordinates {
     long: number
 }
 
+//get all weather stations
 export function getWeatherStations(): Station[] {
     const stations: Station[] = stationsJSON.map( (data) => {
         return {
             station: data.station,
             latitude: parseFloat(data.latitude),
-            longitude: parseFloat(data.longitude)
+            longitude: parseFloat(data.longitude),
+            distance: 999999
         };
     });
-
     return stations;
 }
 
+//get all station frost data
+export function getFrostData(): FrostData[] {
+    const frostData: FrostData[] = frostJSON.map( (data) => {
+        return {
+            station: data.station,
+            fst_t24fp90: parseFloat(data["ann-tmin-prbfst-t24fp90"]),
+            fst_t28fp90: parseFloat(data["ann-tmin-prbfst-t28fp90"]),
+            fst_t32fp90: parseFloat(data["ann-tmin-prbfst-t32fp90"]),
+            lst_t24fp90: parseFloat(data["ann-tmin-prblst-t24fp90"]),
+            lst_t28fp90: parseFloat(data["ann-tmin-prblst-t28fp90"]),
+            lst_t32fp90: parseFloat(data["ann-tmin-prblst-t32fp90"]),
+            gsl_t24fp90: parseFloat(data["ann-tmin-prbgsl-t24fp90"]),
+            gsl_t28fp90: parseFloat(data["ann-tmin-prbgsl-t28fp90"]),
+            gsl_t32fp90: parseFloat(data["ann-tmin-prbgsl-t32fp90"])
+        };
+    });
+    return frostData;
+}
+
 const stations: Station[] = getWeatherStations();
+const frostData: FrostData[] = getFrostData();
 
 // returns closest weather station (station ID, latitude, and longitude) to a given point (latitude and longitude)
+
 export function getClosestStation(origin: Coordinates): Station | null {
     let smallestDistance: number = Infinity;
     let closestStation: Station | null = null;
     
     for (let station of stations) {
         const distance: number = getDistanceFromLatLongInKm(origin, {lat: station.latitude, long: station.longitude});
+        station.distance = distance
         if (distance < smallestDistance) {
             smallestDistance = distance;
             closestStation = station;
         }
     }
+    getClosestStationList(origin)
+    return closestStation;
+}
 
+// returns a list sorted by distance from the origin
+export function getClosestStationList(origin: Coordinates): Station[] | null {
+    let smallestDistance: number = Infinity;
+    let closestStation: Station[] | null = null;
+    //let stationArr: { id: number, lat: number, long: number}[] = [];
+
+    let count = 0
+    for(let station of stations) {
+        
+        if (count < 20) {
+            console.log(`station list: `, station)
+        }
+        count += 1
+    }
     return closestStation;
 }
 

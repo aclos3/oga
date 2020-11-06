@@ -25,7 +25,6 @@ export async function getCityStateCoordinates(cityState: string): Promise<Locati
 
     const json: CityStateApiData = await data.json();
     console.log(json);
-
     // starts with error message--change if API returns valid response
     let locationData: LocationData = {
         hasError: true,

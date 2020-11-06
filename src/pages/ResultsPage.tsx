@@ -1,9 +1,8 @@
 //import React from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
-
+import { getClosestStationList, getClosestStation, Station } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
-import { observable } from "mobx"
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import moment from "moment-timezone"
 import { momentToDate } from "../utils/utils"
@@ -19,14 +18,14 @@ interface DataError {
 }
 
 interface ContainerProps extends RouteComponentProps<{
-  id: string;
+    id: string
 }> {}
 
 interface FrostDatesJulian {
   light: number,
   moderate: number,
   severe: number
-}
+} 
 
 interface FrostDates {
   light: Date,
@@ -49,66 +48,56 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
 
   // fetches frost dates after station ID updates
   // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
-  useEffect( () => {
-    async function getData () {
-      setLoading(true);
-      const headers = new Headers();
-      let API_key = get_NOAA_API_Key();
-      headers.append('token', API_key);
-      const stationStr = '&stationid=GHCND:' + stationID;
-      await fetch(apiStr + stationStr, {
-        method: 'GET',
-        headers: headers,
-        })
-      .then(response => response.json())
-      .then(data => {
-          myData = data;
-          console.log(`my data: `, myData.results)
-          setFallFrostJulian({
-            severe: myData.results[0].value,
-            moderate: myData.results[1].value,
-            light: myData.results[2].value
-          });
-          setSpringFrostJulian({
-            severe: myData.results[6].value,
-            moderate: myData.results[7].value,
-            light: myData.results[8].value
-          });
-          setFrostFreeJulian({
-            severe: myData.results[3].value,
-            moderate: myData.results[4].value,
-            light: myData.results[5].value
-          });
-
-          //fix leap years
-          var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
-          if(isLeap) {
-              var i;
-              for(i = 0; i < myData.results.length; i++ ) {
-                  if(myData.results[i].value > 59 && i !== 3 && i !== 4 && i !== 5) { myData.results[i].value += 1}
-              }
-          }
-
-          setFallFrostDates({
-            light: momentToDate(moment([2020]).add(myData.results[2].value - 1, 'd')),
-            moderate: momentToDate(moment([2020]).add(myData.results[1].value - 1, 'd')),
-            severe: momentToDate(moment([2020]).add(myData.results[0].value - 1, 'd'))
-          });
-
-          setSpringFrostDates({
-            light: momentToDate(moment([2020]).add(myData.results[8].value - 1, 'd')),
-            moderate: momentToDate(moment([2020]).add(myData.results[7].value - 1, 'd')),
-            severe: momentToDate(moment([2020]).add(myData.results[6].value - 1, 'd'))
-          });
-
-          setLoading(false);
-      })
-      .catch((error) => {
-          setLoading(false)
-          console.error(error);
-      });
-    }
-    getData();
+    useEffect( () => {
+    //getClosestStationList()
+    //split out the lat/long
+        let latLong = stationID.split('_')
+        let stationStr = "no_station"
+        
+        console.log(`station ID: `, latLong)
+        //make sure these values are not null or undefined
+        if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
+            const closestStation: Station | null = getClosestStation({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
+        //set the station string
+            if(closestStation) { 
+                setLoading(true); 
+                    console.log(`fall frost: `, myData.results)
+                    setFallFrostJulian({
+                        severe: myData.results[0].value,
+                        moderate: myData.results[1].value,
+                        light: myData.results[2].value
+                    });
+                    setSpringFrostJulian({
+                        severe: myData.results[6].value,
+                        moderate: myData.results[7].value,
+                        light: myData.results[8].value
+                    });
+                    setFrostFreeJulian({
+                        severe: myData.results[3].value,
+                        moderate: myData.results[4].value,
+                        light: myData.results[5].value
+                    });
+                    //fix leap years
+                    var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
+                    if(isLeap) {
+                        var i;
+                        for(i = 0; i < myData.results.length; i++ ) {
+                            if(myData.results[i].value > 59 && i !== 3 && i !== 4 && i !== 5) { myData.results[i].value += 1}
+                        }
+                    }
+                    setFallFrostDates({
+                        light: momentToDate(moment([2020]).add(myData.results[2].value - 1, 'd')),
+                        moderate: momentToDate(moment([2020]).add(myData.results[1].value - 1, 'd')),
+                        severe: momentToDate(moment([2020]).add(myData.results[0].value - 1, 'd'))
+                    });
+                    setSpringFrostDates({
+                        light: momentToDate(moment([2020]).add(myData.results[8].value - 1, 'd')),
+                        moderate: momentToDate(moment([2020]).add(myData.results[7].value - 1, 'd')),
+                        severe: momentToDate(moment([2020]).add(myData.results[6].value - 1, 'd'))
+                    });
+                    setLoading(false);
+            }
+        }
     }, [stationID]);
   
     const checkApiReturn = (dayNum: any, date: any) => {
