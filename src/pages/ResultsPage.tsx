@@ -39,12 +39,9 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     //split out the lat/long
         let latLong = stationID.split('_')
         let stationIdx = -1
-        
-        console.log(`station ID: `, latLong)
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
-            
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
@@ -54,8 +51,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
                     if(stationIdx >= 0) { checking = -1 } //station found, stop checking
                     else { checking++} //station not found, move to text closest
                 }
-                setLoading(true); 
-                    console.log(`ready with station: `, closestStation[stationIdx].station)
+                setLoading(true);
                     setFallFrostJulian({
                         severe: frostData[stationIdx].fst_t24fp90,
                         moderate: frostData[stationIdx].fst_t28fp90,
@@ -76,7 +72,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             else { console.log(`Closest station has no data!`)}
         }
     }, [stationID]);
-  
+
     const checkApiReturn = (dayNum: any) => {
         if(dayNum === "-4444") {  //-4444 is the code for year round frost risk
             return "Year-Round Frost Risk"
