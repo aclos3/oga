@@ -1,3 +1,7 @@
+.text-entry {
+    --background: var(--ion-color-tertiary);
+}
+
 .latLong {
     padding-left: 2em; 
     padding-right: 2em;   

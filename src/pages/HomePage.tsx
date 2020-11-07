@@ -41,7 +41,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Oregon Gardening Application</IonTitle>
+          <IonTitle className="title">Oregon Gardening Application</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
