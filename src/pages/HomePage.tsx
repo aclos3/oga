@@ -18,6 +18,9 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         station: "",
         latitude: 0,
         longitude: 0,
+        elevation: 0,
+        state: "",
+        city: "",
         distance: 888888
     });
 

@@ -5,6 +5,9 @@ export interface Station {
     station: string,
     latitude: number,
     longitude: number,
+    elevation: number,
+    state: string,
+    city: string,
     distance: number
 }
 
@@ -31,9 +34,12 @@ export interface Coordinates {
 export function getWeatherStations(): Station[] {
     const stations: Station[] = stationsJSON.map( (data) => {
         return {
-            station: data.station,
-            latitude: parseFloat(data.latitude),
-            longitude: parseFloat(data.longitude),
+            station: data.id,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            elevation: data.elevation,
+            state: data.state,
+            city: data.city,
             distance: 999999
         };
     });

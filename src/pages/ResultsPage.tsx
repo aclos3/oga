@@ -28,11 +28,14 @@ interface StationUsed {
     stationID: string,
     lat: number,
     long: number,
-    elevation: number
+    elevation: number,
+    state: string,
+    city: string,
+    distance: number
 }
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
     const [userLatLong] = useState<string>(match.params.id);
-    const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0});
+    const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
     const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
@@ -56,9 +59,12 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
                     if(stationIdx >= 0) {  //station found, stop checking
                         setStation({
                             stationID: closestStation[checking].station,
-                            lat: 0,
-                            long: 0,
-                            elevation: 999 
+                            lat: closestStation[checking].latitude,
+                            long: closestStation[checking].longitude,
+                            elevation: closestStation[checking].elevation,
+                            state: closestStation[checking].state,
+                            city: closestStation[checking].city, 
+                            distance: closestStation[checking].distance
                         });
                         checking = -1 
                     }
@@ -124,7 +130,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               message={error.message}
               duration={3000}
           />
-          <br/> Station: {stationID.stationID} 
+          <br/><h3>Station Used:</h3> ID: {stationID.stationID} <br/>City: {stationID.city}, {stationID.state} <br/>Elevation: {stationID.elevation}(meters) <br/> Distance: {stationID.distance}
               <h4>Spring Freeze Dates</h4>
               <h5>Last Severe Freeze: <strong>{checkApiReturn(springFrostJulian.severe)}</strong></h5>
               <h5>Last Moderate Freeze: <strong>{checkApiReturn(springFrostJulian.moderate)}</strong></h5>
