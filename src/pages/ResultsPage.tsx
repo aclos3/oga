@@ -52,22 +52,22 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
                     else { checking++} //station not found, move to text closest
                 }
                 setLoading(true); 
-                    setFallFrostJulian({
-                        severe: frostData[stationIdx].fst_t24fp90,
-                        moderate: frostData[stationIdx].fst_t28fp90,
-                        light: frostData[stationIdx].fst_t32fp90
-                    });
-                    setSpringFrostJulian({
-                        severe: frostData[stationIdx].lst_t24fp90,
-                        moderate: frostData[stationIdx].lst_t28fp90,
-                        light: frostData[stationIdx].lst_t32fp90
-                    });
-                    setFrostFreeJulian({
-                        severe: frostData[stationIdx].gsl_t24fp90,
-                        moderate: frostData[stationIdx].gsl_t28fp90,
-                        light: frostData[stationIdx].gsl_t32fp90
-                    });
-                    setLoading(false);
+                setFallFrostJulian({
+                    severe: frostData[stationIdx].fst_t24fp90,
+                    moderate: frostData[stationIdx].fst_t28fp90,
+                    light: frostData[stationIdx].fst_t32fp90
+                });
+                setSpringFrostJulian({
+                    severe: frostData[stationIdx].lst_t24fp90,
+                    moderate: frostData[stationIdx].lst_t28fp90,
+                    light: frostData[stationIdx].lst_t32fp90
+                });
+                setFrostFreeJulian({
+                    severe: frostData[stationIdx].gsl_t24fp90,
+                    moderate: frostData[stationIdx].gsl_t28fp90,
+                    light: frostData[stationIdx].gsl_t32fp90
+                });
+                setLoading(false);
             }
             else { console.log(`Closest station has no data!`)}
         }
