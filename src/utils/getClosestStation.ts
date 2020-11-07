@@ -62,24 +62,6 @@ export function getFrostData(): FrostData[] {
 
 const stations: Station[] = getWeatherStations();
 
-// returns closest weather station (station ID, latitude, and longitude) to a given point (latitude and longitude)
-
-export function getClosestStation(origin: Coordinates): Station | null {
-    let smallestDistance: number = Infinity;
-    let closestStation: Station | null = null;
-    
-    for (let station of stations) {
-        const distance: number = getDistanceFromLatLongInKm(origin, {lat: station.latitude, long: station.longitude});
-        station.distance = distance
-        if (distance < smallestDistance) {
-            smallestDistance = distance;
-            closestStation = station;
-        }
-    }
-    getClosestStationList(origin)
-    return closestStation;
-}
-
 // returns a list sorted by distance from the origin
 export function getClosestStationList(origin: Coordinates): Station[] | null {
     //get station distances

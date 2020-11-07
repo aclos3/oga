@@ -5,7 +5,7 @@ import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
 import ViewLatLongStation from '../components/DisplayLatLongStation';
 import { observable } from "mobx"
-import { getClosestStation, Station } from '../utils/getClosestStation'
+import { Station } from '../utils/getClosestStation'
 
 export interface ExportStation {
   latLong: string
