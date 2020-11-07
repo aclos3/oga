@@ -24,20 +24,25 @@ interface FrostDates {
     moderate: string,
     severe: string
 }
-
+interface StationUsed {
+    stationID: string,
+    lat: number,
+    long: number,
+    elevation: number
+}
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
-    const [stationID, setStation] = useState<string>(match.params.id);
+    const [userLatLong] = useState<string>(match.params.id);
+    const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0});
     const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
-  
-  // fetches frost dates after station ID updates
-  // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
+    // fetches frost dates after station ID updates
+    // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
     useEffect( () => {
     //split out the lat/long
-        let latLong = stationID.split('_')
+        let latLong = userLatLong.split('_')
         let stationIdx = -1
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
@@ -48,7 +53,15 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
                 let checking = 0
                 while (checking >= 0) { //loop until a station with data is found
                     stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station)
-                    if(stationIdx >= 0) { checking = -1 } //station found, stop checking
+                    if(stationIdx >= 0) {  //station found, stop checking
+                        setStation({
+                            stationID: closestStation[checking].station,
+                            lat: 0,
+                            long: 0,
+                            elevation: 999 
+                        });
+                        checking = -1 
+                    }
                     else { checking++} //station not found, move to text closest
                 }
                 setLoading(true); 
@@ -71,7 +84,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             }
             else { console.log(`Closest station has no data!`)}
         }
-    }, [stationID]);
+    }, [userLatLong]);
 
     const checkApiReturn = (dayNum: any) => {
         if(dayNum === "-4444") {  //-4444 is the code for year round frost risk
@@ -111,7 +124,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               message={error.message}
               duration={3000}
           />
-          <br/> Station: {match.params.id} 
+          <br/> Station: {stationID.stationID} 
               <h4>Spring Freeze Dates</h4>
               <h5>Last Severe Freeze: <strong>{checkApiReturn(springFrostJulian.severe)}</strong></h5>
               <h5>Last Moderate Freeze: <strong>{checkApiReturn(springFrostJulian.moderate)}</strong></h5>
