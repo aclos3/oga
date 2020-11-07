@@ -72,7 +72,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             else { console.log(`Closest station has no data!`)}
         }
     }, [stationID]);
-  
+
     const checkApiReturn = (dayNum: any) => {
         if(dayNum === "-4444") {  //-4444 is the code for year round frost risk
             return "Year-Round Frost Risk"
