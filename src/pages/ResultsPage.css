@@ -3,12 +3,35 @@ ion-toolbar {
     --background: var(--ion-color-primary);
   }
   
-  .title {
-    background-color: var(--ion-color-primary);
-    color: var(--ion-color-light);
-    text-align: center;
-    padding: 10px;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
+.title {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-light);
+  text-align: center;
+  padding: 10px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.results-container {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.results-card {
+  min-width: 50vw;
+  max-width: 300px;
+  margin: 10px auto;
+}
+
+.results-list {
+  list-style: none;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.station-item {
+
+}
