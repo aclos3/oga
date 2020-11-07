@@ -150,9 +150,9 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             </IonCardHeader>
             <IonCardContent>
               <ul className="results-list">
-                <li>Last Severe Freeze: {checkApiReturn(springFrostJulian.severe)}</li>
-                <li>Last Moderate Freeze: {checkApiReturn(springFrostJulian.moderate)}</li>
-                <li>Last Light Freeze: {checkApiReturn(springFrostJulian.light)}</li>
+                <li>Last Severe Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.severe)}</span></li>
+                <li>Last Moderate Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.moderate)}</span></li>
+                <li>Last Light Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.light)}</span></li>
               </ul>
             </IonCardContent>
           </IonCard>
@@ -165,9 +165,9 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             </IonCardHeader>
             <IonCardContent>
               <ul className="results-list">
-                <li>First Severe Freeze: {checkApiReturn(fallFrostJulian.severe)}</li>
-                <li>First Moderate Freeze: {checkApiReturn(fallFrostJulian.moderate)}</li>
-                <li>First Light Freeze: {checkApiReturn(fallFrostJulian.light)}</li>
+                <li>First Severe Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.severe)}</span></li>
+                <li>First Moderate Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.moderate)}</span></li>
+                <li>First Light Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.light)}</span></li>
               </ul>
             </IonCardContent>
           </IonCard>

@@ -22,6 +22,7 @@ ion-toolbar {
   min-width: 50vw;
   max-width: 300px;
   margin: 10px auto;
+  
 }
 
 .results-list {
@@ -30,8 +31,9 @@ ion-toolbar {
   padding: 5px;
   border: 1px solid black;
   border-radius: 10px;
+  color: var(--ion-color-dark);
 }
 
-.station-item {
-
+.frost-date {
+  font-weight: bold;
 }
