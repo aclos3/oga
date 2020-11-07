@@ -42,13 +42,10 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
-  //let myData: { results: { value: any; }[]; };
-  const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&datatypeid=ANN-TMIN-PRBGSL-T24FP90&datatypeid=ANN-TMIN-PRBGSL-T28FP90&datatypeid=ANN-TMIN-PRBGSL-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
-
+  
   // fetches frost dates after station ID updates
   // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
     useEffect( () => {
-    //getClosestStationList()
     //split out the lat/long
         let latLong = stationID.split('_')
         let stationIdx = -1
