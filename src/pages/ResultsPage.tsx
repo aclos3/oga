@@ -130,19 +130,31 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               message={error.message}
               duration={3000}
           />
-          <br/><h3>Station Used:</h3> ID: {stationID.stationID} <br/>City: {stationID.city}, {stationID.state} <br/>Elevation: {stationID.elevation}(meters) <br/> Distance: {stationID.distance}
-              <h4>Spring Freeze Dates</h4>
-              <h5>Last Severe Freeze: <strong>{checkApiReturn(springFrostJulian.severe)}</strong></h5>
-              <h5>Last Moderate Freeze: <strong>{checkApiReturn(springFrostJulian.moderate)}</strong></h5>
-              <h5>Last Light Freeze: <strong>{checkApiReturn(springFrostJulian.light)}</strong></h5>
-              <h4>Fall Freeze Dates</h4>
-              <h5>First Severe Freeze: <strong>{checkApiReturn(fallFrostJulian.severe)}</strong></h5>
-              <h5>First Moderate Freeze: <strong>{checkApiReturn(fallFrostJulian.moderate)}</strong></h5>
-              <h5>First Light Freeze: <strong>{checkApiReturn(fallFrostJulian.light)}</strong></h5>
-              <h4>Freeze Free Period (days)</h4>
-              <h5>Severe: <strong>{frostFreeJulian.severe}</strong></h5>
-              <h5>Moderate: <strong>{frostFreeJulian.moderate}</strong></h5>
-              <h5>Light: <strong>{frostFreeJulian.light}</strong></h5>
+          <h3>Your Weather Station</h3> 
+          <ul>
+            <li>ID: {stationID.stationID}</li>
+            <li>City: {stationID.city}, {stationID.state}</li>
+            <li>Elevation: {stationID.elevation}(meters)</li>
+            <li>Distance: {stationID.distance}</li>
+          </ul>
+          <h4>Spring Freeze Dates</h4>
+          <ul>
+            <li>Last Severe Freeze: {checkApiReturn(springFrostJulian.severe)}</li>
+            <li>Last Moderate Freeze: {checkApiReturn(springFrostJulian.moderate)}</li>
+            <li>Last Light Freeze: {checkApiReturn(springFrostJulian.light)}</li>
+          </ul>
+          <h4>Fall Freeze Dates</h4>
+          <ul>
+            <li>First Severe Freeze: {checkApiReturn(fallFrostJulian.severe)}</li>
+            <li>First Moderate Freeze: {checkApiReturn(fallFrostJulian.moderate)}</li>
+            <li>First Light Freeze: {checkApiReturn(fallFrostJulian.light)}</li>
+          </ul>
+          <h4>Freeze Free Period (days)</h4>
+          <ul>
+            <li>Severe: {frostFreeJulian.severe}</li>
+            <li>Moderate: {frostFreeJulian.moderate}</li>
+            <li>Light: {frostFreeJulian.light}</li>
+          </ul>
       </div>
       </IonContent>
     </IonPage>
