@@ -1,16 +1,7 @@
-//import React from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonToast, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
-
+import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
-import { observable } from "mobx"
-import { IonButton, IonLoading, IonToast } from '@ionic/react';
-import moment from "moment-timezone"
-import { momentToDate } from "../utils/utils"
-import get_NOAA_API_Key from './get_NOAA_API_Key';
-//Station
-var d = new Date()
-const THIS_YEAR = d.getFullYear()
 
 interface ContainerProps {}
 interface DataError {
@@ -19,115 +10,103 @@ interface DataError {
 }
 
 interface ContainerProps extends RouteComponentProps<{
-  id: string;
+    id: string
 }> {}
 
 interface FrostDatesJulian {
-  light: number,
-  moderate: number,
-  severe: number
-}
+    light: number,
+    moderate: number,
+    severe: number
+} 
 
 interface FrostDates {
-  light: Date,
-  moderate: Date,
-  severe: Date
+    light: string,
+    moderate: string,
+    severe: string
 }
-
+interface StationUsed {
+    stationID: string,
+    lat: number,
+    long: number,
+    elevation: number,
+    state: string,
+    city: string,
+    distance: number
+}
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
-  const [stationID, setStation] = useState<string>(match.params.id);
-  const [springFrostJulian, setSpringFrostJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
-  const [fallFrostJulian, setFallFrostJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
-  const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
-  const [springFrostDates, setSpringFrostDates] = useState<FrostDates>({light: new Date(new Date().getFullYear(), 0, 1), moderate: new Date(new Date().getFullYear(), 0, 1), severe: new Date(new Date().getFullYear(), 0, 1)});
-  const [fallFrostDates, setFallFrostDates] = useState<FrostDates>({light: new Date(), moderate: new Date(), severe: new Date()});
+    const [userLatLong] = useState<string>(match.params.id);
+    const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
+    const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
+    const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
+    const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<DataError>({ showError: false });
+    // fetches frost dates after station ID updates
+    // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
+    useEffect( () => {
+    //split out the lat/long
+        let latLong = userLatLong.split('_')
+        let stationIdx = -1
+        //make sure these values are not null or undefined
+        if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
+            const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
+            if(closestStation) {
+                //get frost data list
+                const frostData: FrostData[] = getFrostData();
+                let checking = 0
+                while (checking >= 0) { //loop until a station with data is found
+                    stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station)
+                    if(stationIdx >= 0) {  //station found, stop checking
+                        setStation({
+                            stationID: closestStation[checking].station,
+                            lat: closestStation[checking].latitude,
+                            long: closestStation[checking].longitude,
+                            elevation: closestStation[checking].elevation,
+                            state: closestStation[checking].state,
+                            city: closestStation[checking].city, 
+                            distance: closestStation[checking].distance
+                        });
+                        checking = -1 
+                    }
+                    else { checking++} //station not found, move to text closest
+                }
+                setLoading(true); 
+                setFallFrostJulian({
+                    severe: frostData[stationIdx].fst_t24fp90,
+                    moderate: frostData[stationIdx].fst_t28fp90,
+                    light: frostData[stationIdx].fst_t32fp90
+                });
+                setSpringFrostJulian({
+                    severe: frostData[stationIdx].lst_t24fp90,
+                    moderate: frostData[stationIdx].lst_t28fp90,
+                    light: frostData[stationIdx].lst_t32fp90
+                });
+                setFrostFreeJulian({
+                    severe: frostData[stationIdx].gsl_t24fp90,
+                    moderate: frostData[stationIdx].gsl_t28fp90,
+                    light: frostData[stationIdx].gsl_t32fp90
+                });
+                setLoading(false);
+            }
+            else { console.log(`Closest station has no data!`)}
+        }
+    }, [userLatLong]);
 
-  const [loading, setLoading] = useState<boolean>(false);
-  let myData: { results: { value: any; }[]; };
-  const apiStr = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=NORMAL_ANN&datatypeid=ANN-TMIN-PRBLST-T24FP90&datatypeid=ANN-TMIN-PRBLST-T28FP90&datatypeid=ANN-TMIN-PRBLST-T32FP90&datatypeid=ANN-TMIN-PRBFST-T24FP90&datatypeid=ANN-TMIN-PRBFST-T28FP90&datatypeid=ANN-TMIN-PRBFST-T32FP90&datatypeid=ANN-TMIN-PRBGSL-T24FP90&datatypeid=ANN-TMIN-PRBGSL-T28FP90&datatypeid=ANN-TMIN-PRBGSL-T32FP90&startdate=2010-01-01&enddate=2010-01-01';
-
-  // fetches frost dates after station ID updates
-  // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
-  useEffect( () => {
-    async function getData(isMounted: boolean) {
-      setLoading(true);
-      const headers = new Headers();
-      let API_key = get_NOAA_API_Key();
-      headers.append('token', API_key);
-      const stationStr = '&stationid=GHCND:' + stationID;
-      const data = await fetch(apiStr + stationStr, {
-        method: 'GET',
-        headers: headers,
-      })
-
-      const json = await data.json();
-      const myData = json;
-
-      //fix leap years
-      var isLeap = new Date(THIS_YEAR, 1, 29).getMonth() == 1
-      if(isLeap) {
-          var i;
-          for(i = 0; i < myData.results.length; i++ ) {
-              if(myData.results[i].value > 59 && i !== 3 && i !== 4 && i !== 5) { myData.results[i].value += 1}
-          }
-      }
-
-      // only update state variables if the component is still mounted --> avoid memory leaks
-      if (isMounted) {
-        setFallFrostJulian({
-          severe: myData.results[0].value,
-          moderate: myData.results[1].value,
-          light: myData.results[2].value
-        });
-        setSpringFrostJulian({
-          severe: myData.results[6].value,
-          moderate: myData.results[7].value,
-          light: myData.results[8].value
-        });
-        setFrostFreeJulian({
-          severe: myData.results[3].value,
-          moderate: myData.results[4].value,
-          light: myData.results[5].value
-        });
-  
-        setFallFrostDates({
-          light: momentToDate(moment([2020]).add(myData.results[2].value - 1, 'd')),
-          moderate: momentToDate(moment([2020]).add(myData.results[1].value - 1, 'd')),
-          severe: momentToDate(moment([2020]).add(myData.results[0].value - 1, 'd'))
-        });
-  
-        setSpringFrostDates({
-          light: momentToDate(moment([2020]).add(myData.results[8].value - 1, 'd')),
-          moderate: momentToDate(moment([2020]).add(myData.results[7].value - 1, 'd')),
-          severe: momentToDate(moment([2020]).add(myData.results[6].value - 1, 'd'))
-        });
-      }
-      
-      setLoading(false);
-    }
-
-    // keep track of when component is mounted --> only update state when it's mounted
-    let isMounted = true;
-    getData(isMounted);
-    return () => { isMounted = false };
-  }, [stationID]);
-  
-    const checkApiReturn = (dayNum: any, date: any) => {
-        if(dayNum === -4444) {  //-4444 is the code for year round frost risk
+    const checkApiReturn = (dayNum: any) => {
+        if(dayNum === "-4444") {  //-4444 is the code for year round frost risk
             return "Year-Round Frost Risk"
         }
-        else if (dayNum === -6666) { //-6666 is the code for undefined parameter/insufficent data
+        else if (dayNum === "-6666") { //-6666 is the code for undefined parameter/insufficent data
             return "Insufficient Data"
         }
-        else if ( dayNum === -7777) { //-7777 is the code for non-zero value that rounds to zero
+        else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
             return "0 (rounded)"
         }
         else {
-            let retStr = dayNum.toString() + ` - ` + date 
+            let retStr = dayNum.toString()
             return retStr
         }
     }
-
     return (
     <IonPage>
       <IonHeader>
@@ -145,16 +124,21 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               onDidDismiss={() => setLoading(false)}
               message={'Getting Data...'}
           />
-
-          <br/> Station: {match.params.id} 
+          <IonToast
+              isOpen={true}
+              onDidDismiss={() => setError({ message: "", showError: false })}
+              message={error.message}
+              duration={3000}
+          />
+          <br/><h3>Station Used:</h3> ID: {stationID.stationID} <br/>City: {stationID.city}, {stationID.state} <br/>Elevation: {stationID.elevation}(meters) <br/> Distance: {stationID.distance}
               <h4>Spring Freeze Dates</h4>
-              <h5>Last Severe Freeze: <strong>{checkApiReturn(springFrostJulian.severe, springFrostDates.severe.toDateString())}</strong></h5>
-              <h5>Last Moderate Freeze: <strong>{checkApiReturn(springFrostJulian.moderate, springFrostDates.moderate.toDateString())}</strong></h5>
-              <h5>Last Light Freeze: <strong>{checkApiReturn(springFrostJulian.light, springFrostDates.light.toDateString())}</strong></h5>
+              <h5>Last Severe Freeze: <strong>{checkApiReturn(springFrostJulian.severe)}</strong></h5>
+              <h5>Last Moderate Freeze: <strong>{checkApiReturn(springFrostJulian.moderate)}</strong></h5>
+              <h5>Last Light Freeze: <strong>{checkApiReturn(springFrostJulian.light)}</strong></h5>
               <h4>Fall Freeze Dates</h4>
-              <h5>First Severe Freeze: <strong>{checkApiReturn(fallFrostJulian.severe, fallFrostDates.severe.toDateString())}</strong></h5>
-              <h5>First Moderate Freeze: <strong>{checkApiReturn(fallFrostJulian.moderate, fallFrostDates.moderate.toDateString())}</strong></h5>
-              <h5>First Light Freeze: <strong>{checkApiReturn(fallFrostJulian.light, fallFrostDates.light.toDateString())}</strong></h5>
+              <h5>First Severe Freeze: <strong>{checkApiReturn(fallFrostJulian.severe)}</strong></h5>
+              <h5>First Moderate Freeze: <strong>{checkApiReturn(fallFrostJulian.moderate)}</strong></h5>
+              <h5>First Light Freeze: <strong>{checkApiReturn(fallFrostJulian.light)}</strong></h5>
               <h4>Freeze Free Period (days)</h4>
               <h5>Severe: <strong>{frostFreeJulian.severe}</strong></h5>
               <h5>Moderate: <strong>{frostFreeJulian.moderate}</strong></h5>
@@ -162,8 +146,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
       </div>
       </IonContent>
     </IonPage>
-  
   );
 };
-
 export default ResultsPage;

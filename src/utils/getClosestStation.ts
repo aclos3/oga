@@ -1,9 +1,28 @@
 import stationsJSON from '../data/station_lat_long.json';
+import frostJSON from '../data/frost_data.json';
 
 export interface Station {
     station: string,
     latitude: number,
-    longitude: number
+    longitude: number,
+    elevation: number,
+    state: string,
+    city: string,
+    distance: number
+}
+
+export interface FrostData {
+    station: string,
+    fst_t24fp90: string,
+    fst_t28fp90: string,
+    fst_t32fp90: string,
+    lst_t24fp90: string,
+    lst_t28fp90: string,
+    lst_t32fp90: string,
+    gsl_t24fp90: number,
+    gsl_t28fp90: number,
+    gsl_t32fp90: number,
+    quality: string
 }
 
 export interface Coordinates {
@@ -11,34 +30,53 @@ export interface Coordinates {
     long: number
 }
 
+//get all weather stations
 export function getWeatherStations(): Station[] {
     const stations: Station[] = stationsJSON.map( (data) => {
         return {
-            station: data.station,
-            latitude: parseFloat(data.latitude),
-            longitude: parseFloat(data.longitude)
+            station: data.id,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            elevation: data.elevation,
+            state: data.state,
+            city: data.city,
+            distance: 999999
         };
     });
-
     return stations;
+}
+
+//get all station frost data
+export function getFrostData(): FrostData[] {
+    const frostData: FrostData[] = frostJSON.map( (data) => {
+        return {
+            station: data.station,
+            fst_t24fp90: data["ann-tmin-prbfst-t24fp90"],
+            fst_t28fp90: data["ann-tmin-prbfst-t28fp90"],
+            fst_t32fp90: data["ann-tmin-prbfst-t32fp90"],
+            lst_t24fp90: data["ann-tmin-prblst-t24fp90"],
+            lst_t28fp90: data["ann-tmin-prblst-t28fp90"],
+            lst_t32fp90: data["ann-tmin-prblst-t32fp90"],
+            gsl_t24fp90: data["ann-tmin-prbgsl-t24fp90"],
+            gsl_t28fp90: data["ann-tmin-prbgsl-t28fp90"],
+            gsl_t32fp90: data["ann-tmin-prbgsl-t32fp90"],
+            quality: data["quality"]
+        };
+    });
+    return frostData;
 }
 
 const stations: Station[] = getWeatherStations();
 
-// returns closest weather station (station ID, latitude, and longitude) to a given point (latitude and longitude)
-export function getClosestStation(origin: Coordinates): Station | null {
-    let smallestDistance: number = Infinity;
-    let closestStation: Station | null = null;
-    
+// returns a list sorted by distance from the origin
+export function getClosestStationList(origin: Coordinates): Station[] | null {
+    //get station distances
     for (let station of stations) {
-        const distance: number = getDistanceFromLatLongInKm(origin, {lat: station.latitude, long: station.longitude});
-        if (distance < smallestDistance) {
-            smallestDistance = distance;
-            closestStation = station;
-        }
+        station.distance = getDistanceFromLatLongInKm(origin, {lat: station.latitude, long: station.longitude});
     }
-
-    return closestStation;
+    //sort stations by distance
+    stations.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
+    return stations;
 }
 
 // uses Haversine formula, which gives the great-circle distance between two latitude-longitude pairs
