@@ -3,7 +3,7 @@ ion-toolbar {
   --background: var(--ion-color-primary);
 }
 
-.title {
+.home-title {
   background-color: var(--ion-color-primary);
   color: var(--ion-color-light);
   text-align: center;
