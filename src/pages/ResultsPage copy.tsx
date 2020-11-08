@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonLoading, IonToast, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonToast, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
@@ -128,43 +128,65 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           <h3>Your Frost Dates</h3> 
           <IonCard className="results-card">
             <IonCardHeader>
-              <IonCardTitle>Light Freeze (32° F)</IonCardTitle>
+              <IonCardTitle>
+              Your Weather Station
+              </IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
               <ul className="results-list">
-                <li>Last Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.light)}</span></li>
-                <li>First Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.light)}</span></li>
-                <li>Growing Season Length (Days): {frostFreeJulian.light}</li>
+                <li className="station-item">ID: {stationID.stationID}</li>
+                <li className="station-item">City: {stationID.city}, {stationID.state}</li>
+                <li className="station-item">Elevation: {stationID.elevation}(meters)</li>
+                <li className="station-item">Distance: {stationID.distance}</li>
+              </ul>
+            </IonCardContent>
+          </IonCard>
+          
+          <IonCard className="results-card">
+            <IonCardHeader>
+              <IonCardTitle>
+              Spring Freeze Dates
+              </IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <ul className="results-list">
+                <li>Last Severe Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.severe)}</span></li>
+                <li>Last Moderate Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.moderate)}</span></li>
+                <li>Last Light Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.light)}</span></li>
               </ul>
             </IonCardContent>
           </IonCard>
 
           <IonCard className="results-card">
             <IonCardHeader>
-              <IonCardTitle>Moderate Freeze (30° F)</IonCardTitle>
+              <IonCardTitle>
+              Fall Freeze Dates
+              </IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
               <ul className="results-list">
-                <li>Last Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.moderate)}</span></li>
-                <li>First Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.moderate)}</span></li>
-                <li>Growing Season Length (Days): {frostFreeJulian.moderate}</li>
+                <li>First Severe Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.severe)}</span></li>
+                <li>First Moderate Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.moderate)}</span></li>
+                <li>First Light Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.light)}</span></li>
               </ul>
             </IonCardContent>
           </IonCard>
 
           <IonCard className="results-card">
             <IonCardHeader>
-              <IonCardTitle>Severe Freeze (28° F)</IonCardTitle>
+              <IonCardTitle>
+              Frost Free Period (Days)
+              </IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
               <ul className="results-list">
-                <li>Last Freeze: <span className="frost-date">{checkApiReturn(springFrostJulian.severe)}</span></li>
-                <li>First Freeze: <span className="frost-date">{checkApiReturn(fallFrostJulian.severe)}</span></li>
-                <li>Growing Season Length (Days): {frostFreeJulian.severe}</li>
+                <li>Severe: {frostFreeJulian.severe}</li>
+                <li>Moderate: {frostFreeJulian.moderate}</li>
+                <li>Light: {frostFreeJulian.light}</li>
               </ul>
             </IonCardContent>
           </IonCard>
-        </div>
+      </div>
       </IonContent>
     </IonPage>
   );
