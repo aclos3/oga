@@ -20,6 +20,11 @@ ion-toolbar {
   height: 100%;
 }
 
+.station-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .results-card {
   width: 90%;
   min-width: 280px;
@@ -35,7 +40,7 @@ ion-toolbar {
   align-items: center;
 }
 
-ion-card-header {
+.results-card-header {
   padding: 10px;
   height: 100%;
   width: 100%;
@@ -47,7 +52,7 @@ ion-card-header {
   margin-bottom: 5px;
 }
 
-ion-card-content {
+.results-card-content {
   display: flex;
   justify-content: space-between;
   width: 100%;

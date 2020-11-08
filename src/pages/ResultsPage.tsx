@@ -127,10 +127,10 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           />
           <h3>Your Frost Dates</h3> 
           <IonCard className="results-card">
-            <IonCardHeader>
+            <IonCardHeader className="results-card-header">
               <IonCardTitle>Light Freeze (32° F)</IonCardTitle>
             </IonCardHeader>
-            <IonCardContent className="frost-card-content">
+            <IonCardContent className="results-card-content">
               <div className="frost-card-row">
                 <div className="frost-card-col frost-card-col-header">Last Freeze</div>
                 <div className="frost-card-col">{checkApiReturn(springFrostJulian.light)}</div>
@@ -147,10 +147,10 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           </IonCard>
 
           <IonCard className="results-card">
-            <IonCardHeader>
+            <IonCardHeader className="results-card-header">
               <IonCardTitle>Moderate Freeze (30° F)</IonCardTitle>
             </IonCardHeader>
-            <IonCardContent className="frost-card-content">
+            <IonCardContent className="results-card-content">
               <div className="frost-card-row">
                 <div className="frost-card-col frost-card-col-header">Last Freeze</div>
                 <div className="frost-card-col">{checkApiReturn(springFrostJulian.moderate)}</div>
@@ -167,10 +167,10 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           </IonCard>
 
           <IonCard className="results-card">
-            <IonCardHeader>
+            <IonCardHeader className="results-card-header">
               <IonCardTitle>Severe Freeze (28° F)</IonCardTitle>
             </IonCardHeader>
-            <IonCardContent className="frost-card-content">
+            <IonCardContent className="results-card-content">
               <div className="frost-card-row">
                 <div className="frost-card-col frost-card-col-header">Last Freeze</div>
                 <div className="frost-card-col">{checkApiReturn(springFrostJulian.severe)}</div>
