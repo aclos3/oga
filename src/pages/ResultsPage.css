@@ -16,22 +16,44 @@ ion-toolbar {
 .results-container {
   text-align: center;
   margin: 0 auto;
+  height: 100%;
 }
 
 .results-card {
-  width: 90vw;
+  width: 90%;
   max-width: 500px;
+  height: 30%;
   margin: 10px auto;
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.results-list {
-  list-style: none;
-  margin: 0;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 10px;
-  color: var(--ion-color-dark);
+.frost-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid black;
+  padding: 10px;
+  margin: 5px 10px;
+}
+
+.frost-card-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.frost-card-col {
+  padding: 3px;
+}
+
+.frost-card-col-header {
+  font-weight: bold;
 }
 
 .frost-date {
