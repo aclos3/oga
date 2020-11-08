@@ -47,38 +47,34 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         <div className="home-container">
           <h3>Get Your Frost Dates</h3>
           <div className="content-container">
-            <div className="content-row">
-              <IonCard className="location-card">
+            <IonCard className="location-card">
+              <IonCardHeader>
+                <IonCardTitle>
+                  Use your device's location
+                </IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <DeviceLocation
+                  initialLat={lat}
+                  initialLong={long}
+                  onSubmit={onLatLongChange}
+                ></DeviceLocation>
+              </IonCardContent>
+            </IonCard>
+            <IonCard className="location-card">
                 <IonCardHeader>
                   <IonCardTitle>
-                    Use your device's location
+                    Enter your zip code or city, state
                   </IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  <DeviceLocation
+                  <TextEntry
                     initialLat={lat}
                     initialLong={long}
                     onSubmit={onLatLongChange}
-                  ></DeviceLocation>
+                  ></TextEntry>
                 </IonCardContent>
               </IonCard>
-            </div>
-            <div className="content-row">
-              <IonCard className="location-card">
-                  <IonCardHeader>
-                    <IonCardTitle>
-                      Enter your zip code or city, state
-                    </IonCardTitle>
-                  </IonCardHeader>
-                  <IonCardContent>
-                    <TextEntry
-                      initialLat={lat}
-                      initialLong={long}
-                      onSubmit={onLatLongChange}
-                    ></TextEntry>
-                  </IonCardContent>
-                </IonCard>
-            </div> 
           </div>
         </div>
       </IonContent>
