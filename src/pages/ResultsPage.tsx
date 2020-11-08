@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonLoading, IonToast, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonToast, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonPopover, IonButton } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
@@ -42,6 +42,8 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
+    const [showPopover, setShowPopover] = useState(false);
+    
     // fetches frost dates after station ID updates
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
     useEffect( () => {
@@ -125,7 +127,27 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               onDidDismiss={() => setLoading(false)}
               message={'Getting Data...'}
           />
+          <IonPopover
+            isOpen={showPopover}
+            cssClass='station-popover'
+            onDidDismiss={e => setShowPopover(false)}
+          >
+            <h5>Station Information</h5>
+            <p>ID: {stationID.stationID}</p>
+            <p>Distance: {Math.round(stationID.distance)}km</p>
+            <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
+          </IonPopover>
+
           <h3>Your Frost Dates</h3> 
+
+          <div className="station-container">
+            <div className="station-col">
+              <p>Station: {stationID.city}, {stationID.state}</p>
+              <p>Elevation: {stationID.elevation}m</p>
+              <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
+            </div>
+          </div>
+
           <IonCard className="results-card">
             <IonCardHeader className="results-card-header">
               <IonCardTitle>Light Freeze (32° F)</IonCardTitle>

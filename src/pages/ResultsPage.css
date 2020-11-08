@@ -21,8 +21,27 @@ ion-toolbar {
 }
 
 .station-container {
+  margin: 0 auto;
+  width: 90%;
+  min-width: 280px;
+  max-width: 500px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.station-col {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;;
+  align-items: center;
+}
+
+.station-col p {
+  margin: 5px;
+}
+
+.station-popover {
+  text-align: center;
 }
 
 .results-card {
