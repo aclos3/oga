@@ -103,7 +103,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             return "Occurrences to Few to Compute"
         }
         else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
-            return "Near-Zeross (rounded)"
+            return "Near-Zero (rounded)"
         }
         else {
             let retStr = dayNum.toString()
