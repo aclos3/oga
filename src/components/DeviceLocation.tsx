@@ -3,8 +3,7 @@ import './DeviceLocation.css';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { observable } from "mobx"
-import TextEntry from './TextEntry';
-import { errorMonitor } from 'stream';
+
 
 interface DeviceLocationProps {
     initialLat: number | null;
@@ -55,7 +54,13 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             state.setLong(position.coords.longitude)
             props.onSubmit(state.lat, state.long)
         } catch (e) {
-            setError({ showError: true, message: e.message });
+            //alert("error caught")
+            let newMsg = e.message
+            if(e.message === `Illegal Access`) {
+                alert(`"Use My Location" requires device location access. Please enable location services in your device settings.`)
+                newMsg = `User Denied Location Access`
+            }
+            setError({ showError: true, message: newMsg });
             setLoading(false);
         }
     }
@@ -69,7 +74,7 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             <IonToast
                 isOpen={error.showError}
                 onDidDismiss={() => setError({ message: "", showError: false })}
-                message={error.message}
+                message={error.message} 
                 duration={3000}
             />
             <IonButton color="primary" onClick={getLocation}>Use My Location</IonButton>

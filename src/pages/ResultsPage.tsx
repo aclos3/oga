@@ -100,10 +100,10 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             return "Year-Round Frost Risk"
         }
         else if (dayNum === "-6666") { //-6666 is the code for undefined parameter/insufficent data
-            return "Insufficient Data"
+            return "Occurrences to Few to Compute"
         }
         else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
-            return "0 (rounded)"
+            return "Near-Zeross (rounded)"
         }
         else {
             let retStr = dayNum.toString()
