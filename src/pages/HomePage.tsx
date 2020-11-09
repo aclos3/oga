@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle } from '@ionic/react'
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
 import ViewLatLongStation from '../components/DisplayLatLongStation';
 import { observable } from "mobx"
 import { Station } from '../utils/getClosestStation'
+import './HomePage.css';
 
 export interface ExportStation {
   latLong: string
@@ -39,27 +40,42 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Oregon Gardening Application</IonTitle>
+          <IonTitle className="home-title">Frost Date Finder</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className = "homeContainer">
-            <ViewLatLongStation
-              lat={lat}
-              long={long}
-              stationName={weatherStation.station}
-            />
-            <TextEntry
-                initialLat={lat}
-                initialLong={long}
-                onSubmit={onLatLongChange}
-            ></TextEntry>
-            <br></br>
-            <DeviceLocation
-                initialLat={lat}
-                initialLong={long}
-                onSubmit={onLatLongChange}
-            ></DeviceLocation>
+        <div className="home-container">
+          <h3>Get Your Frost Dates</h3>
+          <div className="content-container">
+            <IonCard className="location-card">
+              <IonCardHeader>
+                <IonCardTitle>
+                  Use your device's location
+                </IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <DeviceLocation
+                  initialLat={lat}
+                  initialLong={long}
+                  onSubmit={onLatLongChange}
+                ></DeviceLocation>
+              </IonCardContent>
+            </IonCard>
+            <IonCard className="location-card">
+                <IonCardHeader>
+                  <IonCardTitle>
+                    Enter your zip code or city, state
+                  </IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <TextEntry
+                    initialLat={lat}
+                    initialLong={long}
+                    onSubmit={onLatLongChange}
+                  ></TextEntry>
+                </IonCardContent>
+              </IonCard>
+          </div>
         </div>
       </IonContent>
     </IonPage>

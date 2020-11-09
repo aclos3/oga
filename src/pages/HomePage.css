@@ -1,24 +1,34 @@
-.homeContainer {
-    text-align: center;
-    position: relative;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .homeContainer strong {
-    font-size: 20px;
-    line-height: 26px;
-  }
-  
-  .homeContainer p {
-    font-size: 16px;
-    line-height: 22px;
-    color: #8c8c8c;
-    margin: 0;
-  }
-  
-  .homeContainer a {
-    text-decoration: none;
-  }
+ion-toolbar {
+  /* hacky to make it seem like there's no margin */
+  --background: var(--ion-color-primary);
+}
+
+.home-title {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-light);
+  text-align: center;
+  padding: 10px;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+ion-content {
+  --background: var(--page-background);
+}
+
+.home-container {
+  text-align: center;
+  height: 90%;
+}
+
+.content-container {
+  height: 100%;
+  margin: 0 auto;
+}
+
+.location-card {
+  min-width: 50vw;
+  max-width: 300px;
+  margin: 10px auto;
+}

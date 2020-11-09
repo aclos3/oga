@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './TextEntry.css';
 import { observable } from "mobx"
-import { IonInput, IonLabel, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
+import { IonContent, IonInput, IonLabel, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
 import { Controller, useForm } from 'react-hook-form';
 import { setTextRange } from 'typescript';
 import {getCityStateCoordinates, LocationData} from '../utils/getCoordinates';
@@ -142,8 +142,8 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         else {alert(`Entry is invalid, please try again. You must use the two letter postal abbreviation for the state.`)}
     }
     return (
-        <div className="zipContainer">
-             <IonLoading
+        <div className="text-entry">
+            <IonLoading
                 isOpen={loading}
                 onDidDismiss={() => setLoading(false)}
                 message={'Getting Data...'}
@@ -152,18 +152,19 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 isOpen={true}
                 onDidDismiss={() => setError({ message: "", showError: false })}
                 message={error.message}
-                duration={3000} />
-             <form onSubmit={handleSubmit(getValid)}>
-                <IonItem>
-                    <IonLabel color="primary">City, State OR Zipcode: </IonLabel>
+                duration={3000} 
+            />
+            <form onSubmit={handleSubmit(getValid)}>
+                <IonItem className="location-form">
+                    {/* <IonLabel>Zip code or City, State:</IonLabel> */}
                     <Controller 
-                        as={<IonInput placeholder="Type Here" type="text" />}
+                        as={<IonInput placeholder="Example: Salem, OR" type="text" />}
                         name="text"
                         control={control}
                         onChangeName="onIonChange"
                     />    
                 </IonItem>
-                Lat:<span className="latLong" >{state.lat}</span>   Long: <span className="latLong">{state.long}</span><br/>
+                {/* Lat:<span className="latLong" >{state.lat}</span>   Long: <span className="latLong">{state.long}</span><br/> */}
                 <IonButton color="primary" type="submit">Submit</IonButton>
             </form>
         </div>
