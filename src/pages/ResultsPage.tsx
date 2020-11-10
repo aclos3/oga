@@ -1,8 +1,15 @@
-import { IonPage, IonHeader, IonLoading, IonToast, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonPopover, IonButton } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonItem, IonSelect, IonToolbar, IonSelectOption, IonTitle, IonContent, IonBackButton, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonPopover, IonButton, IonLabel } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
 import './ResultsPage.css';
+
+const customAlertOptions = {
+    header: 'Probability Percentage',
+    subHeader: 'The likelihood of reaching the minimum temperature',
+    message: '10 to 90 percent',
+    translucent: true
+  };
 
 interface ContainerProps {}
 interface DataError {
@@ -43,6 +50,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
     const [showPopover, setShowPopover] = useState(false);
+    const [percentage, setPercent] = useState<string>("90")
     
     // fetches frost dates after station ID updates
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
@@ -100,7 +108,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             return "Year-Round Frost Risk"
         }
         else if (dayNum === "-6666") { //-6666 is the code for undefined parameter/insufficent data
-            return "Occurrences to Few to Compute"
+            return "Occurrences are too Few to Compute"
         }
         else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
             return "Near-Zero (rounded)"
@@ -144,10 +152,25 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             <div className="station-col">
               <p>Station: {stationID.city}, {stationID.state}</p>
               <p>Elevation: {stationID.elevation}m</p>
-              <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
+              <div className="sel_button">
+                <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
+              </div>
             </div>
           </div>
-
+          <IonItem className="percent-card">
+            <IonLabel>Probability Selection</IonLabel>
+                <IonSelect interfaceOptions={customAlertOptions} interface="alert" value={percentage} onIonChange={e => setPercent(e.detail.value)}>
+                    <IonSelectOption value="10">10%</IonSelectOption>
+                    <IonSelectOption value="20">20%</IonSelectOption>
+                    <IonSelectOption value="30">30%</IonSelectOption>
+                    <IonSelectOption value="40">40%</IonSelectOption>
+                    <IonSelectOption value="50">50%</IonSelectOption>
+                    <IonSelectOption value="60">60%</IonSelectOption>
+                    <IonSelectOption value="70">70%</IonSelectOption>
+                    <IonSelectOption value="80">80%</IonSelectOption>
+                    <IonSelectOption value="90">90%</IonSelectOption>
+                </IonSelect>
+          </IonItem>
           <IonCard className="results-card">
             <IonCardHeader className="results-card-header">
               <IonCardTitle>Light Freeze (32° F)</IonCardTitle>
