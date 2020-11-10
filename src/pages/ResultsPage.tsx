@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton, IonItem, IonLabel, IonSelectOption, IonSelect } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
@@ -146,7 +146,20 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
-
+          <IonItem className="percent-card">
+            <IonLabel>Probability Selection</IonLabel>
+                <IonSelect interfaceOptions={customAlertOptions} interface="alert" value={percentage} onIonChange={e => setPercent(e.detail.value)}>
+                    <IonSelectOption value="10">10%</IonSelectOption>
+                    <IonSelectOption value="20">20%</IonSelectOption>
+                    <IonSelectOption value="30">30%</IonSelectOption>
+                    <IonSelectOption value="40">40%</IonSelectOption>
+                    <IonSelectOption value="50">50%</IonSelectOption>
+                    <IonSelectOption value="60">60%</IonSelectOption>
+                    <IonSelectOption value="70">70%</IonSelectOption>
+                    <IonSelectOption value="80">80%</IonSelectOption>
+                    <IonSelectOption value="90">90%</IonSelectOption>
+                </IonSelect>
+          </IonItem>
           <h3>Your Frost Dates</h3> 
 
           <div className="station-container">
