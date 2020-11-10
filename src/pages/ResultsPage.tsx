@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonLoading, IonToast, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonPopover, IonButton } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
@@ -180,7 +180,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             frostFree={frostFreeJulian.severe}
             >
           </DisplayFrostDates>
-          
+
         </div>
       </IonContent>
     </IonPage>
