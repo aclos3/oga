@@ -1,3 +1,5 @@
+//Source code:
+//https://stackoverflow.com/questions/43872975/regular-expression-to-match-u-s-cities-allowing-certain-special-characters
 import React, {useState} from 'react';
 import './TextEntry.css';
 import { observable } from "mobx"
@@ -106,7 +108,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
 
     const getValid = (data: any) => {
         state.setText(data.text)
-        let regExp = /^[\w ]+,[ ]?[A-Za-z]{2}$/ //regex to check if format is comma separated city state pair
+        let regExp = /^[a-zA-Z',.\s-]+,[ ]?[A-Za-z]{2}$/ //regex to check if format is comma separated city state pair
         
         //catch an empty string being passed
         if(state.textEntry === undefined) {
@@ -152,7 +154,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 isOpen={true}
                 onDidDismiss={() => setError({ message: "", showError: false })}
                 message={error.message}
-                duration={3000} 
+                duration={1000} 
             />
             <form onSubmit={handleSubmit(getValid)}>
                 <IonItem className="location-form">
