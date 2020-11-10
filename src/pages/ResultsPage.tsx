@@ -59,6 +59,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
     const [showPopover, setShowPopover] = useState(false);
+    const [percentage, setPercent] = useState<string>("90")
     
     // fetches frost dates after station ID updates
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
