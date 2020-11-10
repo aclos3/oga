@@ -154,6 +154,15 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
+          <h3>Your Frost Dates</h3> 
+
+          <div className="station-container">
+            <div className="station-col">
+              <p>Station: {stationID.city}, {stationID.state}</p>
+              <p>Elevation: {stationID.elevation}m</p>
+              <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
+            </div>
+          </div>
           <IonItem className="percent-card">
             <IonLabel>Probability Selection</IonLabel>
                 <IonSelect interfaceOptions={customAlertOptions} interface="alert" value={percentage} onIonChange={e => setPercent(e.detail.value)}>
@@ -168,16 +177,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
                     <IonSelectOption value="90">90%</IonSelectOption>
                 </IonSelect>
           </IonItem>
-          <h3>Your Frost Dates</h3> 
-
-          <div className="station-container">
-            <div className="station-col">
-              <p>Station: {stationID.city}, {stationID.state}</p>
-              <p>Elevation: {stationID.elevation}m</p>
-              <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
-            </div>
-          </div>
-
           <DisplayFrostDates
             title="Light Freeze (32° F)"
             springFrost={springFrostJulian.light}
