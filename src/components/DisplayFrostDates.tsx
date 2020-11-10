@@ -22,11 +22,11 @@ const checkApiReturn = (dayNum: any) => {
 const DisplayFrostDates: React.FC<FrostDatesBySeverity> = ({title, springFrost, fallFrost, frostFree}) => { 
     return (
         <div>
-            <IonCard className="results-card">
-                <IonCardHeader className="results-card-header">
+            <IonCard className="frost-card">
+                <IonCardHeader className="frost-card-header">
                     <IonCardTitle>{title}</IonCardTitle>
                 </IonCardHeader>
-                <IonCardContent className="results-card-content">
+                <IonCardContent className="frost-card-content">
                 <div className="frost-card-row">
                     <div className="frost-card-col frost-card-col-header">Last Freeze</div>
                     <div className="frost-card-col">{checkApiReturn(springFrost)}</div>
