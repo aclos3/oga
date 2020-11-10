@@ -43,6 +43,13 @@ export interface FrostDatesBySeverity {
   frostFree: number
 }
 
+const customAlertOptions = {
+    header: 'Probability Percentage',
+    subHeader: 'The likelihood of reaching the minimum temperature',
+    message: '10 to 90 percent',
+    translucent: true
+};
+
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
     const [userLatLong] = useState<string>(match.params.id);
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
