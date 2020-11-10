@@ -165,66 +165,22 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             >
           </DisplayFrostDates>
 
+          <DisplayFrostDates
+            title="Moderate Freeze (30° F)"
+            springFrost={springFrostJulian.moderate}
+            fallFrost={fallFrostJulian.moderate}
+            frostFree={frostFreeJulian.moderate}
+            >
+          </DisplayFrostDates>
 
-          <IonCard className="results-card">
-            <IonCardHeader className="results-card-header">
-              <IonCardTitle>Light Freeze (32° F)</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent className="results-card-content">
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">Last Freeze</div>
-                <div className="frost-card-col">{checkApiReturn(springFrostJulian.light)}</div>
-              </div>
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">First Freeze</div>
-                <div className="frost-card-col">{checkApiReturn(fallFrostJulian.light)}</div>
-              </div>
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">Growing Season</div>
-                <div className="frost-card-col">{frostFreeJulian.light} days</div>
-              </div>
-            </IonCardContent>
-          </IonCard>
-
-          <IonCard className="results-card">
-            <IonCardHeader className="results-card-header">
-              <IonCardTitle>Moderate Freeze (30° F)</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent className="results-card-content">
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">Last Freeze</div>
-                <div className="frost-card-col">{checkApiReturn(springFrostJulian.moderate)}</div>
-              </div>
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">First Freeze</div>
-                <div className="frost-card-col">{checkApiReturn(fallFrostJulian.moderate)}</div>
-              </div>
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">Growing Season</div>
-                <div className="frost-card-col">{frostFreeJulian.moderate} days</div>
-              </div>
-            </IonCardContent>
-          </IonCard>
-
-          <IonCard className="results-card">
-            <IonCardHeader className="results-card-header">
-              <IonCardTitle>Severe Freeze (28° F)</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent className="results-card-content">
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">Last Freeze</div>
-                <div className="frost-card-col">{checkApiReturn(springFrostJulian.severe)}</div>
-              </div>
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">First Freeze</div>
-                <div className="frost-card-col">{checkApiReturn(fallFrostJulian.severe)}</div>
-              </div>
-              <div className="frost-card-row">
-                <div className="frost-card-col frost-card-col-header">Growing Season</div>
-                <div className="frost-card-col">{frostFreeJulian.severe} days</div>
-              </div>
-            </IonCardContent>
-          </IonCard>
+          <DisplayFrostDates
+            title="Severe Freeze (28° F)"
+            springFrost={springFrostJulian.severe}
+            fallFrost={fallFrostJulian.severe}
+            frostFree={frostFreeJulian.severe}
+            >
+          </DisplayFrostDates>
+          
         </div>
       </IonContent>
     </IonPage>
