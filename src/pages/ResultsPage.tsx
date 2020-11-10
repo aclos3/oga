@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
 import './ResultsPage.css';
+import DisplayFrostDates from '../components/DisplayFrostDates'
 
 interface ContainerProps {}
 interface DataError {
@@ -34,6 +35,14 @@ interface StationUsed {
     city: string,
     distance: number
 }
+
+export interface FrostDatesBySeverity {
+  title: string,
+  springFrost: string,
+  fallFrost: string,
+  frostFree: number
+}
+
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
     const [userLatLong] = useState<string>(match.params.id);
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
@@ -147,6 +156,15 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
+
+          <DisplayFrostDates
+            title="Light Freeze (32° F)"
+            springFrost={springFrostJulian.light}
+            fallFrost={fallFrostJulian.light}
+            frostFree={frostFreeJulian.light}
+            >
+          </DisplayFrostDates>
+
 
           <IonCard className="results-card">
             <IonCardHeader className="results-card-header">
