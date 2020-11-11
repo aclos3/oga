@@ -4,6 +4,7 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
   --page-background: #f5f2ed;
+  --header-font: 'Open Sans Bold';
   --body-font: 'Open Sans';
   
   --ion-color-primary: #D73F09;

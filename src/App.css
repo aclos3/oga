@@ -3,6 +3,11 @@
     src: local('Open Sans'), url(./fonts/open_sans/OpenSans-Regular.ttf) format('opentype');
 }
 
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: local('Open Sans Bold'), url(./fonts/open_sans/OpenSans-Bold.ttf) format('opentype');
+}
+
 ion-toolbar {
     --background: var(--ion-color-primary);
 }
@@ -15,6 +20,7 @@ ion-content {
 ion-title {
     background-color: var(--ion-color-primary);
     color: var(--ion-color-light);
+    font-family: var(--header-font);
     padding: 10px;
     margin: 0;
     width: 100%;
