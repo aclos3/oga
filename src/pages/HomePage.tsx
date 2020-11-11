@@ -6,6 +6,7 @@ import TextEntry from '../components/TextEntry';
 import ViewLatLongStation from '../components/DisplayLatLongStation';
 import { observable } from "mobx"
 import { Station } from '../utils/getClosestStation'
+import '../App.css'
 import './HomePage.css';
 
 export interface ExportStation {
