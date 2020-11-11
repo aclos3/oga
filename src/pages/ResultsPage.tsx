@@ -36,6 +36,9 @@ interface StationUsed {
     distance: number
 }
 
+interface Percentage {
+    percent: string
+}
 export interface FrostDatesBySeverity {
   title: string,
   springFrost: string,
@@ -50,6 +53,8 @@ const customAlertOptions = {
     translucent: true
 };
 
+
+
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
     const [userLatLong] = useState<string>(match.params.id);
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
@@ -57,10 +62,11 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<DataError>({ showError: false });
+    //const [error, setError] = useState<DataError>({ showError: false });
     const [showPopover, setShowPopover] = useState(false);
-    const [percentage, setPercent] = useState<string>("90")
+    const [percentage, setPercent] = useState<string>("90");
     
+
     // fetches frost dates after station ID updates
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
     useEffect( () => {
@@ -74,6 +80,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
                 let checking = 0
+                console.log(`Percentage is: `, percentage) 
                 while (checking >= 0) { //loop until a station with data is found
                     stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station)
                     if(stationIdx >= 0) {  //station found, stop checking
@@ -112,21 +119,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
         }
     }, [userLatLong]);
 
-    const checkApiReturn = (dayNum: any) => {
-        if(dayNum === "-4444") {  //-4444 is the code for year round frost risk
-            return "Year-Round Frost Risk"
-        }
-        else if (dayNum === "-6666") { //-6666 is the code for undefined parameter/insufficent data
-            return "Insufficient Data"
-        }
-        else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
-            return "0 (rounded)"
-        }
-        else {
-            let retStr = dayNum.toString()
-            return retStr
-        }
-    }
     return (
     <IonPage>
       <IonHeader>
@@ -186,7 +178,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           </DisplayFrostDates>
 
           <DisplayFrostDates
-            title="Moderate Freeze (30° F)"
+            title="Moderate Freeze (28° F)"
             springFrost={springFrostJulian.moderate}
             fallFrost={fallFrostJulian.moderate}
             frostFree={frostFreeJulian.moderate}
@@ -194,7 +186,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           </DisplayFrostDates>
 
           <DisplayFrostDates
-            title="Severe Freeze (28° F)"
+            title="Severe Freeze (24° F)"
             springFrost={springFrostJulian.severe}
             fallFrost={fallFrostJulian.severe}
             frostFree={frostFreeJulian.severe}
