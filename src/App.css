@@ -2,3 +2,21 @@
     font-family: 'Open Sans';
     src: local('Open Sans'), url(./fonts/open_sans/OpenSans-Regular.ttf) format('opentype');
 }
+
+ion-toolbar {
+    --background: var(--ion-color-primary);
+}
+
+ion-content {
+    --background: var(--page-background);
+}
+
+/* text-align is specified in page's CSS */
+ion-title {
+    background-color: var(--ion-color-primary);
+    color: var(--ion-color-light);
+    padding: 10px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}

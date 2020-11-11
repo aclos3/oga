@@ -2,6 +2,7 @@ import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBa
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
+import '../App.css'
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
 
