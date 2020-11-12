@@ -142,6 +142,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             cssClass='station-popover'
             onDidDismiss={e => setShowPopover(false)}
           >
+            <h1 className="page-header">Your Frost Dates</h1>
             <h5>Station Information</h5>
             <p>ID: {stationID.stationID}</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>

@@ -46,11 +46,11 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
       </IonHeader>
       <IonContent>
         <div className="home-container">
-          <h3>Get Your Frost Dates</h3>
+          <h1 className="page-header">Enter your location</h1>
           <div className="content-container">
             <IonCard className="location-card">
               <IonCardHeader>
-                <IonCardTitle>
+                <IonCardTitle className="location-card-title">
                   Use your device's location
                 </IonCardTitle>
               </IonCardHeader>
@@ -64,7 +64,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
             </IonCard>
             <IonCard className="location-card">
                 <IonCardHeader>
-                  <IonCardTitle>
+                  <IonCardTitle className="location-card-title">
                     Enter your zip code or city, state
                   </IonCardTitle>
                 </IonCardHeader>
