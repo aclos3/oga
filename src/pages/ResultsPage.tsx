@@ -125,7 +125,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start" className="back-button">
-            <IonBackButton />
+            <IonBackButton className="back-button" />
           </IonButtons>
           <IonTitle className="results-title">Frost Date Finder</IonTitle>
         </IonToolbar>

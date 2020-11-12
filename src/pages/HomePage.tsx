@@ -41,7 +41,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className="home-title">Frost Date Finder</IonTitle>
+          <IonTitle>Frost Date Finder</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
