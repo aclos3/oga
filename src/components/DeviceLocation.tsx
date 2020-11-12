@@ -3,8 +3,6 @@ import './DeviceLocation.css';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { observable } from "mobx"
-import TextEntry from './TextEntry';
-import { errorMonitor } from 'stream';
 
 interface DeviceLocationProps {
     initialLat: number | null;
@@ -43,7 +41,7 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
     const getLocation = async () => {
         let options = {
             enableHighAccuracy: true,
-            timeout: 5000
+            timeout: 8000
         }
         setLoading(true);
         try {
@@ -55,7 +53,9 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             state.setLong(position.coords.longitude)
             props.onSubmit(state.lat, state.long)
         } catch (e) {
-            setError({ showError: true, message: e.message });
+            let msg = e.message
+            if(msg === `Timeout expired`) {msg += `. Make sure your device location service is enabled.`}
+            setError({ showError: true, message: msg });
             setLoading(false);
         }
     }
@@ -70,7 +70,7 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
                 isOpen={error.showError}
                 onDidDismiss={() => setError({ message: "", showError: false })}
                 message={error.message}
-                duration={3000}
+                duration={5000}
             />
             <IonButton color="primary" onClick={getLocation}>Use My Location</IonButton>
         </div>
