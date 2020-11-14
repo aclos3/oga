@@ -24,6 +24,11 @@
     border-bottom: 1px solid black;
     margin-bottom: 5px;
   }
+
+  .ion-card-title {
+    color: var(--ion-color-dark);
+    font-family: var(--card-title-font), sans-serif;
+  }
   
   .frost-card-content {
     display: flex;
@@ -36,6 +41,8 @@
     margin: 5px 10px;
     flex: 3;
     box-sizing: border-box;
+    color: var(--ion-color-dark);
+    font-family: var(--body-font), sans-serif;
   }
   
   .frost-card-row {

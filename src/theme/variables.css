@@ -7,6 +7,8 @@ http://ionicframework.com/docs/theming/ */
   --title-font: 'Open Sans Bold';
   --title-font-size-small: 26px;
   --body-font: 'Open Sans';
+  --card-title-font: 'Open Sans SemiBold';
+  --page-header-font: 'Open Sans SemiBold';
   
   --ion-color-primary: #D73F09;
   --ion-color-primary-rgb: 215,63,9;

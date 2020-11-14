@@ -24,7 +24,7 @@ const DisplayFrostDates: React.FC<FrostDatesBySeverity> = ({title, springFrost, 
         <div>
             <IonCard className="frost-card">
                 <IonCardHeader className="frost-card-header">
-                    <IonCardTitle>{title}</IonCardTitle>
+                    <IonCardTitle className="ion-card-title">{title}</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent className="frost-card-content">
                 <div className="frost-card-row">
