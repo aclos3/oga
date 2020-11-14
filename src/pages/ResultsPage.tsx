@@ -1,4 +1,5 @@
-import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react'
+import { helpCircle, arrowBackCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
@@ -124,10 +125,13 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start" className="back-button">
-            <IonBackButton className="back-button" />
-          </IonButtons>
-          <IonTitle className="results-title">Frost Date Finder</IonTitle>
+          <div className="results-toolbar">
+            <IonButtons className="results-title-button">
+              <IonBackButton />
+            </IonButtons>
+            <IonTitle className="results-title">Frost Date Finder</IonTitle>
+            <IonIcon icon={helpCircle} className="results-title-button"></IonIcon>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
