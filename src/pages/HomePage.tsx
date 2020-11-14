@@ -29,8 +29,8 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         setLat(newLat);
         setLong(newLong);
         //const closestStation: Station | null = getClosestStation({lat: newLat, long: newLong});
-        let noaa_station = newLat.toString() + `_` + newLong.toString()
-        history.push('/dashboard/station/' + noaa_station);
+        let noaa_station = newLat.toString() + `,` + newLong.toString()
+        history.push('/dashboard/user/' + noaa_station);
         //console.log(`new lat: `, newLat)
         //console.log(`new long: `, newLong)
         //console.log(`noaa station: `, noaa_station)

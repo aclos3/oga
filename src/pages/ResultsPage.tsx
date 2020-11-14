@@ -57,7 +57,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
     useEffect( () => {
     //split out the lat/long
-        let latLong = userLatLong.split('_')
+        let latLong = userLatLong.split(',')
         let stationIdx = -1
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
@@ -142,6 +142,8 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             onDidDismiss={e => setShowPopover(false)}
           >
             <h5>Station Information</h5>
+            <p>Station Lat: {stationID.lat}</p>
+            <p>Station Long: {stationID.long}</p>
             <p>ID: {stationID.stationID}</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
