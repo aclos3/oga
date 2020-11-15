@@ -5,7 +5,6 @@ import HomePage from './HomePage';
 import ResultsPage from './ResultsPage';
 
 const DashboardPage: React.FC<RouteComponentProps> = ({match}) => {
-    console.log(`match: `, match.url)
     return (
     <IonRouterOutlet>
       <Route exact path={match.url} component={HomePage} />

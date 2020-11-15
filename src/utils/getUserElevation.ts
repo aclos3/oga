@@ -1,51 +1,42 @@
+/*
+interface elevation_api [{
+    "elevation": number,
+    "location": {
+        "lat": number,
+        "lng": number
+    },
+    "resolution": number
+}]
+*/
 
-interface elevation_api {
-    results: [
-        {
-            elevation: number,
-            location: {
-                "lat": number,
-                "lng": number
+export interface elevation_data{
+    elevation: number | null,
+    resolution: number | null
+}
+
+// gets elevation for a lat,long variable
+// if API hasan error, it will return just the error message
+export async function get_elevation(lat_long: string): Promise<elevation_data> {
+    const api_endpoint = 'https://api.jawg.io/elevations?locations='
+    const token = '&access-token=Vna6bzn5juKUCodACBvtFuEk4PlGU6Wmh6vrzJAWyTN6rL8Zca5Tzu60TpuET9pf'
+    const data = await fetch((api_endpoint + lat_long + token), {
+        method: 'GET'
+    });
+    const api_return = await data.json();
+    let results: elevation_data = {
+        elevation: null,
+        resolution: null
+    }
+    try{
+        if (api_return[0].elevation > 0){
+            results = {
+                elevation: api_return[0].elevation,
+                resolution: api_return[0].resolution
             }
         }
-    ],
-    //status will be "OK" id successful
-    status: string
-}
-
-// if error from API: set hasError and enter string for errorMessage
-// if no error from API: set latitudea and longitude to appropriate values
-export interface elevation_api_call {
-    elevation: number | null
-    status: string
-}
-
-// gets latitude and longitude for a city-state pair (for example, Eugene, OR)
-// if API returns an error, the LocationData object will have hasError = true
-export async function get_elevation(lat_long: string): Promise<elevation_api_call> {
-    const api_endpoint = 'https://api.opentopodata.org/v1/ned10m?locations='
-    const data = await fetch(api_endpoint + lat_long, {
-        method: 'GET',
-    });
-
-    const json: elevation_api = await data.json();
-    console.log(json);
-    // starts with error message--change if API returns valid response
-    let user_elevation_data: elevation_api_call = {
-        elevation: null,
-        status: "null"
-    };
-
-    try {
-        if(json.results[0].elevation!=null && json.status=="OK") {
-            user_elevation_data =  {
-                elevation: json.results[0].elevation,
-                status: "OK"
-            };
-        }
-    } catch(error){
-        console.log(error);
     }
-
-    return user_elevation_data;
+    catch{
+        console.log("Error: ", api_return);
+    }
+    return results;
 }

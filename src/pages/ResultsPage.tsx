@@ -1,7 +1,7 @@
 import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
-import { elevation_api_call, get_elevation} from '../utils/getUserElevation';
+import { elevation_data, get_elevation} from '../utils/getUserElevation';
 import React, {useEffect, useState} from 'react';
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
@@ -37,6 +37,10 @@ interface StationUsed {
     distance: number
 }
 
+interface UserInformation{
+  user_elevation: number | null
+}
+
 export interface FrostDatesBySeverity {
   title: string,
   springFrost: string,
@@ -63,6 +67,8 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
+            const user_elevation = get_elevation(userLatLong)
+            console.log(user_elevation)
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
@@ -143,10 +149,11 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             onDidDismiss={e => setShowPopover(false)}
           >
             <h5>Station Information</h5>
+            <p>ID: {stationID.stationID}</p>
             <p>Station Lat: {stationID.lat}</p>
             <p>Station Long: {stationID.long}</p>
-            <p>ID: {stationID.stationID}</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
+            <p>User Elevation: elevation</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
