@@ -46,27 +46,17 @@ ion-button {
 }
 
 h1.page-header {
-    font-size: 20px;
-    font-family: var(--page-header-font);
+    font-size: 1.4rem;
+    font-family: var(--page-header-font), sans-serif;
 }
 
 /* tablets */
 @media (min-width: 481px) {
     ion-title {
-        font-size: 2.75rem;
+        font-size: 2.5rem;
     }
-}
 
-/* laptops */
-@media (min-width: 769px) {
-    ion-title {
-        font-size: 3rem;
-    }
-}
-
-/* desktops */
-@media (min-width: 1025px) {
-    ion-title {
-        font-size: 3rem;
+    h1.page-header {
+        font-size: 2rem;
     }
 }
