@@ -146,8 +146,9 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             cssClass='station-popover'
             onDidDismiss={e => setShowPopover(false)}
           >
-            <h5>Station Information</h5>
+            <h5 className="station-popover-header">Station Information</h5>
             <p>ID: {stationID.stationID}</p>
+            <p>Elevation: {stationID.elevation}m</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
@@ -157,7 +158,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           <div className="station-container">
             <div className="station-col">
               <p>Station: {stationID.city}, {stationID.state}</p>
-              <p>Elevation: {stationID.elevation}m</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>

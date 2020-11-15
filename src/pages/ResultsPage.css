@@ -27,10 +27,10 @@
 .station-container {
   margin: 0 auto;
   width: 90%;
-  min-width: 280px;
+  min-width: 260px;
   max-width: 500px;
   border: 1px solid black;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 
 .station-col {
@@ -46,4 +46,8 @@
 
 .station-popover {
   text-align: center;
+}
+
+.station-popover-header {
+  font-family: var(--card-title-font);
 }
