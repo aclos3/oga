@@ -34,7 +34,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         history.push('/dashboard/station/' + noaa_station);
         //console.log(`new lat: `, newLat)
         //console.log(`new long: `, newLong)
-        //console.log(`noaa station: `, noaa_station)
+        console.log(`noaa station: `, noaa_station)
     }
     
     return (

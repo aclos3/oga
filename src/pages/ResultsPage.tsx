@@ -64,6 +64,9 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
+
+            //Make function call here for user elevation
+
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
@@ -148,6 +151,8 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           >
             <h5 className="station-popover-header">Station Information</h5>
             <p>ID: {stationID.stationID}</p>
+            <p>Station Lat: {stationID.lat}</p>
+            <p>Station Long: {stationID.long}</p>
             <p>Elevation: {stationID.elevation}m</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
