@@ -31,6 +31,7 @@
   max-width: 500px;
   border: 1px solid black;
   border-radius: 4px;
+  font-family: var(--body-font), sans-serif;
 }
 
 .station-col {
@@ -49,5 +50,5 @@
 }
 
 .station-popover-header {
-  font-family: var(--card-title-font);
+  font-family: var(--card-title-font), sans-serif;
 }
