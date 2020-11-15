@@ -9,7 +9,7 @@
 }
 
 .location-card-title {
-  font-size: 18px;
+  font-size: 1.25rem;
   font-weight: normal;
 }
 
@@ -20,4 +20,11 @@
   margin: 10px auto;
   margin-top: 15px;
   font-family: var(--body-font), sans-serif;
+}
+
+/* tablets */
+@media (min-width: 481px) {
+  .location-card-title {
+    font-size: 1.5rem;
+  }
 }
