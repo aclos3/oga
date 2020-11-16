@@ -24,7 +24,6 @@ interface FrostDatesJulian {
     moderate: number,
     severe: number
 } 
-
 interface FrostDates {
     light: string,
     moderate: string,
@@ -47,7 +46,7 @@ export interface FrostDatesBySeverity {
   frostFree: number
 }
 
-const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
+const ResultsPage: React.FC<ContainerProps> = ({ match }) => { 
     const [userLatLongElev] = useState<string>(match.params.id);
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
     const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
@@ -91,19 +90,19 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
                 }
                 setLoading(true); 
                 setFallFrostJulian({
-                    severe: frostData[stationIdx].fst_t24fp90,
-                    moderate: frostData[stationIdx].fst_t28fp90,
-                    light: frostData[stationIdx].fst_t32fp90
+                    severe: frostData[stationIdx].fst_t24fp30,
+                    moderate: frostData[stationIdx].fst_t28fp30,
+                    light: frostData[stationIdx].fst_t32fp30
                 });
                 setSpringFrostJulian({
-                    severe: frostData[stationIdx].lst_t24fp90,
-                    moderate: frostData[stationIdx].lst_t28fp90,
-                    light: frostData[stationIdx].lst_t32fp90
+                    severe: frostData[stationIdx].lst_t24fp30,
+                    moderate: frostData[stationIdx].lst_t28fp30,
+                    light: frostData[stationIdx].lst_t32fp30
                 });
                 setFrostFreeJulian({
-                    severe: frostData[stationIdx].gsl_t24fp90,
-                    moderate: frostData[stationIdx].gsl_t28fp90,
-                    light: frostData[stationIdx].gsl_t32fp90
+                    severe: frostData[stationIdx].gsl_t24fp30,
+                    moderate: frostData[stationIdx].gsl_t28fp30,
+                    light: frostData[stationIdx].gsl_t32fp30
                 });
                 setLoading(false);
             }
@@ -140,7 +139,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             <p>Station Lat: {stationID.lat}</p>
             <p>Station Long: {stationID.long}</p>
             <p>Station Elevation: {stationID.elevation}m</p>
-            <p>Your Elevation: {userElevation}m</p>
+            <p>{stationID.city.charAt(0) + stationID.city.slice(1).toLowerCase()} Elevation: {userElevation}m</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
@@ -149,7 +148,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
 
           <div className="station-container">
             <div className="station-col">
-              <p>Station: {stationID.city}, {stationID.state}</p>
+              <p>Station: {stationID.city.charAt(0) + stationID.city.slice(1).toLowerCase()}, {stationID.state}</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
