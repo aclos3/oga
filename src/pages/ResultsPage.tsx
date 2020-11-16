@@ -40,10 +40,10 @@ interface StationUsed {
 }
 
 export interface FrostDatesBySeverity {
-  title: string,
-  springFrost: string,
-  fallFrost: string,
-  frostFree: number
+    title: string,
+    springFrost: string,
+    fallFrost: string,
+    frostFree: string
 }
 
 const ResultsPage: React.FC<ContainerProps> = ({ match }) => { 
