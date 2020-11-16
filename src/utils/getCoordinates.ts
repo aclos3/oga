@@ -1,4 +1,4 @@
-import { get_elevation} from '../utils/getUserElevation';
+import { getElevation} from '../utils/getUserElevation';
 
 interface CityStateApiData {
     records: { 
@@ -75,7 +75,7 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
     };
     try {
         if(json.records[0].fields.latitude && json.records[0].fields.longitude) {
-            const apiElev = await get_elevation(json.records[0].fields.latitude.toString() + `,` + json.records[0].fields.longitude.toString())
+            const apiElev = await getElevation(json.records[0].fields.latitude.toString() + `,` + json.records[0].fields.longitude.toString())
             locationData =  {
                 hasError: false,
                 errorMessage: '',
