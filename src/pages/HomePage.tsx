@@ -6,6 +6,7 @@ import TextEntry from '../components/TextEntry';
 import ViewLatLongStation from '../components/DisplayLatLongStation';
 import { observable } from "mobx"
 import { Station } from '../utils/getClosestStation'
+import '../App.css'
 import './HomePage.css';
 
 export interface ExportStation {
@@ -40,16 +41,16 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className="home-title">Frost Date Finder</IonTitle>
+          <IonTitle>Frost Date Finder</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <div className="home-container">
-          <h3>Get Your Frost Dates</h3>
+          <h1 className="page-header">Enter your location</h1>
           <div className="content-container">
             <IonCard className="location-card">
               <IonCardHeader>
-                <IonCardTitle>
+                <IonCardTitle className="location-card-title">
                   Use your device's location
                 </IonCardTitle>
               </IonCardHeader>
@@ -63,7 +64,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
             </IonCard>
             <IonCard className="location-card">
                 <IonCardHeader>
-                  <IonCardTitle>
+                  <IonCardTitle className="location-card-title">
                     Enter your zip code or city, state
                   </IonCardTitle>
                 </IonCardHeader>

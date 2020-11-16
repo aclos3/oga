@@ -4,6 +4,11 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
   --page-background: #f5f2ed;
+  --title-font: 'Open Sans Bold';
+  --title-font-size-small: 24px;
+  --body-font: 'Open Sans';
+  --card-title-font: 'Open Sans SemiBold';
+  --page-header-font: 'Open Sans SemiBold';
   
   --ion-color-primary: #D73F09;
   --ion-color-primary-rgb: 215,63,9;

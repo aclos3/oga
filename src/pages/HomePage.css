@@ -1,25 +1,7 @@
-ion-toolbar {
-  /* hacky to make it seem like there's no margin */
-  --background: var(--ion-color-primary);
-}
-
-.home-title {
-  background-color: var(--ion-color-primary);
-  color: var(--ion-color-light);
-  text-align: center;
-  padding: 10px;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-}
-
-ion-content {
-  --background: var(--page-background);
-}
-
 .home-container {
   text-align: center;
   height: 90%;
+  font-family: var(--body-font), sans-serif;
 }
 
 .content-container {
@@ -27,8 +9,16 @@ ion-content {
   margin: 0 auto;
 }
 
+.location-card-title {
+  font-size: 18px;
+  font-weight: normal;
+}
+
 .location-card {
-  min-width: 50vw;
-  max-width: 300px;
+  width: 90%;
+  min-width: 200px;
+  max-width: 400px;
   margin: 10px auto;
+  margin-top: 15px;
+  font-family: var(--body-font), sans-serif;
 }

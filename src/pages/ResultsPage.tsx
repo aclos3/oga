@@ -1,7 +1,9 @@
-import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react'
+import { helpCircle, arrowBackCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
+import '../App.css'
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
 
@@ -126,10 +128,13 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start" className="back-button">
-            <IonBackButton />
-          </IonButtons>
-          <IonTitle className="results-title">Frost Date Finder</IonTitle>
+          <div className="results-toolbar">
+            <IonButtons className="results-title-button">
+              <IonBackButton />
+            </IonButtons>
+            <IonTitle className="results-title">Frost Date Finder</IonTitle>
+            <IonIcon icon={helpCircle} className="results-title-button"></IonIcon>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -144,20 +149,20 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             cssClass='station-popover'
             onDidDismiss={e => setShowPopover(false)}
           >
-            <h5>Station Information</h5>
+            <h5 className="station-popover-header">Station Information</h5>
             <p>ID: {stationID.stationID}</p>
             <p>Station Lat: {stationID.lat}</p>
             <p>Station Long: {stationID.long}</p>
+            <p>Elevation: {stationID.elevation}m</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
-          <h3>Your Frost Dates</h3> 
+          <h1 className="page-header">Your Frost Dates</h1> 
 
           <div className="station-container">
             <div className="station-col">
               <p>Station: {stationID.city}, {stationID.state}</p>
-              <p>Station Elevation: {stationID.elevation}m</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>

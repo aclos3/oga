@@ -1,18 +1,3 @@
-ion-toolbar {
-    /* hacky to make it seem like there's no margin */
-    --background: var(--ion-color-primary);
-}
-
-.results-title {
-  background-color: var(--ion-color-primary);
-  color: var(--ion-color-light);
-  text-align: left;
-  padding: 10px;
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-}
-
 .results-container {
   text-align: center;
   margin: 0 auto;
@@ -20,13 +5,32 @@ ion-toolbar {
   height: 100%;
 }
 
+.results-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.results-title {
+  width: 80%;
+}
+
+.results-title-button {
+  width: 10%;
+  max-width: 30px;
+  min-width: 30px;
+  height: 30px;
+  min-height: 30px;
+  color: var(--ion-color-dark);
+}
+
 .station-container {
   margin: 0 auto;
   width: 90%;
-  min-width: 280px;
+  min-width: 260px;
   max-width: 500px;
   border: 1px solid black;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 
 .station-col {
@@ -42,4 +46,8 @@ ion-toolbar {
 
 .station-popover {
   text-align: center;
+}
+
+.station-popover-header {
+  font-family: var(--card-title-font);
 }

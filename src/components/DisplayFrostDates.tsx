@@ -24,20 +24,18 @@ const DisplayFrostDates: React.FC<FrostDatesBySeverity> = ({title, springFrost, 
         <div>
             <IonCard className="frost-card">
                 <IonCardHeader className="frost-card-header">
-                    <IonCardTitle>{title}</IonCardTitle>
+                    <IonCardTitle className="frost-card-title">{title}</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent className="frost-card-content">
-                <div className="frost-card-row">
-                    <div className="frost-card-col frost-card-col-header">Last Freeze</div>
-                    <div className="frost-card-col">{checkApiReturn(springFrost)}</div>
+                <div className="frost-card-col">
+                    <div className="frost-card-col-header card-item">Last Freeze</div>
+                    <div className="frost-card-col-header card-item">First Freeze</div>
+                    <div className="frost-card-col-header card-item">Growing Season</div>
                 </div>
-                <div className="frost-card-row">
-                    <div className="frost-card-col frost-card-col-header">First Freeze</div>
-                    <div className="frost-card-col">{checkApiReturn(fallFrost)}</div>
-                </div>
-                <div className="frost-card-row">
-                    <div className="frost-card-col frost-card-col-header">Growing Season</div>
-                    <div className="frost-card-col">{frostFree} days</div>
+                <div className="frost-card-col">
+                    <div className="card-item">{checkApiReturn(springFrost)}</div>
+                    <div className="card-item">{checkApiReturn(fallFrost)}</div>
+                    <div className="card-item">{frostFree} days</div>
                 </div>
                 </IonCardContent>
           </IonCard>
