@@ -69,7 +69,9 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             }
             props.onSubmit(state.lat, state.long, state.elev)
         } catch (e) {
-            setError({ showError: true, message: e.message });
+            let msg = e.message
+            if(msg === `Timeout expired`) {msg += `. Make sure your device location service is enabled.`}
+            setError({ showError: true, message: msg });
             setLoading(false);
         }
     }
@@ -84,7 +86,7 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
                 isOpen={error.showError}
                 onDidDismiss={() => setError({ message: "", showError: false })}
                 message={error.message}
-                duration={3000}
+                duration={5000}
             />
             <IonButton onClick={getLocation}>Use My Location</IonButton>
         </div>

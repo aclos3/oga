@@ -24,7 +24,6 @@ interface FrostDatesJulian {
     moderate: number,
     severe: number
 } 
-
 interface FrostDates {
     light: string,
     moderate: string,
@@ -41,13 +40,13 @@ interface StationUsed {
 }
 
 export interface FrostDatesBySeverity {
-  title: string,
-  springFrost: string,
-  fallFrost: string,
-  frostFree: number
+    title: string,
+    springFrost: string,
+    fallFrost: string,
+    frostFree: string
 }
 
-const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
+const ResultsPage: React.FC<ContainerProps> = ({ match }) => { 
     const [userLatLongElev] = useState<string>(match.params.id);
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
     const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
@@ -91,25 +90,39 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
                 }
                 setLoading(true); 
                 setFallFrostJulian({
-                    severe: frostData[stationIdx].fst_t24fp90,
-                    moderate: frostData[stationIdx].fst_t28fp90,
-                    light: frostData[stationIdx].fst_t32fp90
+                    severe: frostData[stationIdx].fst_t24fp30,
+                    moderate: frostData[stationIdx].fst_t28fp30,
+                    light: frostData[stationIdx].fst_t32fp30
                 });
                 setSpringFrostJulian({
-                    severe: frostData[stationIdx].lst_t24fp90,
-                    moderate: frostData[stationIdx].lst_t28fp90,
-                    light: frostData[stationIdx].lst_t32fp90
+                    severe: frostData[stationIdx].lst_t24fp30,
+                    moderate: frostData[stationIdx].lst_t28fp30,
+                    light: frostData[stationIdx].lst_t32fp30
                 });
                 setFrostFreeJulian({
-                    severe: frostData[stationIdx].gsl_t24fp90,
-                    moderate: frostData[stationIdx].gsl_t28fp90,
-                    light: frostData[stationIdx].gsl_t32fp90
+                    severe: frostData[stationIdx].gsl_t24fp30,
+                    moderate: frostData[stationIdx].gsl_t28fp30,
+                    light: frostData[stationIdx].gsl_t32fp30
                 });
                 setLoading(false);
             }
             else { console.log(`Closest station has no data!`)}
         }
     }, [userLatLongElev]);
+    
+    const isLatPositive = () => {
+        if(stationID.lat >= 0) {
+            return `N`
+        }
+        else { return `S`}
+    }
+
+    const isLongPositive = () => {
+        if(stationID.long >= 0) {
+            return `E`
+        }
+        else { return `W`}
+    }
     return (
     <IonPage>
       <IonHeader>
@@ -137,10 +150,10 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           >
             <h5 className="station-popover-header">Station Information</h5>
             <p>ID: {stationID.stationID}</p>
-            <p>Station Lat: {stationID.lat}</p>
-            <p>Station Long: {stationID.long}</p>
+            <p>Station Lat: {Math.abs(parseFloat(stationID.lat.toPrecision(4)))}&#176;{isLatPositive()}</p>
+            <p>Station Long: {Math.abs(parseFloat(stationID.long.toPrecision(5)))}&#176;{isLongPositive()}</p>
             <p>Station Elevation: {stationID.elevation}m</p>
-            <p>Your Elevation: {userElevation}m</p>
+            <p>Local Elevation: {userElevation}m</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
@@ -149,7 +162,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
 
           <div className="station-container">
             <div className="station-col">
-              <p>Station: {stationID.city}, {stationID.state}</p>
+              <p>Station: {stationID.city.charAt(0) + stationID.city.slice(1).toLowerCase()}, {stationID.state}</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
