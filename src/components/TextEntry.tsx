@@ -145,7 +145,6 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
             />
             <form onSubmit={handleSubmit(getValid)}>
                 <IonItem className="location-form">
-                    {/* <IonLabel>Zip code or City, State:</IonLabel> */}
                     <Controller 
                         as={<IonInput placeholder="Example: Salem, OR" type="text" />}
                         name="text"
@@ -153,8 +152,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                         onChangeName="onIonChange"
                     />    
                 </IonItem>
-                {/* Lat:<span className="latLong" >{state.lat}</span>   Long: <span className="latLong">{state.long}</span><br/> */}
-                <IonButton color="primary" type="submit">Submit</IonButton>
+                <IonButton type="submit">Submit</IonButton>
             </form>
         </div>
     );
