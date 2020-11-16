@@ -61,8 +61,8 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             state.setLong(position.coords.longitude)
             //check for evelvation from device
             if(!position.coords.altitude) {
-                let apiElev = getElevation(state.lat.toString() + `,` + state.long.toString())
-                state.setElev((await apiElev).elevation)
+                let apiElev = await getElevation(state.lat.toString() + `,` + state.long.toString())
+                state.setElev(apiElev.elevation)
             }
             else { //use device's location
                 state.setElev(position.coords.altitude)
