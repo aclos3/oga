@@ -17,11 +17,15 @@
 
 .results-title-button {
   width: 10%;
-  max-width: 30px;
-  min-width: 30px;
-  height: 30px;
-  min-height: 30px;
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
   color: var(--ion-color-dark);
+}
+
+/* need to select back button--it isn't affected by font-size above */
+ion-back-button {
+  --icon-font-size: 2rem;
 }
 
 .station-container {
