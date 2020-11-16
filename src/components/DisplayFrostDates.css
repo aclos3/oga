@@ -27,6 +27,7 @@
   .frost-card-title {
     color: var(--ion-color-dark);
     font-family: var(--card-title-font), sans-serif;
+    font-size: 1.2rem;
   }
   
   .frost-card-content {
@@ -43,6 +44,7 @@
     box-sizing: border-box;
     color: var(--ion-color-dark);
     font-family: var(--body-font), sans-serif;
+    font-size: 0.9rem;
   }
   
 .frost-card-col {
