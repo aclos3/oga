@@ -3,9 +3,8 @@
 import React, {useState} from 'react';
 import './TextEntry.css';
 import { observable } from "mobx"
-import { IonContent, IonInput, IonLabel, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
+import { IonInput, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
 import { Controller, useForm } from 'react-hook-form';
-import { setTextRange } from 'typescript';
 import {getCityStateCoordinates, LocationData} from '../utils/getCoordinates';
 
 interface TextEntryProps {
@@ -17,16 +16,6 @@ interface DataError {
     showError: boolean;
     message?: string;
 }
-
-//interface CityStateApiData {
-//    records: { 
-//        fields: { 
-//            geo_point_2d: { //
-//                value: number; 
-//            } []; 
-//        }
-//    } [];
-//}
 
 class EntryData {
     @observable
