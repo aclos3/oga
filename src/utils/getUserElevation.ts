@@ -30,7 +30,7 @@ export async function get_elevation(lat_long: string): Promise<elevation_data> {
     try{
         if (api_return[0].elevation > 0){
             results = {
-                elevation: api_return[0].elevation,
+                elevation: Math.round(api_return[0].elevation),
                 resolution: api_return[0].resolution
             }
         }
