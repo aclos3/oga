@@ -3,8 +3,6 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardH
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
-import ViewLatLongStation from '../components/DisplayLatLongStation';
-import { observable } from "mobx"
 import { Station } from '../utils/getClosestStation'
 import './HomePage.css';
 
@@ -27,15 +25,12 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     });
 
     const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
-        console.log(`on lat long elev: `, newElev)
         setLat(newLat)
         setLong(newLong)
         setElev(newElev)
-        //const closestStation: Station | null = getClosestStation({lat: newLat, long: newLong});
         let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
         history.push('/dashboard/user/' + userLoc);
     }
-    
     return (
     <IonPage>
       <IonHeader>

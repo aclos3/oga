@@ -1,7 +1,6 @@
 import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton } from '@ionic/react'
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
-import { elevation_data, get_elevation} from '../utils/getUserElevation';
 import React, {useEffect, useState} from 'react';
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
@@ -39,10 +38,6 @@ interface StationUsed {
     distance: number
 }
 
-//interface UserInformation{
-//  user_elevation: number|null
-//}
-
 export interface FrostDatesBySeverity {
   title: string,
   springFrost: string,
@@ -65,9 +60,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
     useEffect( () => {
     //split out the lat/long
-        console.log(`userLatLongElv: `, userLatLongElev[2])
         let latLong = userLatLongElev.split(',')
-        console.log(`user elev: `, latLong[2])
         let stationIdx = -1
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
@@ -115,22 +108,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             else { console.log(`Closest station has no data!`)}
         }
     }, [userLatLongElev]);
-
-    const checkApiReturn = (dayNum: any) => {
-        if(dayNum === "-4444") {  //-4444 is the code for year round frost risk
-            return "Year-Round Frost Risk"
-        }
-        else if (dayNum === "-6666") { //-6666 is the code for undefined parameter/insufficent data
-            return "Insufficient Data"
-        }
-        else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
-            return "0 (rounded)"
-        }
-        else {
-            let retStr = dayNum.toString()
-            return retStr
-        }
-    }
     return (
     <IonPage>
       <IonHeader>
@@ -161,9 +138,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             <p>Your Elevation: {userElevation}m</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
-
           <h3>Your Frost Dates</h3> 
-
           <div className="station-container">
             <div className="station-col">
               <p>Station: {stationID.city}, {stationID.state}</p>
@@ -171,7 +146,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
-
           <DisplayFrostDates
             title="Light Freeze (32° F)"
             springFrost={springFrostJulian.light}
@@ -179,7 +153,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             frostFree={frostFreeJulian.light}
             >
           </DisplayFrostDates>
-
           <DisplayFrostDates
             title="Moderate Freeze (30° F)"
             springFrost={springFrostJulian.moderate}
@@ -187,7 +160,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             frostFree={frostFreeJulian.moderate}
             >
           </DisplayFrostDates>
-
           <DisplayFrostDates
             title="Severe Freeze (28° F)"
             springFrost={springFrostJulian.severe}
@@ -195,7 +167,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             frostFree={frostFreeJulian.severe}
             >
           </DisplayFrostDates>
-
         </div>
       </IonContent>
     </IonPage>

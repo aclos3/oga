@@ -3,10 +3,7 @@ import './DeviceLocation.css';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { observable } from "mobx"
-import { elevation_data, get_elevation} from '../utils/getUserElevation';
-import TextEntry from './TextEntry';
-import { errorMonitor } from 'stream';
-import { stat } from 'fs';
+import { get_elevation} from '../utils/getUserElevation';
 
 interface DeviceLocationProps {
     initialLat: number | null;
@@ -64,11 +61,11 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             state.setLong(position.coords.longitude)
             //check for evelvation from device
             if(!position.coords.altitude) {
-                //console.log(`state lat: `, state.long)
                 let apiElev = get_elevation(state.lat.toString() + `,` + state.long.toString())
-               // console.log(`state elev: `, (await apiElev).elevation)
                 state.setElev((await apiElev).elevation)
-                console.log(`state elv: `, state.elev)
+            }
+            else { //use device's location
+                state.setElev(position.coords.altitude)
             }
             props.onSubmit(state.lat, state.long, state.elev)
         } catch (e) {

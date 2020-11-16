@@ -1,14 +1,3 @@
-/*
-interface elevation_api [{
-    "elevation": number,
-    "location": {
-        "lat": number,
-        "lng": number
-    },
-    "resolution": number
-}]
-*/
-
 export interface elevation_data{
     elevation: number | null,
     resolution: number | null
@@ -22,16 +11,13 @@ export async function get_elevation(lat_long: string): Promise<elevation_data> {
     const data = await fetch((api_endpoint + lat_long + token), {
         method: 'GET'
     });
-    
     const api_return = await data.json();
     let results: elevation_data = {
         elevation: null,
         resolution: null
     }
     try{
-        console.log(`apiReturn: `, api_return)
         if (api_return[0] && api_return[0] !== undefined){
-            console.log(`elev from getUser: `, api_return[0].elevation)
             results = {
                 elevation: Math.round(api_return[0].elevation),
                 resolution: api_return[0].resolution

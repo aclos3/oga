@@ -1,4 +1,4 @@
-import { elevation_data, get_elevation} from '../utils/getUserElevation';
+import { get_elevation} from '../utils/getUserElevation';
 
 interface CityStateApiData {
     records: { 
@@ -35,7 +35,6 @@ export async function getCityStateCoordinates(cityState: string): Promise<Locati
     });
 
     const json: CityStateApiData = await data.json();
-    //console.log(json);
     // starts with error message--change if API returns valid response
     let locationData: LocationData = {
         hasError: true,
@@ -55,10 +54,7 @@ export async function getCityStateCoordinates(cityState: string): Promise<Locati
                 elevation: json.records[0].fields.elev_in_ft
             };
         }
-    } catch(error){
-        console.log(error);
-    }
-
+    } catch(error){ console.log(error) }
     return locationData;
 }
 // gets latitude, longitude and elevation for a zip code pair (for example, 97365)
@@ -69,7 +65,6 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
         method: 'GET',
     });
     const json: ZipCodeApiData = await data.json();
-    //console.log(json);
     // starts with error message--change if API returns valid response
     let locationData: LocationData = {
         hasError: true,
@@ -80,7 +75,6 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
     };
     try {
         if(json.records[0].fields.latitude && json.records[0].fields.longitude) {
-            console.log(`json coord 1: `, json.records[0].fields.latitude)
             let apiElev = get_elevation(json.records[0].fields.latitude.toString() + `,` + json.records[0].fields.longitude.toString())
             locationData =  {
                 hasError: false,
@@ -90,8 +84,6 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
                 elevation: (await apiElev).elevation
             };
         }
-    } catch(error){
-        console.log(error);
-    }
+    } catch(error){ console.log(error) }
     return locationData;
 }
