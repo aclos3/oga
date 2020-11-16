@@ -121,7 +121,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         if(regExp.test(state.textEntry)) {
             //console.log(`City state syntax valid!`)
             state.setText(state.textEntry.replace(/,/g, ',+\''))
-            //console.log("replaced spaces after commas: ", state.textEntry)
+            console.log("replaced spaces after commas: ", state.textEntry)
             getCityStateData();
         }
         //determine if entry is a valid zip code
@@ -149,7 +149,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 <IonItem className="location-form">
                     {/* <IonLabel>Zip code or City, State:</IonLabel> */}
                     <Controller 
-                        as={<IonInput placeholder="Example: Salem, OR" type="text" />}
+                        as={<IonInput placeholder="Example: Corvallis, OR" type="text" />}
                         name="text"
                         control={control}
                         onChangeName="onIonChange"
