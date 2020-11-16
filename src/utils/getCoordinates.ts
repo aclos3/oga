@@ -34,14 +34,10 @@ export async function getCityStateCoordinates(cityState: string, cityName: strin
         latitude: null,
         longitude: null
     };
-
     try {
         console.log(`nhits: `, json.records.length)
         for(let i = 0; i < json.records.length; i++) {
-            
-            
             if(json.records[i].fields.name.toUpperCase() === cityName && json.records[i].fields.state.toUpperCase() === stateCode) {
-                console.log(`city states: `, i)
                 if(json.records[i].fields.geo_point_2d[0] && json.records[i].fields.geo_point_2d[1]) {
                     locationData =  {
                         hasError: false,
@@ -55,6 +51,5 @@ export async function getCityStateCoordinates(cityState: string, cityName: strin
     } catch(error){
         console.log(error);
     }
-
     return locationData;
 }

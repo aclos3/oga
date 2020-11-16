@@ -79,7 +79,6 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         .then(response => response.json())
         .then(data => {
             myData = data;
-            console.log(`api str: `, state.textEntry)
             if(myData.records[0] === undefined) { alert(`No results found for your entry. Please check the validity of your zipcode or city/state pair.`)}
             else {
                 if(myData.records[0].fields.geopoint[0] === undefined) {alert(`Latitude not found.`)}
@@ -146,22 +145,14 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 else { buildStateCode += state.textEntry.charAt(i).toUpperCase() }
             }
             state.setStateCode(buildStateCode)
-            //console.log(`city name: `, state.cityName)
-            //console.log(`state code: `, state.stateCode)
         }
-        //console.log("replaced spaces after commas: ", state.textEntry, `text len: `, state.textEntry.length, `idx: `, idx)
         //determine if the entry is a city/state pair
         if(regExp.test(state.textEntry) && commaCount === 1) {
-            //console.log(`City state syntax valid!`)
             state.setText(state.textEntry.replace(/,/g, ',+\''))
-            console.log("replaced spaces after commas: ", state.textEntry)
             getCityStateData();
         }
         //determine if entry is a valid zip code
-        else if(!(isNaN(state.textEntry)) && state.textEntry.length === 5) {
-            //console.log(`zip valid`)
-            getZipCodeData();
-        }
+        else if(!(isNaN(state.textEntry)) && state.textEntry.length === 5) { getZipCodeData() }
         //check for more than two characters after comma
         else {alert(`Entry is invalid, please try again. You must use the two letter postal abbreviation for the state.`)}
     }
