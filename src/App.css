@@ -52,11 +52,15 @@ h1.page-header {
 
 /* tablets */
 @media (min-width: 481px) {
-    ion-title {
-        font-size: 2.5rem;
+    html, body {
+        font-size: 20px;
+    }
+    
+    /* ion-title {
+        font-size: 1.9rem;
     }
 
     h1.page-header {
-        font-size: 2rem;
-    }
+        font-size: 1.6rem;
+    } */
 }
