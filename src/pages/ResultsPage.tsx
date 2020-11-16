@@ -139,9 +139,9 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             <p>ID: {stationID.stationID}</p>
             <p>Station Lat: {stationID.lat}</p>
             <p>Station Long: {stationID.long}</p>
-            <p>Elevation: {stationID.elevation}m</p>
-            <p>Distance: {Math.round(stationID.distance)}km</p>
+            <p>Station Elevation: {stationID.elevation}m</p>
             <p>Your Elevation: {userElevation}m</p>
+            <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
