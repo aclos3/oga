@@ -4,7 +4,9 @@ interface CityStateApiData {
     records: { 
         fields: { 
             geo_point_2d: number[],
-            elev_in_ft: number
+            elev_in_ft: number,
+            name: string,
+            state: string
         }
     } [];
 }
@@ -30,6 +32,13 @@ export interface LocationData {
 // if API returns an error, the LocationData object will have hasError = true
 export async function getCityStateCoordinates(cityState: string): Promise<LocationData> {
     const cityApiStr = 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=cities-and-towns-of-the-united-states&q='
+    let name = cityState.split(`,`)
+    let cityName = name[0].toUpperCase()
+    let stateCode = name[name.length - 1].slice(2).toUpperCase()
+    console.log(name)
+    console.log(`City`, cityName, ` length: `, cityName.length)
+    console.log(`State:`, stateCode.slice(2))
+
     const data = await fetch(cityApiStr + cityState, {
         method: 'GET',
     });
@@ -45,14 +54,18 @@ export async function getCityStateCoordinates(cityState: string): Promise<Locati
     };
 
     try {
-        if(json.records[0].fields.geo_point_2d[0] && json.records[0].fields.geo_point_2d[1]) {
-            locationData =  {
-                hasError: false,
-                errorMessage: '',
-                latitude: json.records[0].fields.geo_point_2d[0],
-                longitude: json.records[0].fields.geo_point_2d[1],
-                elevation: json.records[0].fields.elev_in_ft
-            };
+        for(let i = 0; i < json.records.length; i++) {
+            if(json.records[i].fields.name.toUpperCase() === cityName && json.records[i].fields.state.toUpperCase() === stateCode) {
+                if(json.records[i].fields.geo_point_2d[0] && json.records[i].fields.geo_point_2d[1]) {
+                    locationData =  {
+                        hasError: false,
+                        errorMessage: '',
+                        latitude: json.records[i].fields.geo_point_2d[0],
+                        longitude: json.records[i].fields.geo_point_2d[1],
+                        elevation: json.records[i].fields.elev_in_ft
+                    };
+                }
+            }
         }
     } catch(error){ console.log(error) }
     return locationData;
