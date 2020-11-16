@@ -4,7 +4,6 @@ import { helpCircle, } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
-import { Station } from '../utils/getClosestStation'
 import '../App.css'
 import './HomePage.css';
 
@@ -15,26 +14,12 @@ export interface ExportStation {
 const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     const [lat, setLat] = useState<number>(0);
     const [long, setLong] = useState<number>(0);
-    const [weatherStation, setWeatherStation] = useState<Station>({
-        station: "",
-        latitude: 0,
-        longitude: 0,
-        elevation: 0,
-        state: "",
-        city: "",
-        distance: 888888
-    });
-
     const onLatLongChange =  (newLat: number, newLong: number) => {
         setLat(newLat);
         setLong(newLong);
         let noaa_station = newLat.toString() + `_` + newLong.toString()
         history.push('/dashboard/station/' + noaa_station);
-        //console.log(`new lat: `, newLat)
-        //console.log(`new long: `, newLong)
-        console.log(`noaa station: `, noaa_station)
     }
-    
     return (
     <IonPage>
       <IonHeader>

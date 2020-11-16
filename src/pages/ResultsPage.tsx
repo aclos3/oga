@@ -6,7 +6,6 @@ import React, {useEffect, useState} from 'react';
 import '../App.css'
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
-import { stat } from 'fs';
 
 interface ContainerProps {}
 interface DataError {
@@ -57,8 +56,6 @@ const customAlertOptions = {
     translucent: true
 };
 
-
-
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
     const [userLatLong] = useState<string>(match.params.id);
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0, idx: 0});
@@ -68,7 +65,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [showPopover, setShowPopover] = useState(false);
     const [percentage, setPercent] = useState<string>("90");
-    //const [dataPercentStr, setPerStr] = useState<string>({})
     const frostData: FrostData[] = getFrostData();
     // fetches frost dates after station ID updates
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
@@ -79,14 +75,8 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
-
-            //Make function call here for user elevation
-
             if(closestStation) {
-                //get frost data list
-                
                 let checking = 0
-                console.log(`Percentage is: `, percentage) 
                 while (checking >= 0) { //loop until a station with data is found
                     stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station)
                     if(stationIdx >= 0) {  //station found, stop checking
@@ -129,7 +119,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     
     const changePercent = (per: string) => {
         setPercent(per)
-        //const frostData: FrostData[] = getFrostData();
         if(per === "10") {
             setFallFrostJulian({
                 severe: frostData[stationID.idx].fst_t24fp10,

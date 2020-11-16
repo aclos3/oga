@@ -1,5 +1,3 @@
-//Source code:
-//https://stackoverflow.com/questions/43872975/regular-expression-to-match-u-s-cities-allowing-certain-special-characters
 import React, {useState} from 'react';
 import './TextEntry.css';
 import { observable } from "mobx"
@@ -58,7 +56,6 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         .then(response => response.json())
         .then(data => {
             myData = data;
-            console.log(`api str: `, state.textEntry)
             if(myData.records[0] === undefined) { alert(`No results found for your entry. Please check the validity of your zipcode or city/state pair.`)}
             else {
                 if(myData.records[0].fields.geopoint[0] === undefined) {alert(`Latitude not found.`)}
@@ -81,7 +78,6 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     const getCityStateData = async () => {
         setLoading(true);
         const locationData: LocationData = await getCityStateCoordinates(state.textEntry);
-        
         if (locationData.hasError) {
             console.log(locationData.errorMessage);
             alert('No results found for your entry. Please check the validity of your city/state pair.');
@@ -91,7 +87,6 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
             state.setLong(locationData.longitude);
             props.onSubmit(state.lat, state.long)
         }
-
         setLoading(false);
     }
 
