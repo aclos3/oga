@@ -75,13 +75,13 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
     };
     try {
         if(json.records[0].fields.latitude && json.records[0].fields.longitude) {
-            let apiElev = get_elevation(json.records[0].fields.latitude.toString() + `,` + json.records[0].fields.longitude.toString())
+            const apiElev = await get_elevation(json.records[0].fields.latitude.toString() + `,` + json.records[0].fields.longitude.toString())
             locationData =  {
                 hasError: false,
                 errorMessage: '',
                 latitude: json.records[0].fields.latitude,
                 longitude: json.records[0].fields.longitude,
-                elevation: (await apiElev).elevation
+                elevation: apiElev.elevation
             };
         }
     } catch(error){ console.log(error) }
