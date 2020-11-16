@@ -1,18 +1,18 @@
-export interface elevation_data{
+export interface elevationData{
     elevation: number | null,
     resolution: number | null
 }
 
 // gets elevation for a lat,long variable
 // if API hasan error, it will return just the error message
-export async function get_elevation(lat_long: string): Promise<elevation_data> {
-    const api_endpoint = 'https://api.jawg.io/elevations?locations='
+export async function getElevation(latLong: string): Promise<elevationData> {
+    const apiEndpoint = 'https://api.jawg.io/elevations?locations='
     const token = '&access-token=Vna6bzn5juKUCodACBvtFuEk4PlGU6Wmh6vrzJAWyTN6rL8Zca5Tzu60TpuET9pf'
-    const data = await fetch((api_endpoint + lat_long + token), {
+    const data = await fetch((apiEndpoint + latLong + token), {
         method: 'GET'
     });
     const api_return = await data.json();
-    let results: elevation_data = {
+    let results: elevationData = {
         elevation: null,
         resolution: null
     }

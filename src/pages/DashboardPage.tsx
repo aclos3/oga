@@ -8,7 +8,7 @@ const DashboardPage: React.FC<RouteComponentProps> = ({match}) => {
     return (
     <IonRouterOutlet>
       <Route exact path={match.url} component={HomePage} />
-      <Route path={`${match.url}/user/:id`} component={ResultsPage} />
+      <Route path={`${match.url}/station/:id`} component={ResultsPage} />
     </IonRouterOutlet>
   );
 };
