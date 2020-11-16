@@ -46,6 +46,16 @@ class EntryData {
     setLong = (long: any) => {
         this.long = long
     }
+    @observable
+    stateCode: any = ""
+    setStateCode = (stateCode: any) => {
+        this.stateCode = stateCode
+    }
+    @observable
+    cityName: any = ""
+    setCityName = (cityName: any) => {
+        this.cityName = cityName
+    }
 }
 
 const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => { 
@@ -91,7 +101,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
 
     const getCityStateData = async () => {
         setLoading(true);
-        const locationData: LocationData = await getCityStateCoordinates(state.textEntry);
+        const locationData: LocationData = await getCityStateCoordinates(state.textEntry, state.cityName.toUpperCase(), state.stateCode.toUpperCase());
         
         if (locationData.hasError) {
             console.log(locationData.errorMessage);
@@ -109,7 +119,9 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     const getValid = (data: any) => {
         state.setText(data.text)
         let regExp = /^[a-zA-Z',.\s-]+,[ ]?[A-Za-z]{2}$/ //regex to check if format is comma separated city state pair
-        
+        let commaCount = 0
+        let buildCityName = ""
+        let buildStateCode = ""
         //catch an empty string being passed
         if(state.textEntry === undefined) {
             console.log(`textEntry @ getValid: `, state.textEntry)
@@ -117,22 +129,32 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         else {  //find comma
             let idx = 0
             for(let i = 0; i < state.textEntry.length; i++) {
-                if(state.textEntry.charAt(i) === ',') { idx = i }
-            }
+                if(state.textEntry.charAt(i) === ',') { 
+                    idx = i
+                    commaCount+=1
+                }
+            } //get the city name and set state variable.
+            for(let i = 0; i < idx; i++) { buildCityName += state.textEntry.charAt(i) }
+            state.setCityName(buildCityName)
+    
             //remove spaces after comma
-            for(let i = idx; i < state.textEntry.length; i++) {
+            for(let i = idx + 1; i < state.textEntry.length; i++) {
                 if(state.textEntry.charAt(i) === ' ') {
                     state.setText(state.textEntry.substring(0, i) + state.textEntry.substring(i + 1))
                     i--
                 }
+                else { buildStateCode += state.textEntry.charAt(i).toUpperCase() }
             }
+            state.setStateCode(buildStateCode)
+            //console.log(`city name: `, state.cityName)
+            //console.log(`state code: `, state.stateCode)
         }
         //console.log("replaced spaces after commas: ", state.textEntry, `text len: `, state.textEntry.length, `idx: `, idx)
         //determine if the entry is a city/state pair
-        if(regExp.test(state.textEntry)) {
+        if(regExp.test(state.textEntry) && commaCount === 1) {
             //console.log(`City state syntax valid!`)
             state.setText(state.textEntry.replace(/,/g, ',+\''))
-            //console.log("replaced spaces after commas: ", state.textEntry)
+            console.log("replaced spaces after commas: ", state.textEntry)
             getCityStateData();
         }
         //determine if entry is a valid zip code
