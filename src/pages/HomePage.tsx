@@ -31,7 +31,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         setLong(newLong)
         setElev(newElev)
         let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
-        history.push('/dashboard/user/' + userLoc);
+        history.push('/dashboard/station/' + userLoc);
     }
     return (
     <IonPage>
