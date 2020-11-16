@@ -7,6 +7,8 @@ import '../App.css'
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
 
+const FEET_TO_METERS = 0.3048
+
 interface ContainerProps {}
 interface DataError {
     showError: boolean;
@@ -46,7 +48,7 @@ export interface FrostDatesBySeverity {
 }
 
 const ResultsPage: React.FC<ContainerProps> = ({match, history}) => { 
-    const [userLatLong] = useState<string>(match.params.id);
+    const [userLatLongElev] = useState<string>(match.params.id);
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
     const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
@@ -54,19 +56,19 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
     const [showPopover, setShowPopover] = useState(false);
+    const [userElevation, setUserElevation] = useState<number>(0)
     
     // fetches frost dates after station ID updates
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
     useEffect( () => {
     //split out the lat/long
-        let latLong = userLatLong.split('_')
+        let latLong = userLatLongElev.split(',')
         let stationIdx = -1
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
-
-            //Make function call here for user elevation
-
+            //Set elevation
+            if(latLong[2] && latLong[2] !== undefined) { setUserElevation(Math.round(FEET_TO_METERS * parseFloat(latLong[2]))) }
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
@@ -107,23 +109,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             }
             else { console.log(`Closest station has no data!`)}
         }
-    }, [userLatLong]);
-
-    const checkApiReturn = (dayNum: any) => {
-        if(dayNum === "-4444") {  //-4444 is the code for year round frost risk
-            return "Year-Round Frost Risk"
-        }
-        else if (dayNum === "-6666") { //-6666 is the code for undefined parameter/insufficent data
-            return "Insufficient Data"
-        }
-        else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
-            return "0 (rounded)"
-        }
-        else {
-            let retStr = dayNum.toString()
-            return retStr
-        }
-    }
+    }, [userLatLongElev]);
     return (
     <IonPage>
       <IonHeader>
@@ -153,7 +139,8 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             <p>ID: {stationID.stationID}</p>
             <p>Station Lat: {stationID.lat}</p>
             <p>Station Long: {stationID.long}</p>
-            <p>Elevation: {stationID.elevation}m</p>
+            <p>Station Elevation: {stationID.elevation}m</p>
+            <p>Your Elevation: {userElevation}m</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
@@ -166,7 +153,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
-
           <DisplayFrostDates
             title="Light Freeze (32° F)"
             springFrost={springFrostJulian.light}
@@ -174,7 +160,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             frostFree={frostFreeJulian.light}
             >
           </DisplayFrostDates>
-
           <DisplayFrostDates
             title="Moderate Freeze (30° F)"
             springFrost={springFrostJulian.moderate}
@@ -182,7 +167,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             frostFree={frostFreeJulian.moderate}
             >
           </DisplayFrostDates>
-
           <DisplayFrostDates
             title="Severe Freeze (28° F)"
             springFrost={springFrostJulian.severe}
@@ -190,7 +174,6 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
             frostFree={frostFreeJulian.severe}
             >
           </DisplayFrostDates>
-
         </div>
       </IonContent>
     </IonPage>

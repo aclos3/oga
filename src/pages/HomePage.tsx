@@ -4,8 +4,6 @@ import { helpCircle, } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
-import ViewLatLongStation from '../components/DisplayLatLongStation';
-import { observable } from "mobx"
 import { Station } from '../utils/getClosestStation'
 import '../App.css'
 import './HomePage.css';
@@ -17,6 +15,7 @@ export interface ExportStation {
 const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     const [lat, setLat] = useState<number>(0);
     const [long, setLong] = useState<number>(0);
+    const [elev, setElev] = useState<number>(0);
     const [weatherStation, setWeatherStation] = useState<Station>({
         station: "",
         latitude: 0,
@@ -27,17 +26,13 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         distance: 888888
     });
 
-    const onLatLongChange =  (newLat: number, newLong: number) => {
-        setLat(newLat);
-        setLong(newLong);
-        //const closestStation: Station | null = getClosestStation({lat: newLat, long: newLong});
-        let noaa_station = newLat.toString() + `_` + newLong.toString()
-        history.push('/dashboard/station/' + noaa_station);
-        //console.log(`new lat: `, newLat)
-        //console.log(`new long: `, newLong)
-        console.log(`noaa station: `, noaa_station)
+    const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
+        setLat(newLat)
+        setLong(newLong)
+        setElev(newElev)
+        let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
+        history.push('/dashboard/station/' + userLoc);
     }
-    
     return (
     <IonPage>
       <IonHeader>
@@ -63,6 +58,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
                 <DeviceLocation
                   initialLat={lat}
                   initialLong={long}
+                  initialElev={elev}
                   onSubmit={onLatLongChange}
                 ></DeviceLocation>
               </IonCardContent>
@@ -77,6 +73,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
                   <TextEntry
                     initialLat={lat}
                     initialLong={long}
+                    initialElev={elev}
                     onSubmit={onLatLongChange}
                   ></TextEntry>
                 </IonCardContent>
