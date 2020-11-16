@@ -3,30 +3,21 @@
 import React, {useState} from 'react';
 import './TextEntry.css';
 import { observable } from "mobx"
-import { IonContent, IonInput, IonLabel, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
+import { IonInput, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
 import { Controller, useForm } from 'react-hook-form';
-import { setTextRange } from 'typescript';
-import {getCityStateCoordinates, LocationData} from '../utils/getCoordinates';
+import {getCityStateCoordinates, getZipCoordinates, LocationData} from '../utils/getCoordinates';
+
 
 interface TextEntryProps {
-    initialLat: number | null;
-    initialLong: number | null;
-    onSubmit: (homeLat: number, homeLong: number) => void
+    initialLat: number | null
+    initialLong: number | null
+    initialElev: number | null
+    onSubmit: (homeLat: number, homeLong: number, homeElev: number) => void
 }
 interface DataError {
     showError: boolean;
     message?: string;
 }
-
-//interface CityStateApiData {
-//    records: { 
-//        fields: { 
-//            geo_point_2d: { //
-//                value: number; 
-//            } []; 
-//        }
-//    } [];
-//}
 
 class EntryData {
     @observable
@@ -46,6 +37,11 @@ class EntryData {
     setLong = (long: any) => {
         this.long = long
     }
+    @observable
+    elev: any = ""
+    setElev = (elev: any) => {
+        this.elev = elev
+    }
 }
 
 const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => { 
@@ -54,39 +50,30 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
     let myData: { records: { fields: { geopoint: { value: any; } []; }} []; };
+    let myElev: { records: { fields: { elev_in_ft: {value: any } }} []; }
     const apiStr = 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-zip-code-latitude-and-longitude&q='
     
     React.useEffect(() => {
         state.setLat(props.initialLat)
         state.setLong(props.initialLong)
-    }, [props.initialLat, props.initialLong, state])
+        state.setElev(props.initialElev)
+    }, [props.initialLat, props.initialLong, props.initialElev, state])
 
     const getZipCodeData = async () => {
         setLoading(true);
-        await fetch(apiStr + String(state.textEntry), {
-            method: 'GET',
-        })
-        .then(response => response.json())
-        .then(data => {
-            myData = data;
-            console.log(`api str: `, state.textEntry)
-            if(myData.records[0] === undefined) { alert(`No results found for your entry. Please check the validity of your zipcode or city/state pair.`)}
-            else {
-                if(myData.records[0].fields.geopoint[0] === undefined) {alert(`Latitude not found.`)}
-                else if(myData.records[0].fields.geopoint[1] === undefined) {alert(`Longitude not found.`)}
-                else if(myData.records[0].fields.geopoint[0] && myData.records[0].fields.geopoint[1]) {
-                    state.setLat(myData.records[0].fields.geopoint[0])
-                    state.setLong(myData.records[0].fields.geopoint[1])
-                    props.onSubmit(state.lat, state.long)
-                }
-                else { alert(`Latitude/Longitude data for the desired zip code was not found.`)}
-            }
-            setLoading(false);
-        })
-        .catch((error) => {
-            setLoading(false)
-            console.error(error)
-        });
+        const locationData: LocationData = await getZipCoordinates(state.textEntry);
+        
+        if (locationData.hasError) {
+            console.log(locationData.errorMessage);
+            alert(`No results found for your entry. Please check the validity of your five digit zip code.`);
+        }
+        else {
+            state.setLat(locationData.latitude)
+            state.setLong(locationData.longitude)
+            state.setElev(locationData.elevation)
+            props.onSubmit(state.lat, state.long, state.elev)
+        }
+        setLoading(false);
     }
 
     const getCityStateData = async () => {
@@ -98,11 +85,11 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
             alert('No results found for your entry. Please check the validity of your city/state pair.');
         }
         else {
-            state.setLat(locationData.latitude);
-            state.setLong(locationData.longitude);
-            props.onSubmit(state.lat, state.long)
+            state.setLat(locationData.latitude)
+            state.setLong(locationData.longitude)
+            state.setElev(locationData.elevation)
+            props.onSubmit(state.lat, state.long, state.elev)
         }
-
         setLoading(false);
     }
 

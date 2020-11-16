@@ -15,6 +15,7 @@ export interface ExportStation {
 const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     const [lat, setLat] = useState<number>(0);
     const [long, setLong] = useState<number>(0);
+    const [elev, setElev] = useState<number>(0);
     const [weatherStation, setWeatherStation] = useState<Station>({
         station: "",
         latitude: 0,
@@ -25,12 +26,14 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         distance: 888888
     });
 
-    const onLatLongChange =  (newLat: number, newLong: number) => {
-        setLat(newLat);
-        setLong(newLong);
+    const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
+        console.log(`on lat long elev: `, newElev)
+        setLat(newLat)
+        setLong(newLong)
+        setElev(newElev)
         //const closestStation: Station | null = getClosestStation({lat: newLat, long: newLong});
-        let noaa_station = newLat.toString() + `,` + newLong.toString()
-        history.push('/dashboard/user/' + noaa_station);
+        let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
+        history.push('/dashboard/user/' + userLoc);
     }
     
     return (
@@ -54,6 +57,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
                 <DeviceLocation
                   initialLat={lat}
                   initialLong={long}
+                  initialElev={elev}
                   onSubmit={onLatLongChange}
                 ></DeviceLocation>
               </IonCardContent>
@@ -68,6 +72,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
                   <TextEntry
                     initialLat={lat}
                     initialLong={long}
+                    initialElev={elev}
                     onSubmit={onLatLongChange}
                   ></TextEntry>
                 </IonCardContent>

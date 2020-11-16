@@ -3,13 +3,16 @@ import './DeviceLocation.css';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { observable } from "mobx"
+import { elevation_data, get_elevation} from '../utils/getUserElevation';
 import TextEntry from './TextEntry';
 import { errorMonitor } from 'stream';
+import { stat } from 'fs';
 
 interface DeviceLocationProps {
     initialLat: number | null;
     initialLong: number | null;
-    onSubmit: (homeLat: number, homeLong: number) => void
+    initialElev: number | null;
+    onSubmit: (homeLat: number, homeLong: number, homeElev: number) => void
  }
 interface LocationError {
     showError: boolean;
@@ -27,6 +30,11 @@ class DeviceData {
     setLong = (long: any) => {
         this.long = long
     }
+    @observable
+    elev: any = ""
+    setElev = (elev: any) => {
+        this.elev = elev
+    }
 }
 const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProps) => {
     const state = React.useRef(new DeviceData()).current
@@ -38,7 +46,8 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
     React.useEffect(() => {
         state.setLat(props.initialLat)
         state.setLong(props.initialLong)
-    }, [props.initialLat, props.initialLong, state])
+        state.setElev(props.initialElev)
+    }, [props.initialLat, props.initialLong, props.initialElev, state])
 
     const getLocation = async () => {
         let options = {
@@ -53,7 +62,15 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             setError({ showError: false });
             state.setLat(position.coords.latitude)
             state.setLong(position.coords.longitude)
-            props.onSubmit(state.lat, state.long)
+            //check for evelvation from device
+            if(!position.coords.altitude) {
+                //console.log(`state lat: `, state.long)
+                let apiElev = get_elevation(state.lat.toString() + `,` + state.long.toString())
+               // console.log(`state elev: `, (await apiElev).elevation)
+                state.setElev((await apiElev).elevation)
+                console.log(`state elv: `, state.elev)
+            }
+            props.onSubmit(state.lat, state.long, state.elev)
         } catch (e) {
             setError({ showError: true, message: e.message });
             setLoading(false);
