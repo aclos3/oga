@@ -9,6 +9,8 @@ http://ionicframework.com/docs/theming/ */
   --body-font: 'Open Sans';
   --card-title-font: 'Open Sans SemiBold';
   --page-header-font: 'Open Sans SemiBold';
+  --card-min-width: 220px;
+  --card-max-width: 500px;
   
   --ion-color-primary: #D73F09;
   --ion-color-primary-rgb: 215,63,9;

@@ -27,8 +27,8 @@
 .station-container {
   margin: 0 auto;
   width: 90%;
-  min-width: 260px;
-  max-width: 500px;
+  min-width: var(--card-min-width);
+  max-width: var(--card-max-width);
   border: 1px solid black;
   border-radius: 4px;
   font-family: var(--body-font), sans-serif;

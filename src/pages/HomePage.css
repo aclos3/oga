@@ -15,8 +15,8 @@
 
 .location-card {
   width: 90%;
-  min-width: 200px;
-  max-width: 400px;
+  min-width: var(--card-min-width);
+  max-width: var(--card-max-width);
   margin: 10px auto;
   margin-top: 15px;
   font-family: var(--body-font), sans-serif;
