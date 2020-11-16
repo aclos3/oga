@@ -38,7 +38,7 @@ interface StationUsed {
 }
 
 interface UserInformation{
-  user_elevation: number | null
+  user_elevation: number|null
 }
 
 export interface FrostDatesBySeverity {
@@ -57,6 +57,7 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
     const [showPopover, setShowPopover] = useState(false);
+    const [userElevation, setUserElevation] = useState<UserInformation>({user_elevation: null})
     
     // fetches frost dates after station ID updates
     // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
@@ -67,8 +68,15 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
-            const user_elevation = get_elevation(userLatLong)
-            console.log(user_elevation)
+            //This is where elevation data function is called
+            const fetchData = async () => {
+              const elevation_data = await get_elevation(userLatLong)
+              setUserElevation({
+                user_elevation: elevation_data.elevation
+              })
+              return elevation_data
+            }
+            fetchData()
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
@@ -162,7 +170,8 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
           <div className="station-container">
             <div className="station-col">
               <p>Station: {stationID.city}, {stationID.state}</p>
-              <p>Elevation: {stationID.elevation}m</p>
+              <p>Station Elevation: {stationID.elevation}m</p>
+              <p>Your Elevation: {userElevation.user_elevation}m</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
