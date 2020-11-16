@@ -69,12 +69,15 @@ const ResultsPage: React.FC<ContainerProps> = ({match, history}) => {
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
             //This is where elevation data function is called
-            const fetchData = async () => {
+            async function fetchData (): Promise<UserInformation> {
               const elevation_data = await get_elevation(userLatLong)
+              let return_data: UserInformation ={
+                user_elevation: elevation_data.elevation
+              }
               setUserElevation({
                 user_elevation: elevation_data.elevation
               })
-              return elevation_data
+              return return_data
             }
             fetchData()
             if(closestStation) {
