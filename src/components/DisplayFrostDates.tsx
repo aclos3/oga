@@ -11,7 +11,7 @@ const checkApiReturn = (dayNum: any) => {
         return "Insufficient Data"
     }
     else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
-        return "0 (rounded)"
+        return "Nearly Zero"
     }
     else {
         let retStr = dayNum.toString()

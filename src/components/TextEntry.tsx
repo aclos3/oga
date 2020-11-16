@@ -14,20 +14,17 @@ interface DataError {
     showError: boolean;
     message?: string;
 }
-
 class EntryData {
     @observable
     textEntry: any = ""
     setText = (textEntry: any) => {
         this.textEntry = textEntry
     }
-
     @observable
     lat: any = ""
     setLat = (lat: any) => {
         this.lat = lat
     }
-
     @observable
     long: any = ""
     setLong = (long: any) => {
@@ -47,25 +44,27 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         state.setLat(props.initialLat)
         state.setLong(props.initialLong)
     }, [props.initialLat, props.initialLong, state])
-
+    //this function runs if a zip code is detected.
     const getZipCodeData = async () => {
         setLoading(true);
-        await fetch(apiStr + String(state.textEntry), {
+        await fetch(apiStr + String(state.textEntry), {  //async GET call to opendatasoft
             method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
             myData = data;
+            //check for empty return
             if(myData.records[0] === undefined) { alert(`No results found for your entry. Please check the validity of your zipcode or city/state pair.`)}
-            else {
-                if(myData.records[0].fields.geopoint[0] === undefined) {alert(`Latitude not found.`)}
-                else if(myData.records[0].fields.geopoint[1] === undefined) {alert(`Longitude not found.`)}
+            else { //check that lat and long are present in the return
+                if(myData.records[0].fields.geopoint[0] === undefined) { alert(`Latitude not found.`) }
+                else if(myData.records[0].fields.geopoint[1] === undefined) { alert(`Longitude not found.`) }
                 else if(myData.records[0].fields.geopoint[0] && myData.records[0].fields.geopoint[1]) {
+                    //set lat and longs
                     state.setLat(myData.records[0].fields.geopoint[0])
                     state.setLong(myData.records[0].fields.geopoint[1])
                     props.onSubmit(state.lat, state.long)
                 }
-                else { alert(`Latitude/Longitude data for the desired zip code was not found.`)}
+                else { alert(`Latitude/Longitude data for the desired zip code was not found.`) }
             }
             setLoading(false);
         })
@@ -111,19 +110,13 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 }
             }
         }
-        //console.log("replaced spaces after commas: ", state.textEntry, `text len: `, state.textEntry.length, `idx: `, idx)
         //determine if the entry is a city/state pair
         if(regExp.test(state.textEntry)) {
-            //console.log(`City state syntax valid!`)
             state.setText(state.textEntry.replace(/,/g, ',+\''))
-            console.log("replaced spaces after commas: ", state.textEntry)
             getCityStateData();
         }
         //determine if entry is a valid zip code
-        else if(!(isNaN(state.textEntry)) && state.textEntry.length === 5) {
-            //console.log(`zip valid`)
-            getZipCodeData();
-        }
+        else if(!(isNaN(state.textEntry)) && state.textEntry.length === 5) { getZipCodeData() }
         //check for more than two characters after comma
         else {alert(`Entry is invalid, please try again. You must use the two letter postal abbreviation for the state.`)}
     }

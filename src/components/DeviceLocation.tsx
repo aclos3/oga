@@ -41,7 +41,7 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
     const getLocation = async () => {
         let options = {
             enableHighAccuracy: true,
-            timeout: 8000
+            timeout: 8000 //8 seconds to wait for GPS fix on mobile device
         }
         setLoading(true);
         try {
@@ -54,6 +54,7 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             props.onSubmit(state.lat, state.long)
         } catch (e) {
             let msg = e.message
+            //add special instructions since the error is likely related to device location being turned off
             if(msg === `Timeout expired`) {msg += `. Make sure your device location service is enabled.`}
             setError({ showError: true, message: msg });
             setLoading(false);
