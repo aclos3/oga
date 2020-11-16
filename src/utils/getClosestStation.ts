@@ -51,15 +51,15 @@ export function getFrostData(): FrostData[] {
     const frostData: FrostData[] = frostJSON.map( (data) => {
         return {
             station: data.station,
-            fst_t24fp30: data["ann-tmin-prbfst-t24fp30"],
-            fst_t28fp30: data["ann-tmin-prbfst-t28fp30"],
-            fst_t32fp30: data["ann-tmin-prbfst-t32fp30"],
-            lst_t24fp30: data["ann-tmin-prblst-t24fp30"],
-            lst_t28fp30: data["ann-tmin-prblst-t28fp30"],
-            lst_t32fp30: data["ann-tmin-prblst-t32fp30"],
-            gsl_t24fp30: data["ann-tmin-prbgsl-t24fp30"],
-            gsl_t28fp30: data["ann-tmin-prbgsl-t28fp30"],
-            gsl_t32fp30: data["ann-tmin-prbgsl-t32fp30"],
+            fst_t28fp30: data["ann-tmin-prbfst-t28Fp30"],
+            fst_t24fp30: data["ann-tmin-prbfst-t24Fp30"],
+            fst_t32fp30: data["ann-tmin-prbfst-t32Fp30"],
+            lst_t24fp30: data["ann-tmin-prblst-t24Fp30"],
+            lst_t28fp30: data["ann-tmin-prblst-t28Fp30"],
+            lst_t32fp30: data["ann-tmin-prblst-t32Fp30"],
+            gsl_t24fp30: data["ann-tmin-prbgsl-t24Fp30"],
+            gsl_t28fp30: data["ann-tmin-prbgsl-t28Fp30"],
+            gsl_t32fp30: data["ann-tmin-prbgsl-t32Fp30"],
             quality: data["quality"]
         };
     });
