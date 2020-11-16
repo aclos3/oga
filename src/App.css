@@ -24,16 +24,14 @@ ion-toolbar {
 
 ion-content {
     --background: var(--page-background);
-    /* font-family: var(--body-font); */
 }
 
-/* text-align is specified in page's CSS */
 ion-title {
     background-color: var(--ion-color-primary);
     text-align: center;
     color: var(--ion-color-light);
     font-family: var(--title-font);
-    font-size: 1.75rem;
+    font-size: 1.6rem;
     padding: 10px;
     margin: 0;
     width: 100%;
@@ -51,17 +49,16 @@ h1.page-header {
     font-family: var(--page-header-font), sans-serif;
 }
 
+/* small mobile devices */
+@media (max-width: 300px) {
+    html, body {
+        font-size: 14px;
+    }
+}
+
 /* tablets */
 @media (min-width: 481px) {
     html, body {
         font-size: 20px;
     }
-    
-    /* ion-title {
-        font-size: 1.9rem;
-    }
-
-    h1.page-header {
-        font-size: 1.6rem;
-    } */
 }
