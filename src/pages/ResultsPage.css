@@ -26,6 +26,7 @@
 
 .station-container {
   margin: 0 auto;
+  padding: 0.4rem;
   width: 90%;
   min-width: var(--card-min-width);
   max-width: var(--card-max-width);
@@ -42,7 +43,8 @@
 }
 
 .station-col p {
-  margin: 5px;
+  margin: 0.2rem;
+  margin-bottom: .4rem;
 }
 
 .station-popover {

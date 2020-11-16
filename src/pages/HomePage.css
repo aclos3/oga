@@ -17,7 +17,6 @@
   width: 90%;
   min-width: var(--card-min-width);
   max-width: var(--card-max-width);
-  margin: 10px auto;
-  margin-top: 15px;
+  margin: 0.75rem auto;
   font-family: var(--body-font), sans-serif;
 }
