@@ -6,6 +6,7 @@ import React, {useEffect, useState} from 'react';
 import '../App.css'
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 const FEET_TO_METERS = 0.3048
 
@@ -20,9 +21,9 @@ interface ContainerProps extends RouteComponentProps<{
 }> {}
 
 interface FrostDatesJulian {
-    light: number,
-    moderate: number,
-    severe: number
+    light: string,
+    moderate: string,
+    severe: string
 } 
 interface FrostDates {
     light: string,
@@ -51,7 +52,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
     const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
-    const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
+    const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: "0", moderate: "0", severe: "0"});
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
     const [showPopover, setShowPopover] = useState(false);
@@ -71,7 +72,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
-                let checking = 0
+                let checking = 0    
                 while (checking >= 0) { //loop until a station with data is found
                     stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station)
                     if(stationIdx >= 0) {  //station found, stop checking
@@ -116,7 +117,6 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
         }
         else { return `S`}
     }
-
     const isLongPositive = () => {
         if(stationID.long >= 0) {
             return `E`

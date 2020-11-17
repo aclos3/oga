@@ -19,9 +19,9 @@ export interface FrostData {
     lst_t24fp30: string,
     lst_t28fp30: string,
     lst_t32fp30: string,
-    gsl_t24fp30: number,
-    gsl_t28fp30: number,
-    gsl_t32fp30: number,
+    gsl_t24fp30: string,
+    gsl_t28fp30: string,
+    gsl_t32fp30: string,
     quality: string
 }
 

@@ -32,13 +32,6 @@ export interface LocationData {
 // if API returns an error, the LocationData object will have hasError = true
 export async function getCityStateCoordinates(cityState: string, cityName: string, stateCode: string): Promise<LocationData> {
     const cityApiStr = 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=cities-and-towns-of-the-united-states&q='
-    let name = cityState.split(`,`)
-    let cityName = name[0].toUpperCase()
-    let stateCode = name[name.length - 1].slice(2).toUpperCase()
-    console.log(name)
-    console.log(`City`, cityName, ` length: `, cityName.length)
-    console.log(`State:`, stateCode.slice(2))
-
     const data = await fetch(cityApiStr + cityState, {
         method: 'GET',
     });
