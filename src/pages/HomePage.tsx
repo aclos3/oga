@@ -84,5 +84,4 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     </IonPage>
   );
 };
-
 export default HomePage;

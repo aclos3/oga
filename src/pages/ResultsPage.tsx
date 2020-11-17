@@ -6,6 +6,7 @@ import React, {useEffect, useState} from 'react';
 import '../App.css'
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 const FEET_TO_METERS = 0.3048
 
@@ -71,7 +72,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
-                let checking = 0
+                let checking = 0    
                 while (checking >= 0) { //loop until a station with data is found
                     stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station)
                     if(stationIdx >= 0) {  //station found, stop checking
@@ -116,7 +117,6 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
         }
         else { return `S`}
     }
-
     const isLongPositive = () => {
         if(stationID.long >= 0) {
             return `E`

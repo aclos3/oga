@@ -31,9 +31,6 @@ export interface LocationData {
 // gets latitude and longitude for a city-state pair (for example, Eugene, OR)
 // if API returns an error, the LocationData object will have hasError = true
 export async function getCityStateCoordinates(cityState: string, cityName: string, stateCode: string): Promise<LocationData> {
-    console.log(`cityName: `, cityName)
-    console.log(`stateCode: `, stateCode)
-    console.log(`cityState: `, cityState)
     const cityApiStr = 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=cities-and-towns-of-the-united-states&q='
     const data = await fetch(cityApiStr + cityState, {
         method: 'GET',
@@ -50,7 +47,6 @@ export async function getCityStateCoordinates(cityState: string, cityName: strin
     };
     try {
         for(let i = 0; i < json.records.length; i++) {
-            console.log(`Comparing: `, json.records[i].fields.name.toUpperCase(), ` to `, cityName)
             if(json.records[i].fields.name.toUpperCase() === cityName && json.records[i].fields.state.toUpperCase() === stateCode) {
                 if(json.records[i].fields.geo_point_2d[0] && json.records[i].fields.geo_point_2d[1]) {
                     locationData =  {
