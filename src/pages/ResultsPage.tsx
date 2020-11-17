@@ -20,9 +20,9 @@ interface ContainerProps extends RouteComponentProps<{
 }> {}
 
 interface FrostDatesJulian {
-    light: number,
-    moderate: number,
-    severe: number
+    light: string,
+    moderate: string,
+    severe: string
 } 
 interface FrostDates {
     light: string,
@@ -51,7 +51,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
     const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
-    const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: 0, moderate: 0, severe: 0});
+    const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: "0", moderate: "0", severe: "0"});
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
     const [showPopover, setShowPopover] = useState(false);

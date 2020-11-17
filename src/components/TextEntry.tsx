@@ -40,6 +40,16 @@ class EntryData {
     setElev = (elev: any) => {
         this.elev = elev
     }
+    @observable
+    cityName: any = ""
+    setCityName = (cityName: any) => {
+        this.cityName = cityName
+    }
+    @observable
+    stateCode: any = ""
+    setStateCode = (stateCode: any) => {
+        this.stateCode = stateCode
+    }
 }
 
 const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => { 
@@ -47,13 +57,15 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     const { control, handleSubmit } = useForm();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
-    const [cityName, setCityName] = useState<string>("")
-    const [stateCode, setStateCode] = useState<string>("")
+    //const [cityName, setCityName] = useState<string>("")
+    //const [stateCode, setStateCode] = useState<string>("")
     
     React.useEffect(() => {
         state.setLat(props.initialLat)
         state.setLong(props.initialLong)
         state.setElev(props.initialElev)
+        //state.setCityName(props.initialCity)
+        //state.setStateCode(props.initialState)
     }, [props.initialLat, props.initialLong, props.initialElev, state])
 
     const getZipCodeData = async () => {
@@ -75,7 +87,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
 
     const getCityStateData = async () => {
         setLoading(true);
-        const locationData: LocationData = await getCityStateCoordinates(state.textEntry, cityName.toUpperCase(), stateCode.toUpperCase());
+        const locationData: LocationData = await getCityStateCoordinates(state.textEntry, state.cityName.toUpperCase(), state.stateCode.toUpperCase());
         
         if (locationData.hasError) {
             console.log(locationData.errorMessage);
@@ -98,7 +110,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         let buildStateCode = ""
         //catch an empty string being passed
         if(state.textEntry === undefined) {
-            console.log(`textEntry @ getValid: `, state.textEntry)
+            alert("Error in text entry.")
         }
         else {  //find comma
             let idx = 0
@@ -109,8 +121,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 }
             } //get the city name and set state variable.
             for(let i = 0; i < idx; i++) { buildCityName += state.textEntry.charAt(i) }
-            setCityName(buildCityName)
-    
+            state.setCityName(buildCityName)
             //remove spaces after comma
             for(let i = idx + 1; i < state.textEntry.length; i++) {
                 if(state.textEntry.charAt(i) === ' ') {
@@ -119,7 +130,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 }
                 else { buildStateCode += state.textEntry.charAt(i).toUpperCase() }
             }
-            setStateCode(buildStateCode)
+            state.setStateCode(buildStateCode)
         }
         //determine if the entry is a city/state pair
         if(regExp.test(state.textEntry) && commaCount === 1) {
@@ -142,7 +153,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 isOpen={true}
                 onDidDismiss={() => setError({ message: "", showError: false })}
                 message={error.message}
-                duration={1000} 
+                duration={2000} 
             />
             <form onSubmit={handleSubmit(getValid)}>
                 <IonItem className="location-form">
