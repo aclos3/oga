@@ -10,10 +10,6 @@ import DisplayFrostDates from '../components/DisplayFrostDates'
 const FEET_TO_METERS = 0.3048
 
 interface ContainerProps {}
-interface DataError {
-    showError: boolean;
-    message?: string;
-}
 
 interface ContainerProps extends RouteComponentProps<{
     id: string
