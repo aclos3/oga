@@ -42,7 +42,7 @@ export async function getCityStateCoordinates(cityState: string, cityName: strin
     // starts with error message--change if API returns valid response
     let locationData: LocationData = {
         hasError: true,
-        errorMessage: 'Error in API response',
+        errorMessage: `Error in API response`,
         latitude: null,
         longitude: null,
         elevation: null
@@ -53,7 +53,7 @@ export async function getCityStateCoordinates(cityState: string, cityName: strin
                 if(json.records[i].fields.geo_point_2d[0] && json.records[i].fields.geo_point_2d[1]) {
                     locationData =  {
                         hasError: false,
-                        errorMessage: '',
+                        errorMessage: ``,
                         latitude: json.records[i].fields.geo_point_2d[0],
                         longitude: json.records[i].fields.geo_point_2d[1],
                         elevation: json.records[i].fields.elev_in_ft
@@ -82,7 +82,7 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
     };
     try {
         if(json.records[0].fields.latitude && json.records[0].fields.longitude) {
-            const apiElev = await getElevation(json.records[0].fields.latitude.toString() + `,` + json.records[0].fields.longitude.toString())
+            const apiElev = await getElevation(json.records[0].fields.latitude, json.records[0].fields.longitude)
             locationData =  {
                 hasError: false,
                 errorMessage: '',

@@ -5,14 +5,14 @@ import './DisplayFrostDates.css';
 
 //these codes are defined in NOAA's "NORMAL_ANN_documentation.pdf"
 const checkApiReturn = (dayNum: any) => {
-    if(dayNum === "-4444") {  //-4444 is the code for year round frost risk
-        return "Year-Round Frost Risk"
+    if(dayNum === `-4444`) {  //-4444 is the code for year round frost risk
+        return `Year-Round Frost Risk`
     }
-    else if (dayNum === "-6666") { //-6666 is the code for undefined parameter/insufficent data
-        return "Too Infrequent to Estimate"
+    else if (dayNum === `-6666`) { //-6666 is the code for undefined parameter/insufficent data
+        return `Too Infrequent to Estimate`
     }
-    else if ( dayNum === "-7777") { //-7777 is the code for non-zero value that rounds to zero
-        return "Nearly Zero, Rounded Down."
+    else if ( dayNum === `-7777`) { //-7777 is the code for non-zero value that rounds to zero
+        return `Nearly Zero, Rounded Down.`
     }
     else { return dayNum.toString() }
 }

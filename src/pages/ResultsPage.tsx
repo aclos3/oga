@@ -66,7 +66,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
             //get a list of stations sorted by distance from the user.
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
             //Set elevation
-            if(latLong[2] && latLong[2] !== undefined) { setUserElevation(Math.round(FEET_TO_METERS * parseFloat(latLong[2]))) }
+            if(latLong[2] && latLong[2] !== undefined) { setUserElevation(parseFloat(latLong[2])* FEET_TO_METERS) }
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
@@ -140,7 +140,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
           <IonLoading
               isOpen={loading}
               onDidDismiss={() => setLoading(false)}
-              message={'Getting Data...'}
+              message={`Getting Data...`}
           />
           <IonPopover
             isOpen={showPopover}
@@ -152,7 +152,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
             <p>Station Lat: {Math.abs(parseFloat(stationID.lat.toPrecision(4)))}&#176;{isLatPositive()}</p>
             <p>Station Long: {Math.abs(parseFloat(stationID.long.toPrecision(5)))}&#176;{isLongPositive()}</p>
             <p>Station Elevation: {stationID.elevation}m</p>
-            <p>Local Elevation: {userElevation}m</p>
+            <p>Local Elevation: {userElevation.toFixed(1)}m</p>
             <p>Distance: {Math.round(stationID.distance)}km</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>

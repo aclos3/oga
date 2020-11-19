@@ -16,17 +16,17 @@ interface LocationError {
 }
 class DeviceData {
     @observable
-    lat: any = ""
+    lat: any = ``
     setLat = (lat: any) => {
         this.lat = lat
     }
     @observable
-    long: any = ""
+    long: any = ``
     setLong = (long: any) => {
         this.long = long
     }
     @observable
-    elev: any = ""
+    elev: any = ``
     setElev = (elev: any) => {
         this.elev = elev
     }
@@ -58,8 +58,9 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             state.setLat(position.coords.latitude)
             state.setLong(position.coords.longitude)
             //check for evelvation from device
+            
             if(!position.coords.altitude) { //if no elevation from device, call the separate getElevation function
-                let apiElev = await getElevation(state.lat.toString() + `,` + state.long.toString())
+                let apiElev = await getElevation(state.lat, state.long)
                 state.setElev(apiElev.elevation)
             }
             else { //otherwise, use device's location
@@ -78,11 +79,11 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             <IonLoading
                 isOpen={loading}
                 onDidDismiss={() => setLoading(false)}
-                message={'Getting Location...'}
+                message={`Getting Location...`}
             />
             <IonToast
                 isOpen={error.showError}
-                onDidDismiss={() => setError({ message: "", showError: false })}
+                onDidDismiss={() => setError({ message: ``, showError: false })}
                 message={error.message}
                 duration={5000}
             />

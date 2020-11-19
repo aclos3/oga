@@ -34,7 +34,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         //the same three data types are combined into a string
         let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
         //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
-        history.push('/dashboard/station/' + userLoc);
+        history.push(`/dashboard/station/` + userLoc);
     }
     return (
     <IonPage>
