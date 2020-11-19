@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './DeviceLocation.css';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { observable } from "mobx"
@@ -15,7 +14,6 @@ interface LocationError {
     showError: boolean;
     message?: string;
 }
-
 class DeviceData {
     @observable
     lat: any = ""
@@ -47,12 +45,12 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
     }, [props.initialLat, props.initialLong, props.initialElev, state])
 
     const getLocation = async () => {
-        let options = {
+        let options = {  //Device GPS location settings
             enableHighAccuracy: true,
-            timeout: 5000
+            timeout: 8000
         }
         setLoading(true);
-        try {
+        try { //use the device geolocation to get coordinates and possibly elevation
             const position = await geolocation.getCurrentPosition(options);
             setPosition(position);
             setLoading(false);
@@ -60,11 +58,11 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             state.setLat(position.coords.latitude)
             state.setLong(position.coords.longitude)
             //check for evelvation from device
-            if(!position.coords.altitude) {
+            if(!position.coords.altitude) { //if no elevation from device, call the separate getElevation function
                 let apiElev = await getElevation(state.lat.toString() + `,` + state.long.toString())
                 state.setElev(apiElev.elevation)
             }
-            else { //use device's location
+            else { //otherwise, use device's location
                 state.setElev(position.coords.altitude)
             }
             props.onSubmit(state.lat, state.long, state.elev)

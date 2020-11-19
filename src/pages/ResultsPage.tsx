@@ -1,12 +1,11 @@
 import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react'
-import { helpCircle, arrowBackCircle } from 'ionicons/icons';
+import { helpCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
 import '../App.css'
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates'
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 const FEET_TO_METERS = 0.3048
 
@@ -54,28 +53,29 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
     const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
     const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDatesJulian>({light: "0", moderate: "0", severe: "0"});
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<DataError>({ showError: false });
     const [showPopover, setShowPopover] = useState(false);
     const [userElevation, setUserElevation] = useState<number>(0)
     
     // fetches frost dates after station ID updates
-    // must declare async function INSIDE of useEffect to avoid error concerning return of Promise in callback function
     useEffect( () => {
     //split out the lat/long
         let latLong = userLatLongElev.split(',')
         let stationIdx = -1
         //make sure these values are not null or undefined
         if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
+            //get a list of stations sorted by distance from the user.
             const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])})
             //Set elevation
             if(latLong[2] && latLong[2] !== undefined) { setUserElevation(Math.round(FEET_TO_METERS * parseFloat(latLong[2]))) }
             if(closestStation) {
                 //get frost data list
                 const frostData: FrostData[] = getFrostData();
-                let checking = 0    
-                while (checking >= 0) { //loop until a station with data is found
+                //loop until a station with data is found, not all climate normals weather stations contain the frost data we're looking for
+                let checking = 0
+                while (checking >= 0) {
+                    //compare the two lists to see if the station ID exists in both
                     stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station)
-                    if(stationIdx >= 0) {  //station found, stop checking
+                    if(stationIdx >= 0) {  //matching station was found, stop checking, populate station information
                         setStation({
                             stationID: closestStation[checking].station,
                             lat: closestStation[checking].latitude,
@@ -89,7 +89,8 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
                     }
                     else { checking++} //station not found, move to text closest
                 }
-                setLoading(true); 
+                setLoading(true);
+                //populate the frost data variables with data from the closest station
                 setFallFrostJulian({
                     severe: frostData[stationIdx].fst_t24fp30,
                     moderate: frostData[stationIdx].fst_t28fp30,
@@ -107,20 +108,18 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
                 });
                 setLoading(false);
             }
-            else { console.log(`Closest station has no data!`)}
+            else { alert(`Error: The station list is empty!`)}
         }
     }, [userLatLongElev]);
     
+    //these two helper functions are for styling purposes. To convert negative/positive lat and long
+    //to North, East, South, or West
     const isLatPositive = () => {
-        if(stationID.lat >= 0) {
-            return `N`
-        }
+        if(stationID.lat >= 0) { return `N` }
         else { return `S`}
     }
     const isLongPositive = () => {
-        if(stationID.long >= 0) {
-            return `E`
-        }
+        if(stationID.long >= 0) { return `E` }
         else { return `W`}
     }
     return (

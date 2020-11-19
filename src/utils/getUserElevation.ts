@@ -2,7 +2,6 @@ export interface elevationData{
     elevation: number | null,
     resolution: number | null
 }
-
 // gets elevation for a lat,long variable
 // if API hasan error, it will return just the error message
 export async function getElevation(latLong: string): Promise<elevationData> {
@@ -24,8 +23,6 @@ export async function getElevation(latLong: string): Promise<elevationData> {
             }
         }
     }
-    catch{
-        console.log("Error: ", api_return);
-    }
+    catch{ console.log("Error: ", api_return); }
     return results;
 }

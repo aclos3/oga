@@ -7,7 +7,6 @@ import { IonInput, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react
 import { Controller, useForm } from 'react-hook-form';
 import {getCityStateCoordinates, getZipCoordinates, LocationData} from '../utils/getCoordinates';
 
-
 interface TextEntryProps {
     initialLat: number | null
     initialLong: number | null
@@ -57,26 +56,21 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     const { control, handleSubmit } = useForm();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<DataError>({ showError: false });
-    //const [cityName, setCityName] = useState<string>("")
-    //const [stateCode, setStateCode] = useState<string>("")
     
     React.useEffect(() => {
         state.setLat(props.initialLat)
         state.setLong(props.initialLong)
         state.setElev(props.initialElev)
-        //state.setCityName(props.initialCity)
-        //state.setStateCode(props.initialState)
     }, [props.initialLat, props.initialLong, props.initialElev, state])
-
+    //called when the text entry is determined to be a zip code
     const getZipCodeData = async () => {
         setLoading(true);
-        const locationData: LocationData = await getZipCoordinates(state.textEntry);
-        
+        const locationData: LocationData = await getZipCoordinates(state.textEntry); //gets the lat/long associated with this zipcode
         if (locationData.hasError) {
             console.log(locationData.errorMessage);
             alert(`No results found for your entry. Please check the validity of your five digit zip code.`);
         }
-        else {
+        else { 
             state.setLat(locationData.latitude)
             state.setLong(locationData.longitude)
             state.setElev(locationData.elevation)
@@ -84,7 +78,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         }
         setLoading(false);
     }
-
+    //called when the text entry is determined to be a city, state
     const getCityStateData = async () => {
         setLoading(true);
         const locationData: LocationData = await getCityStateCoordinates(state.textEntry, state.cityName.toUpperCase(), state.stateCode.toUpperCase());
@@ -101,7 +95,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         }
         setLoading(false);
     }
-
+    //perform input validation on the user entered text and then determine if it is a zipcode or city, state
     const getValid = (data: any) => {
         state.setText(data.text)
         let regExp = /^[a-zA-Z',.\s-]+,[ ]?[A-Za-z]{2}$/ //regex to check if format is comma separated city state pair
@@ -112,7 +106,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         if(state.textEntry === undefined) {
             alert("Error in text entry.")
         }
-        else {  //find comma
+        else {  //find the comma index and count(there should be only 0 or 1 of them)
             let idx = 0
             for(let i = 0; i < state.textEntry.length; i++) {
                 if(state.textEntry.charAt(i) === ',') { 
@@ -128,6 +122,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                     state.setText(state.textEntry.substring(0, i) + state.textEntry.substring(i + 1))
                     i--
                 }
+                // add the character to the state code
                 else { buildStateCode += state.textEntry.charAt(i).toUpperCase() }
             }
             state.setStateCode(buildStateCode)
@@ -153,7 +148,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
                 isOpen={true}
                 onDidDismiss={() => setError({ message: "", showError: false })}
                 message={error.message}
-                duration={2000} 
+                duration={3000} 
             />
             <form onSubmit={handleSubmit(getValid)}>
                 <IonItem className="location-form">
