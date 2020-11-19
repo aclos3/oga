@@ -6,6 +6,7 @@
     "@angular/core": "^10.1.6",
     "@capacitor/android": "^2.4.2",
     "@capacitor/core": "2.4.2",
+    "@capacitor/ios": "^2.4.2",
     "@ionic-native/core": "^5.29.0",
     "@ionic-native/geolocation": "^5.29.0",
     "@ionic-native/splash-screen": "^5.29.0",
@@ -22,6 +23,7 @@
     "@types/react-router-dom": "^5.1.6",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-splashscreen": "^6.0.0",
+    "cordova-res": "^0.15.2",
     "ionicons": "^5.2.3",
     "mobx": "^6.0.1",
     "moment-timezone": "^0.5.31",
@@ -44,7 +46,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js"
   },
   "eslintConfig": {
     "extends": "react-app"
