@@ -74,6 +74,13 @@ ion-button {
     font-size: 0.8rem;
 }
 
+.app-page-container {
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
 h1.page-header {
     font-size: 1.4rem;
     font-family: var(--page-header-font), sans-serif;

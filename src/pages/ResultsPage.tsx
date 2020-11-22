@@ -139,7 +139,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className="results-container">
+        <div className="app-page-container">
           <IonLoading
               isOpen={loading}
               onDidDismiss={() => setLoading(false)}
