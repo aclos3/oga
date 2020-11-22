@@ -15,24 +15,6 @@
   width: 80%;
 }
 
-.results-title-button {
-  width: 10%;
-  margin: 0;
-  padding: 0;
-  font-size: 2rem;
-  color: var(--ion-color-dark);
-  display: flex;
-  align-items: center;
-}
-
-.left-title-button {
-  justify-content: flex-start;
-}
-
-.right-title-button {
-  justify-content: flex-end;
-}
-
 /* need to select back button--it isn't affected by font-size above */
 ion-back-button {
   --icon-font-size: 2rem;
