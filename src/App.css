@@ -57,15 +57,16 @@ ion-title {
     color: var(--ion-color-dark);
     display: flex;
     align-items: center;
-    margin-right: 0.25rem;
 }
 
 .app-left-title-button {
     justify-content: flex-start;
+    margin-left: 0.25rem;
 }
 
 .app-right-title-button {
     justify-content: flex-end;
+    margin-right: 0.25rem;
 }
 
 ion-button {
@@ -76,6 +77,7 @@ ion-button {
 
 ion-back-button {
     --icon-font-size: 2rem;
+    --padding-start: 0;
   }
 
 .app-page-container {
