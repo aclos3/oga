@@ -40,17 +40,18 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className="home-toolbar">
-            <div className="home-title-button"></div>
-            <IonTitle className="home-title">Frost Date Finder</IonTitle>
-            <IonIcon icon={helpCircle} className="home-title-button"></IonIcon>
+          <div className="app-toolbar">
+            <div className="app-title-button"></div>
+            <IonTitle className="app-title">Frost Date Finder</IonTitle>
+            <div className="app-title-button app-right-title-button">
+              <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+            </div>
           </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className="home-container">
-          <h1 className="page-header">Enter your location</h1>
-          <div className="content-container">
+        <div className="app-page-container">
+          <h1 className="app-page-header">Enter your location</h1>
             <IonCard className="location-card">
               <IonCardHeader>
                 <IonCardTitle className="location-card-title">
@@ -81,7 +82,6 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
                   ></TextEntry>
                 </IonCardContent>
               </IonCard>
-          </div>
         </div>
       </IonContent>
     </IonPage>

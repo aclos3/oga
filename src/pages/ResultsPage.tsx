@@ -122,17 +122,19 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className="results-toolbar">
-            <IonButtons className="results-title-button">
+          <div className="app-toolbar">
+            <IonButtons className="app-title-button app-left-title-button">
               <IonBackButton />
             </IonButtons>
-            <IonTitle className="results-title">Frost Date Finder</IonTitle>
-            <IonIcon icon={helpCircle} className="results-title-button"></IonIcon>
+            <IonTitle className="app-title">Frost Date Finder</IonTitle>
+            <div className="app-title-button app-right-title-button">
+              <IonIcon icon={helpCircle}></IonIcon>
+            </div>
           </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className="results-container">
+        <div className="app-page-container">
           <IonLoading
               isOpen={loading}
               onDidDismiss={() => setLoading(false)}
@@ -153,7 +155,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
-          <h1 className="page-header">Your Frost Dates</h1> 
+          <h1 className="app-page-header">Your Frost Dates</h1> 
 
           <div className="station-container">
             <div className="station-col">
