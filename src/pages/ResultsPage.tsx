@@ -127,11 +127,11 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className="results-toolbar">
+          <div className="app-toolbar">
             <IonButtons className="app-title-button app-left-title-button">
               <IonBackButton />
             </IonButtons>
-            <IonTitle className="results-title">Frost Date Finder</IonTitle>
+            <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
               <IonIcon icon={helpCircle}></IonIcon>
             </div>

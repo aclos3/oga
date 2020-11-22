@@ -1,13 +1,3 @@
-.home-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.home-title {
-  width: 80%;
-}
-
 .home-container {
   text-align: center;
   height: 90%;
