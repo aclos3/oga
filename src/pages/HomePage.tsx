@@ -25,13 +25,16 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         city: "",
         distance: 888888
     });
-
+    //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
     const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
+        //the incoming (new) lat/long/elevation are set to the state variables
         setLat(newLat)
         setLong(newLong)
         setElev(newElev)
+        //the same three data types are combined into a string
         let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
-        history.push('/dashboard/station/' + userLoc);
+        //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
+        history.push(`/dashboard/station/` + userLoc);
     }
     return (
     <IonPage>

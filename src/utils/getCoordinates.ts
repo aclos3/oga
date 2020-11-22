@@ -1,5 +1,6 @@
 import { getElevation} from '../utils/getUserElevation';
 
+//the format of the return from the opendatasoft 'cities and towns' API call
 interface CityStateApiData {
     records: { 
         fields: { 
@@ -10,6 +11,7 @@ interface CityStateApiData {
         }
     } [];
 }
+//the format of the return from the opendatasoft 'zipcode lat/long' API call
 interface ZipCodeApiData {
     records: { 
         fields: { 
@@ -40,18 +42,18 @@ export async function getCityStateCoordinates(cityState: string, cityName: strin
     // starts with error message--change if API returns valid response
     let locationData: LocationData = {
         hasError: true,
-        errorMessage: 'Error in API response',
+        errorMessage: `Error in API response`,
         latitude: null,
         longitude: null,
         elevation: null
     };
-    try {
+    try { //the api call may return several results, so loop through to match the city name and two character state code
         for(let i = 0; i < json.records.length; i++) {
             if(json.records[i].fields.name.toUpperCase() === cityName && json.records[i].fields.state.toUpperCase() === stateCode) {
                 if(json.records[i].fields.geo_point_2d[0] && json.records[i].fields.geo_point_2d[1]) {
                     locationData =  {
                         hasError: false,
-                        errorMessage: '',
+                        errorMessage: ``,
                         latitude: json.records[i].fields.geo_point_2d[0],
                         longitude: json.records[i].fields.geo_point_2d[1],
                         elevation: json.records[i].fields.elev_in_ft
@@ -80,7 +82,7 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
     };
     try {
         if(json.records[0].fields.latitude && json.records[0].fields.longitude) {
-            const apiElev = await getElevation(json.records[0].fields.latitude.toString() + `,` + json.records[0].fields.longitude.toString())
+            const apiElev = await getElevation(json.records[0].fields.latitude, json.records[0].fields.longitude)
             locationData =  {
                 hasError: false,
                 errorMessage: '',

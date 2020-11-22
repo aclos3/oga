@@ -1,15 +1,11 @@
-import React, {useState} from 'react';
-import { observable } from "mobx"
-import { IonInput, IonLabel, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
-import { Controller, useForm } from 'react-hook-form';
+import React from 'react';
 
 export interface LatLongStation {
     lat: number,
     long: number,
     stationName: string
   }
-
-const ViewLatLongStation: React.FC<LatLongStation> = (props) => { 
+const ViewLatLongStation: React.FC<LatLongStation> = (props) => {
     return (
         <div>
             <h1>Lat: {props.lat}</h1>

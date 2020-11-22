@@ -12,5 +12,4 @@ const DashboardPage: React.FC<RouteComponentProps> = ({match}) => {
     </IonRouterOutlet>
   );
 };
-
 export default DashboardPage

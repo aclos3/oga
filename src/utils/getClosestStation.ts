@@ -29,8 +29,10 @@ export interface Coordinates {
     lat: number,
     long: number
 }
+//create a stations list
+const stations: Station[] = getWeatherStations();
 
-//get all weather stations
+//get all weather stations from JSON file
 export function getWeatherStations(): Station[] {
     const stations: Station[] = stationsJSON.map( (data) => {
         return {
@@ -46,7 +48,7 @@ export function getWeatherStations(): Station[] {
     return stations;
 }
 
-//get all station frost data
+//get all station frost data from JSON file
 export function getFrostData(): FrostData[] {
     const frostData: FrostData[] = frostJSON.map( (data) => {
         return {
@@ -65,19 +67,19 @@ export function getFrostData(): FrostData[] {
     });
     return frostData;
 }
-const stations: Station[] = getWeatherStations();
+
 // returns a list sorted by distance from the origin
 export function getClosestStationList(origin: Coordinates): Station[] | null {
     //get station distances
     for (let station of stations) {
         station.distance = getDistanceFromLatLongInKm(origin, {lat: station.latitude, long: station.longitude});
     }
-    //sort stations by distance
+    //sort stations by distance from user
     stations.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
     return stations;
 }
 // uses Haversine formula, which gives the great-circle distance between two latitude-longitude pairs
-// will have some error from assuming that earth is a perfect sphere
+// will have some inaccuracy from assuming that earth is a perfect sphere
 export const getClosestPoint = (origin: Coordinates, locations: Coordinates[]): Coordinates => {
     let smallestDistance: number = Infinity;
     let closestPosition: Coordinates = {
@@ -103,13 +105,11 @@ export const getDistanceFromLatLongInKm = (pointA: Coordinates, pointB: Coordina
     const earthRadiusInKM: number = 6371;
     const latitudeDifferenceInRadians: number = convertDegreesToRadians(pointB.lat - pointA.lat);
     const longitudeDifferenceInRadians: number = convertDegreesToRadians(pointB.long - pointA.long); 
-
     const a: number = 
       Math.sin(latitudeDifferenceInRadians / 2) * Math.sin(latitudeDifferenceInRadians / 2) +
       Math.cos(convertDegreesToRadians(pointA.lat)) * Math.cos(convertDegreesToRadians(pointB.lat)) * 
       Math.sin(longitudeDifferenceInRadians / 2) * Math.sin(longitudeDifferenceInRadians / 2); 
     const c: number = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
     const distance: number = earthRadiusInKM * c;
-
     return distance;
 }

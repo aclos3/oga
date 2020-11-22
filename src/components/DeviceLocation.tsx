@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './DeviceLocation.css';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { observable } from "mobx"
@@ -15,20 +14,19 @@ interface LocationError {
     showError: boolean;
     message?: string;
 }
-
 class DeviceData {
     @observable
-    lat: any = ""
+    lat: any = ``
     setLat = (lat: any) => {
         this.lat = lat
     }
     @observable
-    long: any = ""
+    long: any = ``
     setLong = (long: any) => {
         this.long = long
     }
     @observable
-    elev: any = ""
+    elev: any = ``
     setElev = (elev: any) => {
         this.elev = elev
     }
@@ -47,12 +45,12 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
     }, [props.initialLat, props.initialLong, props.initialElev, state])
 
     const getLocation = async () => {
-        let options = {
+        let options = {  //Device GPS location settings
             enableHighAccuracy: true,
-            timeout: 5000
+            timeout: 8000
         }
         setLoading(true);
-        try {
+        try { //use the device geolocation to get coordinates and possibly elevation
             const position = await geolocation.getCurrentPosition(options);
             setPosition(position);
             setLoading(false);
@@ -60,11 +58,12 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             state.setLat(position.coords.latitude)
             state.setLong(position.coords.longitude)
             //check for evelvation from device
-            if(!position.coords.altitude) {
-                let apiElev = await getElevation(state.lat.toString() + `,` + state.long.toString())
+            
+            if(!position.coords.altitude) { //if no elevation from device, call the separate getElevation function
+                let apiElev = await getElevation(state.lat, state.long)
                 state.setElev(apiElev.elevation)
             }
-            else { //use device's location
+            else { //otherwise, use device's location
                 state.setElev(position.coords.altitude)
             }
             props.onSubmit(state.lat, state.long, state.elev)
@@ -80,11 +79,11 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
             <IonLoading
                 isOpen={loading}
                 onDidDismiss={() => setLoading(false)}
-                message={'Getting Location...'}
+                message={`Getting Location...`}
             />
             <IonToast
                 isOpen={error.showError}
-                onDidDismiss={() => setError({ message: "", showError: false })}
+                onDidDismiss={() => setError({ message: ``, showError: false })}
                 message={error.message}
                 duration={5000}
             />

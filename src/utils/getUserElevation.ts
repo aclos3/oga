@@ -1,31 +1,28 @@
-export interface elevationData{
+export interface elevationData2{
     elevation: number | null,
     resolution: number | null
 }
 
+interface elevationData {
+    elevation: number | null
+}
 // gets elevation for a lat,long variable
-// if API hasan error, it will return just the error message
-export async function getElevation(latLong: string): Promise<elevationData> {
-    const apiEndpoint = 'https://api.jawg.io/elevations?locations='
-    const token = '&access-token=Vna6bzn5juKUCodACBvtFuEk4PlGU6Wmh6vrzJAWyTN6rL8Zca5Tzu60TpuET9pf'
-    const data = await fetch((apiEndpoint + latLong + token), {
+// if API has an error, it will return just the error message
+export async function getElevation(lat: number, long: number): Promise<elevationData> {
+    //build the string for the get request to usgs
+    const apiEndpoint = `https://ned.usgs.gov/epqs/pqs.php?`
+    const data = await fetch((apiEndpoint + `x=` + long.toString() + `&y=` + lat.toString() + `&units=Feet&output=json`), {
         method: 'GET'
     });
     const api_return = await data.json();
     let results: elevationData = {
-        elevation: null,
-        resolution: null
+        elevation: null
     }
-    try{
-        if (api_return[0] && api_return[0] !== undefined){
-            results = {
-                elevation: Math.round(api_return[0].elevation),
-                resolution: api_return[0].resolution
-            }
+    try{ //get the elevation out of the return from the API call
+        if (api_return && api_return !== undefined){
+            results = { elevation: api_return.USGS_Elevation_Point_Query_Service.Elevation_Query.Elevation }
         }
     }
-    catch{
-        console.log("Error: ", api_return);
-    }
+    catch{ console.log(`Error: `, api_return); }
     return results;
 }
