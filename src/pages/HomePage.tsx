@@ -40,7 +40,9 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
           <div className="home-toolbar">
             <div className="home-title-button"></div>
             <IonTitle className="home-title">Frost Date Finder</IonTitle>
-            <IonIcon icon={helpCircle} className="home-title-button"></IonIcon>
+            <div className="home-title-button">
+              <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+            </div>
           </div>
         </IonToolbar>
       </IonHeader>

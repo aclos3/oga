@@ -21,6 +21,16 @@
   padding: 0;
   font-size: 2rem;
   color: var(--ion-color-dark);
+  display: flex;
+  align-items: center;
+}
+
+.left-title-button {
+  justify-content: flex-start;
+}
+
+.right-title-button {
+  justify-content: flex-end;
 }
 
 /* need to select back button--it isn't affected by font-size above */
