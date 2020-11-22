@@ -85,7 +85,7 @@ ion-back-button {
     height: 100%;
 }
 
-h1.page-header {
+.app-page-header {
     font-size: 1.4rem;
     font-family: var(--page-header-font), sans-serif;
 }

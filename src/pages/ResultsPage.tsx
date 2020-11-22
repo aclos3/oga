@@ -160,7 +160,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
-          <h1 className="page-header">Your Frost Dates</h1> 
+          <h1 className="app-page-header">Your Frost Dates</h1> 
 
           <div className="station-container">
             <div className="station-col">

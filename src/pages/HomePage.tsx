@@ -48,7 +48,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
       </IonHeader>
       <IonContent>
         <div className="app-page-container">
-          <h1 className="page-header">Enter your location</h1>
+          <h1 className="app-page-header">Enter your location</h1>
             <IonCard className="location-card">
               <IonCardHeader>
                 <IonCardTitle className="location-card-title">
