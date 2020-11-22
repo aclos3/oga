@@ -42,7 +42,7 @@ export interface FrostDatesBySeverity {
     frostFree: string
 }
 
-const ResultsPage: React.FC<ContainerProps> = ({ match }) => { 
+const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => { 
     const [userLatLongElev] = useState<string>(match.params.id);
     const [stationID, setStation] = useState<StationUsed>({stationID: "0", lat: 0, long: 0, elevation: 0, state: "0", city: "0", distance: 0});
     const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: "0", moderate: "0", severe: "0"});
@@ -128,7 +128,14 @@ const ResultsPage: React.FC<ContainerProps> = ({ match }) => {
             </IonButtons>
             <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
-              <IonIcon icon={helpCircle}></IonIcon>
+            <IonButtons>
+                <IonButton onClick={e => {
+                  e.preventDefault();
+                  history.push('/dashboard/info')
+                }}>
+                  <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+                </IonButton>
+              </IonButtons>
             </div>
           </div>
         </IonToolbar>

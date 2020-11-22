@@ -9,7 +9,6 @@ import DisplayFrostDates from '../components/DisplayFrostDates'
 import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 interface ContainerProps extends RouteComponentProps<{
-    id: string
 }> {}
 
 const InfoPage: React.FC<ContainerProps> = ({ match }) => { 
@@ -29,4 +28,4 @@ const InfoPage: React.FC<ContainerProps> = ({ match }) => {
     </IonPage>
   );
 };
-export default IonPage;
+export default InfoPage;

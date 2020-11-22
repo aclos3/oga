@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButtons, IonButton } from '@ionic/react'
 import { helpCircle, } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
@@ -44,7 +44,14 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
             <div className="app-title-button"></div>
             <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
-              <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+              <IonButtons>
+                <IonButton onClick={e => {
+                  e.preventDefault();
+                  history.push('/dashboard/info')
+                }}>
+                  <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+                </IonButton>
+              </IonButtons>
             </div>
           </div>
         </IonToolbar>
