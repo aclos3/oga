@@ -1,8 +1,3 @@
-/* need to select back button--it isn't affected by font-size above */
-ion-back-button {
-  --icon-font-size: 2rem;
-}
-
 .station-container {
   margin: 0 auto;
   padding: 0.4rem;

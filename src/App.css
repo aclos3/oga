@@ -74,6 +74,10 @@ ion-button {
     font-size: 0.8rem;
 }
 
+ion-back-button {
+    --icon-font-size: 2rem;
+  }
+
 .app-page-container {
     text-align: center;
     margin: 0 auto;
