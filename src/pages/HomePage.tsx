@@ -1,3 +1,8 @@
+/*
+Some Source code for reference:
+https://stackblitz.com/edit/ionic-react-routing?file=src%2Fpages%2FDashboardPage.tsx
+https://www.sitepoint.com/onclick-html-attribute/
+*/
 import React, { useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButtons, IonButton } from '@ionic/react'
 import { helpCircle, } from 'ionicons/icons';
@@ -34,7 +39,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         //the same three data types are combined into a string
         let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
         //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
-        history.push(`/dashboard/results/` + userLoc);
+        //history.push(`/dashboard/results/` + userLoc);
         //return <Redirect to = {{ pathname: `/dashboard/station/` + userLoc}}/>
     }
     return (
