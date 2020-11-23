@@ -10,7 +10,7 @@ const DashboardPage: React.FC<RouteComponentProps> = ({match}) => {
     return (
     <IonRouterOutlet>
       <Route exact path={match.url} component={HomePage} />
-      <Route exact path={`${match.url}/results/:id`} component={ResultsPage} />
+      <Route path={`${match.url}/results/:id`} component={ResultsPage} />
       <Route exact path={`${match.url}/info1`} component={InfoPage1} />
       <Route exact path={`${match.url}/info2`} component={InfoPage2} />
     </IonRouterOutlet>

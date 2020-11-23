@@ -8,7 +8,6 @@ import { arrowBack } from 'ionicons/icons';
 interface ContainerProps extends RouteComponentProps<{
 }> {}
 
-
 const InfoPage2: React.FC<ContainerProps> = ({ match, history }) => { 
     return (
     <IonPage>
@@ -16,7 +15,7 @@ const InfoPage2: React.FC<ContainerProps> = ({ match, history }) => {
         <IonToolbar>
           <div className="app-toolbar">
             <IonButtons className="app-title-button app-left-title-button">
-              <IonButton href="/results">
+              <IonButton href="/dashboard">
                 <IonIcon icon={arrowBack}> </IonIcon>
               </IonButton>
             </IonButtons>
