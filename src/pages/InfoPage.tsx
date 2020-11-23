@@ -13,12 +13,11 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className="results-toolbar">
-            <IonButtons className="results-title-button">
+          <div className="app-toolbar">
+            <IonButtons className="app-title-button app-left-title-button">
               <IonBackButton />
             </IonButtons>
             <IonTitle className="results-title">Frost Date Finder</IonTitle>
-            <IonIcon icon={helpCircle} className="results-title-button"></IonIcon>
           </div>
         </IonToolbar>
         <IonContent>
@@ -26,6 +25,7 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
             <h1 className='about-title'>
               About The App
             </h1>
+            <p>This app was designed and created by a group of </p>
           </IonText>
         </IonContent>
       </IonHeader>

@@ -6,7 +6,7 @@ https://www.sitepoint.com/onclick-html-attribute/
 import React, { useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButtons, IonButton } from '@ionic/react'
 import { helpCircle, } from 'ionicons/icons';
-import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
 import { Station } from '../utils/getClosestStation'
@@ -30,6 +30,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         city: "",
         distance: 888888
     });
+
     //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
     const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
         //the incoming (new) lat/long/elevation are set to the state variables
@@ -39,8 +40,8 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         //the same three data types are combined into a string
         let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
         //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
-        //history.push(`/dashboard/results/` + userLoc);
-        //return <Redirect to = {{ pathname: `/dashboard/station/` + userLoc}}/>
+        history.push(`/dashboard/results/` + userLoc);
+        
     }
     return (
     <IonPage>

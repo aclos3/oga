@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react'
+import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react'
 import { arrowBack, helpCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
@@ -134,7 +134,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
                 <IonButton onClick={e => {
                   e.preventDefault();
                   history.push('/dashboard/info')
-                }}>
+                  }}>
                   <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
                 </IonButton>
               </IonButtons>
