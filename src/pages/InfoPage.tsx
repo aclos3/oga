@@ -1,17 +1,14 @@
-import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react'
-import { helpCircle, arrowBackCircle } from 'ionicons/icons';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonBackButton, IonButtons, IonIcon, IonContent, IonText } from '@ionic/react'
+import { helpCircle} from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
-import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import '../App.css'
-import './ResultsPage.css';
-import DisplayFrostDates from '../components/DisplayFrostDates'
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
+import './InfoPage.css';
 
 interface ContainerProps extends RouteComponentProps<{
 }> {}
 
-const InfoPage: React.FC<ContainerProps> = ({ match }) => { 
+const InfoPage: React.FC<ContainerProps> = ({ match, history }) => { 
     return (
     <IonPage>
       <IonHeader>
@@ -24,6 +21,13 @@ const InfoPage: React.FC<ContainerProps> = ({ match }) => {
             <IonIcon icon={helpCircle} className="results-title-button"></IonIcon>
           </div>
         </IonToolbar>
+        <IonContent>
+          <IonText>
+            <h1 className='about-title'>
+              About The App
+            </h1>
+          </IonText>
+        </IonContent>
       </IonHeader>
     </IonPage>
   );

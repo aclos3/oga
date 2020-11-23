@@ -1,5 +1,5 @@
 import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react'
-import { helpCircle } from 'ionicons/icons';
+import { arrowBack, helpCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
@@ -124,7 +124,9 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         <IonToolbar>
           <div className="app-toolbar">
             <IonButtons className="app-title-button app-left-title-button">
-              <IonBackButton />
+              <IonButton href="/dashboard">
+                <IonIcon icon={arrowBack}> </IonIcon>
+              </IonButton>
             </IonButtons>
             <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
