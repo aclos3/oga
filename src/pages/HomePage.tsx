@@ -52,10 +52,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
             <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
               <IonButtons>
-                <IonButton onClick={e => {
-                  e.preventDefault();
-                  history.push('/dashboard/info')
-                }}>
+                <IonButton href="/dashboard/info1">
                   <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
                 </IonButton>
               </IonButtons>
