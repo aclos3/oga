@@ -178,14 +178,14 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             >
           </DisplayFrostDates>
           <DisplayFrostDates
-            title="Moderate Freeze (30° F)"
+            title="Moderate Freeze (28° F)"
             springFrost={springFrostJulian.moderate}
             fallFrost={fallFrostJulian.moderate}
             frostFree={frostFreeJulian.moderate}
             >
           </DisplayFrostDates>
           <DisplayFrostDates
-            title="Severe Freeze (28° F)"
+            title="Severe Freeze (24° F)"
             springFrost={springFrostJulian.severe}
             fallFrost={fallFrostJulian.severe}
             frostFree={frostFreeJulian.severe}
