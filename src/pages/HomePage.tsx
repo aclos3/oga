@@ -1,5 +1,10 @@
+/*
+Some Source code for reference:
+https://stackblitz.com/edit/ionic-react-routing?file=src%2Fpages%2FDashboardPage.tsx
+https://www.sitepoint.com/onclick-html-attribute/
+*/
 import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButtons, IonButton } from '@ionic/react';
 import { helpCircle, } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
@@ -17,7 +22,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
   const [elev, setElev] = useState<number>(0);
 
   //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
-  const onLatLongChange = (newLat: number, newLong: number, newElev: number) => {
+  const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
     //the incoming (new) lat/long/elevation are set to the state variables
     setLat(newLat);
     setLong(newLong);
@@ -25,9 +30,9 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
     //the same three data types are combined into a string
     const userLoc = newLat.toString() + ',' + newLong.toString() + ',' + newElev.toString();
     //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
-    history.push('/dashboard/station/' + userLoc);
+    history.push('/dashboard/results/' + userLoc);
+        
   };
-
   return (
     <IonPage>
       <IonHeader>
@@ -36,7 +41,14 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
             <div className="app-title-button"></div>
             <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
-              <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+              <IonButtons>
+                <IonButton onClick={e => {
+                  e.preventDefault();
+                  history.push('/dashboard/info');
+                }}>
+                  <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+                </IonButton>
+              </IonButtons>
             </div>
           </div>
         </IonToolbar>
