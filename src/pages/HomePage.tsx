@@ -49,17 +49,20 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
         <IonToolbar>
           <div className="app-toolbar">
             <div className="app-title-button"></div>
-            <IonTitle className="app-title">Frost Date Finder</IonTitle>
-            <div className="app-title-button app-right-title-button">
-              <IonButtons>
-                <IonButton href="/dashboard/info1">
-                  <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
-                </IonButton>
-              </IonButtons>
+              <IonTitle className="app-title">Frost Date Finder</IonTitle>
+              <div className="app-title-button app-right-title-button">
+                <IonButtons>
+                  <IonButton onClick={e => {
+                    e.preventDefault();
+                    history.push('/dashboard/info')
+                    }}>
+                    <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+                  </IonButton>
+                </IonButtons>
+              </div>
             </div>
-          </div>
-        </IonToolbar>
-      </IonHeader>
+          </IonToolbar>
+        </IonHeader>
       <IonContent>
         <div className="app-page-container">
           <h1 className="app-page-header">Enter your location</h1>

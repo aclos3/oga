@@ -2,7 +2,7 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonIcon, IonConte
 import { RouteComponentProps } from 'react-router';
 import React from 'react';
 import '../App.css'
-import './InfoPage1.css';
+import './InfoPage.css';
 import { arrowBack } from 'ionicons/icons';
 
 interface ContainerProps extends RouteComponentProps<{

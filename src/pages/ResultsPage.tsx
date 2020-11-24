@@ -129,9 +129,12 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
             <IonButtons>
-                <IonButton href="/dashboard/info2">
-                  <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
-                </IonButton>
+              <IonButton onClick={e => {
+                e.preventDefault();
+                history.push('/dashboard/info')
+                }}>
+                <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+              </IonButton>
               </IonButtons>
             </div>
           </div>
