@@ -4,7 +4,6 @@ import { helpCircle, } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
-import { Station } from '../utils/getClosestStation';
 import '../App.css';
 import './HomePage.css';
 

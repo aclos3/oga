@@ -1,18 +1,15 @@
-import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react';
-import { helpCircle, arrowBackCircle } from 'ionicons/icons';
+import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonBackButton, IonButtons, IonIcon } from '@ionic/react';
+import { helpCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
-import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import '../App.css';
 import './ResultsPage.css';
-import DisplayFrostDates from '../components/DisplayFrostDates';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 type ContainerProps = RouteComponentProps<{
-    id: string;
+  id: string;
 }>
 
-const InfoPage: React.FC<ContainerProps> = ({ match }) => { 
+const InfoPage: React.FC<ContainerProps> = () => { 
   return (
     <IonPage>
       <IonHeader>
