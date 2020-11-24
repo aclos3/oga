@@ -48,7 +48,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "resources": "cordova-res ios && cordova-res android && node scripts/resources.js",
-    "lint": "eslint . --ext .ts --fix"
+    "lint": "eslint src --ext .js,.ts,.tsx --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
