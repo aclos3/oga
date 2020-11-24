@@ -9,8 +9,6 @@ import DisplayFrostDates from '../components/DisplayFrostDates';
 
 const FEET_TO_METERS = 0.3048;
 
-interface ContainerProps {}
-
 type ContainerProps = RouteComponentProps<{
   id: string;
 }>
