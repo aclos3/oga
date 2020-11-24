@@ -12,21 +12,13 @@ export interface ExportStation {
   latLong: string;
 } 
 
-const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
+const HomePage: React.FC<RouteComponentProps> = ({history}) => {
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
   const [elev, setElev] = useState<number>(0);
-  const [weatherStation, setWeatherStation] = useState<Station>({
-    station: '',
-    latitude: 0,
-    longitude: 0,
-    elevation: 0,
-    state: '',
-    city: '',
-    distance: 888888
-  });
-    //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
-  const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
+
+  //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
+  const onLatLongChange = (newLat: number, newLong: number, newElev: number) => {
     //the incoming (new) lat/long/elevation are set to the state variables
     setLat(newLat);
     setLong(newLong);
@@ -36,6 +28,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
     //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
     history.push('/dashboard/station/' + userLoc);
   };
+
   return (
     <IonPage>
       <IonHeader>
@@ -70,7 +63,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
           <IonCard className="location-card">
             <IonCardHeader>
               <IonCardTitle className="location-card-title">
-                    Enter your zip code or city, state
+                  Enter your zip code or city, state
               </IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
