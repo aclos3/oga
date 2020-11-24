@@ -4,98 +4,88 @@ https://stackblitz.com/edit/ionic-react-routing?file=src%2Fpages%2FDashboardPage
 https://www.sitepoint.com/onclick-html-attribute/
 */
 import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButtons, IonButton } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButtons, IonButton } from '@ionic/react';
 import { helpCircle, } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import DeviceLocation from '../components/DeviceLocation';
 import TextEntry from '../components/TextEntry';
-import { Station } from '../utils/getClosestStation'
-import '../App.css'
+import '../App.css';
 import './HomePage.css';
 
 export interface ExportStation {
-  latLong: string
+  latLong: string;
 } 
 
-const HomePage: React.FC<RouteComponentProps> = ({history},props) => {
-    const [lat, setLat] = useState<number>(0);
-    const [long, setLong] = useState<number>(0);
-    const [elev, setElev] = useState<number>(0);
-    const [weatherStation, setWeatherStation] = useState<Station>({
-        station: "",
-        latitude: 0,
-        longitude: 0,
-        elevation: 0,
-        state: "",
-        city: "",
-        distance: 888888
-    });
+const HomePage: React.FC<RouteComponentProps> = ({history}) => {
+  const [lat, setLat] = useState<number>(0);
+  const [long, setLong] = useState<number>(0);
+  const [elev, setElev] = useState<number>(0);
 
-    //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
-    const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
-        //the incoming (new) lat/long/elevation are set to the state variables
-        setLat(newLat)
-        setLong(newLong)
-        setElev(newElev)
-        //the same three data types are combined into a string
-        let userLoc = newLat.toString() + `,` + newLong.toString() + `,` + newElev.toString()
-        //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
-        history.push(`/dashboard/results/` + userLoc);
+  //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
+  const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
+    //the incoming (new) lat/long/elevation are set to the state variables
+    setLat(newLat);
+    setLong(newLong);
+    setElev(newElev);
+    //the same three data types are combined into a string
+    const userLoc = newLat.toString() + ',' + newLong.toString() + ',' + newElev.toString();
+    //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
+    history.push('/dashboard/results/' + userLoc);
         
-    }
-    return (
+  };
+  return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <div className="app-toolbar">
             <div className="app-title-button"></div>
-              <IonTitle className="app-title">Frost Date Finder</IonTitle>
-              <div className="app-title-button app-right-title-button">
-                <IonButtons>
-                  <IonButton onClick={e => {
-                    e.preventDefault();
-                    history.push('/dashboard/info')
-                    }}>
-                    <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
-                  </IonButton>
-                </IonButtons>
-              </div>
+            <IonTitle className="app-title">Frost Date Finder</IonTitle>
+            <div className="app-title-button app-right-title-button">
+              <IonButtons>
+                <IonButton onClick={e => {
+                  e.preventDefault();
+                  history.push('/dashboard/info');
+                }}>
+                  <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+                </IonButton>
+              </IonButtons>
             </div>
-          </IonToolbar>
-        </IonHeader>
+          </div>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
         <div className="app-page-container">
           <h1 className="app-page-header">Enter your location</h1>
-            <IonCard className="location-card">
-              <IonCardHeader>
-                <IonCardTitle className="location-card-title">
+          <IonCard className="location-card">
+            <IonCardHeader>
+              <IonCardTitle className="location-card-title">
                   Use your device's location
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                <DeviceLocation
-                  initialLat={lat}
-                  initialLong={long}
-                  initialElev={elev}
-                  onSubmit={onLatLongChange}
-                ></DeviceLocation>
-              </IonCardContent>
-            </IonCard>
-            <IonCard className="location-card">
-                <IonCardHeader>
-                  <IonCardTitle className="location-card-title">
-                    Enter your zip code or city, state
-                  </IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent>
-                  <TextEntry
-                    initialLat={lat}
-                    initialLong={long}
-                    initialElev={elev}
-                    onSubmit={onLatLongChange}
-                  ></TextEntry>
-                </IonCardContent>
-              </IonCard>
+              </IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <DeviceLocation
+                initialLat={lat}
+                initialLong={long}
+                initialElev={elev}
+                onSubmit={onLatLongChange}
+              ></DeviceLocation>
+            </IonCardContent>
+          </IonCard>
+          <IonCard className="location-card">
+            <IonCardHeader>
+              <IonCardTitle className="location-card-title">
+                  Enter your zip code or city, state
+              </IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <TextEntry
+                initialLat={lat}
+                initialLong={long}
+                initialElev={elev}
+                onSubmit={onLatLongChange}
+              ></TextEntry>
+            </IonCardContent>
+          </IonCard>
         </div>
       </IonContent>
     </IonPage>

@@ -47,7 +47,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js"
+    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js",
+    "lint": "eslint src --ext .js,.ts,.tsx --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -67,6 +68,7 @@
   "devDependencies": {
     "@capacitor/cli": "2.4.2",
     "@ionic/react-test-utils": "0.0.3",
+    "eslint-plugin-react": "^7.21.5",
     "react-scripts": "3.4.4"
   },
   "description": "An Ionic project",
