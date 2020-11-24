@@ -43,15 +43,17 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
       </IonHeader>
         <IonContent>
           <IonText>
-            <h1 className='about-title'> About Page</h1>
+            <h1 className='about-title'>About Page</h1>
           </IonText>
           <IonList>
           {
             FrostData
             ? <IonItem onClick={ toggleFrost }>
                 <p>
-                  All of the weather data presented on this app came directly 
-                  from the National Oceanic and Atmospheric Administration (NOAA).
+                  The climate data presented on this application comes directly 
+                  from the National Oceanic and Atmospheric Administration (NOAA). Specifically, NOAA's 
+                  <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data" target="_blank">
+                      1981-2010 U.S. Climate Normals.</a>
                 </p>
               </IonItem>
             : <IonItem onClick={ toggleFrost }>
@@ -62,12 +64,12 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
             LocationData
             ? <IonItem onClick={ toggleLocation }>
                 <p>
-                The app uses location infromation from a variety of sources. 
-                The user location is either obtained directly from the phone's GPS
-                unit or it is obtained from API calls based on the zip code or 
-                the city, state entered by the user. Once user loaction is obtained,
-                the app uses the haversine formula to find the nearest NOAA weather 
-                station.
+                This application uses location information from a variety of sources. 
+                The user location is either obtained directly from the device GPS or browser
+                or it is obtained from API calls based on the zip code or 
+                the city and state entered by the user. Once the user's loaction is obtained,
+                the app employs the haversine formula to determine the nearest NOAA weather 
+                stations.
                 </p>
               </IonItem>
             : <IonItem onClick={ toggleLocation }>
@@ -77,12 +79,17 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
           {
             TeamData
             ? <IonItem onClick={ toggleTeam }>
-                <p>This app was created by undergrads at Oregon State University as
-                  part of thier capstone project.
-                <ul>Developers:</ul>
-                  <li>Andrew Clos</li>
-                  <li>Kirsten Corrao</li>
-                  <li>John Lebens</li></p>
+                <p>This application was created by a team of three undergraduates at Oregon State University as
+                  part of their senior capstone project. 
+                <br/><br/>
+                    <u>Developers:</u>
+                
+                    <ul>
+                        <li>Andrew Clos</li>
+                        <li>Kirsten Corrao</li>
+                        <li>John Lebens</li>
+                    </ul>
+                </p>
               </IonItem>
             : <IonItem onClick={ toggleTeam }>
                 <IonLabel>The Team</IonLabel>
@@ -92,7 +99,7 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
             PartnersData
             ? <IonItem onClick={ togglePartners }>
                 <p>
-                Frost Finder App was a collaboration between Oregon State University 
+                The Frost Finder App was a collaboration between Oregon State University 
                 and the garden extension program.
                 </p>
               </IonItem>
