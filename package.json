@@ -68,7 +68,6 @@
   "devDependencies": {
     "@capacitor/cli": "2.4.2",
     "@ionic/react-test-utils": "0.0.3",
-    "eslint": "^7.14.0",
     "eslint-plugin-react": "^7.21.5",
     "react-scripts": "3.4.4"
   },
