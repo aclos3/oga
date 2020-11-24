@@ -10,22 +10,22 @@ interface ContainerProps extends RouteComponentProps<{
 
 
 const InfoPage: React.FC<ContainerProps> = ({ match, history }) => { 
-    const [ FrostData, displayFrost ] = useState(false);
+    const [ FrostData, displayFrost ] = useState(true);
     const toggleFrost = () => {
       displayFrost(!FrostData)
     }
 
-    const [ LocationData, displayLocation ] = useState(false);
+    const [ LocationData, displayLocation ] = useState(true);
     const toggleLocation = () => {
       displayLocation(!LocationData)
     }
 
-    const [ TeamData, displayTeam ] = useState(false);
+    const [ TeamData, displayTeam ] = useState(true);
     const toggleTeam = () => {
       displayTeam(!TeamData)
     }
 
-    const [ PartnersData, displayPartners ] = useState(false);
+    const [ PartnersData, displayPartners ] = useState(true);
     const togglePartners = () => {
       displayPartners(!PartnersData)
     }
@@ -48,23 +48,23 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
           <IonList>
           {
             FrostData
-            ? <IonItem onClick={ toggleFrost }>
-                <p>
+            ? <IonItem>
+                <p><h3><u>Frost Data:</u></h3>
                   The climate data presented on this application comes directly 
                   from the National Oceanic and Atmospheric Administration (NOAA). Specifically, NOAA's 
                   <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data" target="_blank">
                       1981-2010 U.S. Climate Normals.</a>
                 </p>
               </IonItem>
-            : <IonItem onClick={ toggleFrost }>
+            : <IonItem>
                 <IonLabel>Frost Data</IonLabel>
               </IonItem>
           }
           {
             LocationData
-            ? <IonItem onClick={ toggleLocation }>
-                <p>
-                This application uses location information from a variety of sources. 
+            ? <IonItem>
+                <p><h3><u>Location Data:</u></h3>
+                This application uses location information from several sources. 
                 The user location is either obtained directly from the device GPS or browser
                 or it is obtained from API calls based on the zip code or 
                 the city and state entered by the user. Once the user's loaction is obtained,
@@ -72,14 +72,15 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
                 stations.
                 </p>
               </IonItem>
-            : <IonItem onClick={ toggleLocation }>
+            : <IonItem>
                 <IonLabel>Location Data</IonLabel>
               </IonItem>
           }
           {
             TeamData
-            ? <IonItem onClick={ toggleTeam }>
-                <p>This application was created by a team of three undergraduates at Oregon State University as
+            ? <IonItem>
+                <p><h3><u>The Team:</u></h3>
+                This application was created by a team of three undergraduates at Oregon State University as
                   part of their senior capstone project. 
                 <br/><br/>
                     <u>Developers:</u>
@@ -91,19 +92,19 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
                     </ul>
                 </p>
               </IonItem>
-            : <IonItem onClick={ toggleTeam }>
+            : <IonItem>
                 <IonLabel>The Team</IonLabel>
               </IonItem>
           }
           {
             PartnersData
-            ? <IonItem onClick={ togglePartners }>
-                <p>
+            ? <IonItem>
+                <p><h3><u>Our Partners:</u></h3>
                 The Frost Finder App was a collaboration between Oregon State University 
                 and the garden extension program.
                 </p>
               </IonItem>
-            : <IonItem onClick={ togglePartners }>
+            : <IonItem>
                 <IonLabel>Our Partners</IonLabel>
               </IonItem>
           }
