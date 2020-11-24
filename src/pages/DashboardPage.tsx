@@ -6,7 +6,7 @@ import ResultsPage from './ResultsPage';
 import InfoPage from './InfoPage';
 
 const DashboardPage: React.FC<RouteComponentProps> = ({match}) => {
-    return (
+  return (
     <IonRouterOutlet>
       <Route exact path={match.url} component={HomePage} />
       <Route exact path={`${match.url}/station/:id`} component={ResultsPage} />
@@ -14,4 +14,4 @@ const DashboardPage: React.FC<RouteComponentProps> = ({match}) => {
     </IonRouterOutlet>
   );
 };
-export default DashboardPage
+export default DashboardPage;
