@@ -69,7 +69,7 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
                 The user location is either obtained directly from the device GPS or browser
                 or it is obtained from API calls based on the zip code or 
                 the city and state entered by the user. Once the user's loaction is obtained,
-                the app employs the haversine formula to determine the nearest NOAA weather 
+                the app employs the Haversine formula to determine the nearest NOAA weather 
                 stations.
                 </p>
               </IonItem>
@@ -101,8 +101,8 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
             PartnersData
               ? <IonItem onClick={ togglePartners }>
                 <p><h4><u>Our Partners:</u></h4>
-                The Frost Finder App was a collaboration between Oregon State University 
-                and the garden extension program.
+                The Frost Date Finder App was a collaboration between Oregon State University 
+                and Oregon State University Extension Service.
                 </p>
               </IonItem>
               : <IonItem onClick={ togglePartners }>
