@@ -66,8 +66,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         //get frost data list
         const frostData: FrostData[] = getFrostData();
         //loop until a station with data is found, not all climate normals weather stations contain the frost data we're looking for
-        let checking = 0;
-        while (checking >= 0) {
+        for(let checking = 0; checking < closestStation.length; checking++) {
           //compare the two lists to see if the station ID exists in both
           stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station);
           if(stationIdx >= 0) {  //matching station was found, stop checking, populate station information
@@ -80,9 +79,8 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
               city: closestStation[checking].city, 
               distance: closestStation[checking].distance
             });
-            checking = -1; 
+            checking = closestStation.length; 
           }
-          else { checking++;} //station not found, move to text closest
         }
         setLoading(true);
         //populate the frost data variables with data from the closest station
