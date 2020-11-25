@@ -76,9 +76,13 @@ ion-button {
 }
 
 ion-back-button {
-    --icon-font-size: 2rem;
+    --icon-font-size: 1.8rem;
     --padding-start: 0;
-  }
+}
+
+.app-icon {
+    font-size: 1.8rem;
+}
 
 .app-page-container {
     text-align: center;
@@ -95,7 +99,7 @@ ion-back-button {
 /* small mobile devices */
 @media (max-width: 300px) {
     html, body {
-        font-size: 14px;
+        font-size: 13px;
     }
 }
 

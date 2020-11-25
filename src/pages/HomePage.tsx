@@ -46,7 +46,7 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
                   e.preventDefault();
                   history.push('/dashboard/info');
                 }}>
-                  <IonIcon icon={helpCircle} id="question-icon"></IonIcon>
+                  <IonIcon icon={helpCircle} class="app-icon"></IonIcon>
                 </IonButton>
               </IonButtons>
             </div>
