@@ -53,7 +53,7 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
                   <p><h4><u>Frost Data:</u></h4>
                     The climate data presented on this application comes directly 
                     from the National Oceanic and Atmospheric Administration (NOAA). Specifically, NOAA's 
-                    <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data" target="_blank">
+                    <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data" target="_blank" rel="noopener noreferrer">
                       1981-2010 U.S. Climate Normals.</a>
                 </p>
               </IonItem>
