@@ -99,7 +99,7 @@ ion-back-button {
 /* small mobile devices */
 @media (max-width: 300px) {
     html, body {
-        font-size: 14px;
+        font-size: 13px;
     }
 }
 
