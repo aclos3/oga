@@ -89,6 +89,7 @@ ion-back-button {
 
 .app-icon {
     font-size: 1.8rem;
+    color: var(--ion-color-dark);
 }
 
 .app-page-container {
