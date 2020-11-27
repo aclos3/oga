@@ -8,7 +8,8 @@ import '../App.css';
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates';
 
-const FEET_TO_METERS = 0.3048;
+const METERS_TO_FEET = 3.28084;
+const KM_TO_MILES = 0.621371;
 
 type ContainerProps = RouteComponentProps<{
     id: string;
@@ -61,7 +62,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
       //get a list of stations sorted by distance from the user.
       const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])});
       //Set elevation
-      if(latLong[2] && latLong[2] !== undefined) { setUserElevation(parseFloat(latLong[2])* FEET_TO_METERS); }
+      if(latLong[2] && latLong[2] !== undefined) { setUserElevation(parseFloat(latLong[2])); }
       if(closestStation) {
         //get frost data list
         const frostData: FrostData[] = getFrostData();
@@ -74,10 +75,10 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
               stationID: closestStation[checking].station,
               lat: closestStation[checking].latitude,
               long: closestStation[checking].longitude,
-              elevation: closestStation[checking].elevation,
+              elevation: closestStation[checking].elevation * METERS_TO_FEET,
               state: closestStation[checking].state,
               city: closestStation[checking].city, 
-              distance: closestStation[checking].distance
+              distance: closestStation[checking].distance * KM_TO_MILES
             });
             checking = closestStation.length; 
           }
@@ -115,6 +116,21 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     if(stationID.long >= 0) { return 'E'; }
     else { return 'W';}
   };
+  //this function makes sure only the first letter of each word remains capitalized and removes extraneous spaces at the end of the string
+  const stringUpper = () => {
+    let upWords = stationID.city.split(" ");
+    console.log(`upWords: `, upWords)
+    
+    for (let i = 0; i < upWords.length; i++) {
+      if(upWords[i] !== undefined && upWords[i] && upWords[i] !== " ") {
+        //Spell out "Airport"
+        if(upWords[i] === 'AP') { upWords[i] = "Airport "; }
+        //otherwise lowercase all but the first character of the string
+        else { upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + " "; }
+      }
+    }
+    return upWords.join(" ").trim();
+  }
   return (
     <IonPage>
       <IonHeader>
@@ -155,9 +171,9 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             <p>ID: {stationID.stationID}</p>
             <p>Station Lat: {Math.abs(parseFloat(stationID.lat.toPrecision(4)))}&#176;{isLatPositive()}</p>
             <p>Station Long: {Math.abs(parseFloat(stationID.long.toPrecision(5)))}&#176;{isLongPositive()}</p>
-            <p>Station Elevation: {stationID.elevation}m</p>
-            <p>Local Elevation: {userElevation.toFixed(1)}m</p>
-            <p>Distance: {Math.round(stationID.distance)}km</p>
+            <p>Station Elevation: {stationID.elevation.toFixed(1)} feet</p>
+            <p>Local Elevation: {userElevation.toFixed(1)} feet</p>
+            <p>Distance: {Math.round(stationID.distance)} miles</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
@@ -165,7 +181,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
 
           <div className="station-container">
             <div className="station-col">
-              <p>Station: {stationID.city.charAt(0) + stationID.city.slice(1).toLowerCase()}, {stationID.state}</p>
+              <p>Station: {stringUpper()}, {stationID.state}</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
