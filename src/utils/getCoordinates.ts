@@ -88,7 +88,7 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
         errorMessage: '',
         latitude: json.records[0].fields.latitude,
         longitude: json.records[0].fields.longitude,
-        elevation: apiElev.elevation
+        elevation: apiElev
       };
     }
   } catch(error){ console.log(error); }
