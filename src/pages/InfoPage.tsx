@@ -1,13 +1,12 @@
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonText, IonList, IonItem, IonLabel, IonBackButton } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonText, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonItemDivider, IonIcon, IonTabButton, IonTabs, IonTabBar } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import React, { useState } from 'react';
 import '../App.css';
 import './InfoPage.css';
+import { calendar, pulseSharp } from 'ionicons/icons';
 
 type ContainerProps = RouteComponentProps<{
-  id: string;
 }>
-
 
 const InfoPage: React.FC<ContainerProps> = ({ match, history }) => { 
   const [ FrostData, displayFrost ] = useState(false);
@@ -46,25 +45,28 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
         <IonText>
           <h1 className='about-title'> About Page</h1>
         </IonText>
-        <IonList>
-          {
-            FrostData
-              ? <IonItem onClick={ toggleFrost }>
-                  <p><h4><u>Frost Data:</u></h4>
-                    The climate data presented on this application comes directly 
-                    from the National Oceanic and Atmospheric Administration (NOAA). Specifically, NOAA's 
-                    <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data" target="_blank" rel="noopener noreferrer">
-                      1981-2010 U.S. Climate Normals.</a>
+        <IonList className = "toggleItems">
+          <IonItem detail onClick ={ toggleFrost }>
+            {
+              FrostData
+              ? 
+                <p>
+                  <h4><u>Frost Data:</u></h4>
+                The climate data presented on this application comes directly 
+                from the National Oceanic and Atmospheric Administration (NOAA). Specifically, NOAA's 
+                <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data" target="_blank" rel="noopener noreferrer">
+                  1981-2010 U.S. Climate Normals.</a>
                 </p>
-              </IonItem>
-              : <IonItem onClick={ toggleFrost }>
-                <IonLabel>Frost Data</IonLabel>
-              </IonItem>
-          }
-          {
-            LocationData
-              ? <IonItem onClick={ toggleLocation }>
-                <p><h4><u>Location Data:</u></h4>
+              : 
+                <h3>Frost Data</h3>
+            }
+          </IonItem>
+          <IonItem detail onClick={ toggleLocation }>
+            {
+              LocationData
+              ?
+                <p>
+                  <h4><u>Location Data:</u></h4>
                 This application uses location information from several sources. 
                 The user location is either obtained directly from the device GPS or browser
                 or it is obtained from API calls based on the zip code or 
@@ -72,46 +74,44 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
                 the app employs the Haversine formula to determine the nearest NOAA weather 
                 stations.
                 </p>
-              </IonItem>
-              : <IonItem onClick={ toggleLocation }>
-                <IonLabel>Location Data</IonLabel>
-              </IonItem>
-          }
+              : 
+                <h3>Location Data</h3>
+            }
+          </IonItem>
+          <IonItem detail onClick={ toggleTeam }>
           {
             TeamData
-              ? <IonItem onClick={ toggleTeam }>
-                <p><h4><u>The Team:</u></h4>
-                This application was created by a team of three undergraduates at Oregon State University as
-                  part of their senior capstone project. 
-                <br/><br/>
-                    <u>Developers:</u>
-                
-                    <ul>
-                        <li>Andrew Clos</li>
-                        <li>Kirsten Corrao</li>
-                        <li>John Lebens</li>
-                    </ul>
-                </p>
-              </IonItem>
-              : <IonItem onClick={ toggleTeam }>
-                <IonLabel>The Team</IonLabel>
-              </IonItem>
-          }
-          {
+            ? 
+              <p>
+                <h4><u>The Team:</u></h4>
+              This application was created by a team of three undergraduates at Oregon State University as
+              part of their senior capstone project. 
+              <br/><br/>
+                <u>Developers:</u>
+                <ul>
+                  <li>Andrew Clos</li>
+                  <li>Kirsten Corrao</li>
+                  <li>John Lebens</li>
+                </ul>
+              </p>
+            : 
+              <h3> Development Team</h3>          }
+          </IonItem>
+          <IonItem detail onClick={ togglePartners }>
+            {
             PartnersData
-              ? <IonItem onClick={ togglePartners }>
-                <p><h4><u>Our Partners:</u></h4>
-                The Frost Date Finder App was a collaboration between Oregon State University 
-                and Oregon State University Extension Service.
-                </p>
-              </IonItem>
-              : <IonItem onClick={ togglePartners }>
-                <IonLabel>Our Partners</IonLabel>
-              </IonItem>
-          }
+            ?
+              <p>
+                <h4><u>Our Partners:</u></h4>
+              The Frost Date Finder App was a collaboration between Oregon State University 
+              and Oregon State University Extension Service.
+              </p>
+            : 
+              <h3>Our Partners</h3>
+            }
+          </IonItem>
         </IonList>
       </IonContent>
-      
     </IonPage>
   );
 };

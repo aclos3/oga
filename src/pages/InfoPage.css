@@ -1,4 +1,4 @@
-.location-card-title {
+  .location-card-title {
     font-size: 1rem;
     font-weight: normal;
   }
@@ -13,4 +13,7 @@
   .about-title{
      text-align: center; 
   }
-  
+
+  button{
+    margin: 0 auto;
+  }

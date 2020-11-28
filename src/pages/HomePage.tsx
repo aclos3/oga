@@ -38,8 +38,8 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
       <IonHeader>
         <IonToolbar>
           <div className="app-toolbar">
-            <div className="app-title-button"></div>
-            <IonTitle className="app-title">Frost Date Finder</IonTitle>
+          <div className="app-title-button"></div>
+          <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
               <IonButtons>
                 <IonButton onClick={e => {
