@@ -65,13 +65,8 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
               <p>
                 The Frost Date Finder App was a collaboration between Oregon State University Extension Service and the 
                 Oregon State University College of Engineering.This application was created by a team of three computer science undergraduates
-                as part of their senior capstone project. 
+                as part of their senior capstone project: Andrew Clos, Kirsten Corrao, and John Lebens. 
               </p>
-                <ul>
-                  <li>Andrew Clos</li>
-                  <li>Kirsten Corrao</li>
-                  <li>John Lebens</li>
-                </ul>
             </IonCardContent>
           </IonCard>
 
