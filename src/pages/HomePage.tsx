@@ -76,9 +76,6 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
             </IonCardHeader>
             <IonCardContent>
               <TextEntry
-                initialLat={lat}
-                initialLong={long}
-                initialElev={elev}
                 onSubmit={onLatLongChange}
               ></TextEntry>
             </IonCardContent>

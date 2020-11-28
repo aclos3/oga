@@ -8,9 +8,6 @@ import { Controller, useForm } from 'react-hook-form';
 import {getCityStateCoordinates, getZipCoordinates, LocationData} from '../utils/getCoordinates';
 
 interface TextEntryProps {
-  initialLat: number | null;
-  initialLong: number | null;
-  initialElev: number | null;
   onSubmit: (homeLat: number, homeLong: number, homeElev: number) => void;
 }
 interface DataError {
@@ -55,12 +52,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
-    
-  React.useEffect(() => {
-    state.setLat(props.initialLat);
-    state.setLong(props.initialLong);
-    state.setElev(props.initialElev);
-  }, [props.initialLat, props.initialLong, props.initialElev, state]);
+    ;
   //called when the text entry is determined to be a zip code
   const getZipCodeData = async () => {
     setLoading(true);
