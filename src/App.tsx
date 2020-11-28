@@ -25,12 +25,10 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 const { SplashScreen } = Plugins;
 
-
 const App: React.FC = () => {
-  SplashScreen.show();
-    
+  SplashScreen.hide();
+
   return(
-    
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
