@@ -97,7 +97,7 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
             : 
               <h3> Development Team</h3>          }
           </IonItem>
-          <IonItem detail onClick={ togglePartners }>
+          <IonItem class="eachItem" detail onClick={ togglePartners }>
             {
             PartnersData
             ?
