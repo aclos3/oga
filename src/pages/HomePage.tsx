@@ -64,9 +64,6 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
             </IonCardHeader>
             <IonCardContent>
               <DeviceLocation
-                initialLat={lat}
-                initialLong={long}
-                initialElev={elev}
                 onSubmit={onLatLongChange}
               ></DeviceLocation>
             </IonCardContent>

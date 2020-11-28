@@ -4,9 +4,6 @@ import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { getElevation } from '../utils/getUserElevation';
 
 interface DeviceLocationProps {
-    initialLat: number | null;
-    initialLong: number | null;
-    initialElev: number | null;
     onSubmit: (homeLat: number, homeLong: number, homeElev: number) => void;
 }
 
@@ -24,12 +21,6 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
   let lat: number | null = 0;
   let long: number | null = 0;
   let elev: number | null = 0;
-
-  React.useEffect(() => {
-    lat = props.initialLat;
-    long = props.initialLong;
-    elev = props.initialElev;
-  }, [props.initialLat, props.initialLong, props.initialElev]);
 
   const getLocation = async () => {
     const options = {  //Device GPS location settings
