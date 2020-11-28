@@ -101,6 +101,21 @@ ion-back-button {
     font-family: var(--page-header-font), sans-serif;
 }
 
+.app-card-title {
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--ion-color-dark);
+}
+
+.app-card {
+    width: 90%;
+    min-width: var(--card-min-width);
+    max-width: var(--card-max-width);
+    margin: 0.75rem auto;
+    font-family: var(--body-font), sans-serif;
+    color: var(--ion-color-dark);
+}
+
 /* small mobile devices */
 @media (max-width: 300px) {
     html, body {

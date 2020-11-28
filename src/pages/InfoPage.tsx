@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonText, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonItemDivider, IonIcon, IonTabButton, IonTabs, IonTabBar } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonText, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonItemDivider, IonIcon, IonTabButton, IonTabs, IonTabBar, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import React, { useState } from 'react';
 import '../App.css';
@@ -9,25 +9,6 @@ type ContainerProps = RouteComponentProps<{
 }>
 
 const InfoPage: React.FC<ContainerProps> = ({ match, history }) => { 
-  const [ FrostData, displayFrost ] = useState(false);
-  const toggleFrost = () => {
-    displayFrost(!FrostData);
-  };
-
-  const [ LocationData, displayLocation ] = useState(false);
-  const toggleLocation = () => {
-    displayLocation(!LocationData);
-  };
-
-  const [ TeamData, displayTeam ] = useState(false);
-  const toggleTeam = () => {
-    displayTeam(!TeamData);
-  };
-
-  const [ PartnersData, displayPartners ] = useState(false);
-  const togglePartners = () => {
-    displayPartners(!PartnersData);
-  };
   return (
     <IonPage>
       <IonHeader>
@@ -41,76 +22,60 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
           </div>
         </IonToolbar>
       </IonHeader>
+
       <IonContent>
-        <IonText>
-          <h1 className='about-title'> About Page</h1>
-        </IonText>
-        <IonList className = "toggleItems">
-          <IonItem detail onClick ={ toggleFrost }>
-            {
-              FrostData
-              ? 
-                <p>
-                  <h4><u>Frost Data:</u></h4>
+        <div className="app-page-container">
+          <h1 className="app-page-header"> About Page</h1>
+
+          <IonCard className="app-card">
+            <IonCardHeader>
+              <IonCardTitle className="app-card-title">Frost Data</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <p>
                 The climate data presented on this application comes directly 
                 from the National Oceanic and Atmospheric Administration (NOAA). Specifically, NOAA's 
                 <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data" target="_blank" rel="noopener noreferrer">
-                  1981-2010 U.S. Climate Normals.</a>
-                </p>
-              : 
-                <h3>Frost Data</h3>
-            }
-          </IonItem>
-          <IonItem detail onClick={ toggleLocation }>
-            {
-              LocationData
-              ?
-                <p>
-                  <h4><u>Location Data:</u></h4>
+                1981-2010 U.S. Climate Normals.</a>
+              </p>
+            </IonCardContent>
+          </IonCard>
+
+          <IonCard className="app-card">
+            <IonCardHeader>
+              <IonCardTitle className="app-card-title">Location Data</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <p>
                 This application uses location information from several sources. 
                 The user location is either obtained directly from the device GPS or browser
                 or it is obtained from API calls based on the zip code or 
                 the city and state entered by the user. Once the user's loaction is obtained,
                 the app employs the Haversine formula to determine the nearest NOAA weather 
                 stations.
-                </p>
-              : 
-                <h3>Location Data</h3>
-            }
-          </IonItem>
-          <IonItem detail onClick={ toggleTeam }>
-          {
-            TeamData
-            ? 
+              </p>
+            </IonCardContent>
+          </IonCard>
+
+          <IonCard className="app-card">
+            <IonCardHeader>
+              <IonCardTitle className="app-card-title">Development Team</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
               <p>
-                <h4><u>The Team:</u></h4>
-              This application was created by a team of three undergraduates at Oregon State University as
-              part of their senior capstone project. 
-              <br/><br/>
-                <u>Developers:</u>
+                The Frost Date Finder App was a collaboration between Oregon State University Extension Service and the 
+                Oregon State University College of Engineering.This application was created by a team of three computer science undergraduates
+                as part of their senior capstone project. 
+              </p>
                 <ul>
                   <li>Andrew Clos</li>
                   <li>Kirsten Corrao</li>
                   <li>John Lebens</li>
                 </ul>
-              </p>
-            : 
-              <h3> Development Team</h3>          }
-          </IonItem>
-          <IonItem class="eachItem" detail onClick={ togglePartners }>
-            {
-            PartnersData
-            ?
-              <p>
-                <h4><u>Our Partners:</u></h4>
-              The Frost Date Finder App was a collaboration between Oregon State University 
-              and Oregon State University Extension Service.
-              </p>
-            : 
-              <h3>Our Partners</h3>
-            }
-          </IonItem>
-        </IonList>
+            </IonCardContent>
+          </IonCard>
+
+        </div>
       </IonContent>
     </IonPage>
   );
