@@ -103,7 +103,6 @@ ion-back-button {
 
 .app-card-title {
     font-size: 1rem;
-    font-weight: normal;
     color: var(--ion-color-dark);
 }
 

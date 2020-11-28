@@ -1,15 +1,7 @@
-  .location-card-title {
-    font-size: 1rem;
-    font-weight: normal;
-  }
+.info-card-header {
+  padding-bottom: 0.3rem;
+}
   
-  .location-card {
-    width: 90%;
-    min-width: var(--card-min-width);
-    max-width: var(--card-max-width);
-    margin: 0.75rem auto;
-    font-family: var(--body-font), sans-serif;
-  }
-  .about-title{
-     text-align: center; 
-  }
+.info-card-title {
+  font-family: var(--card-title-font), sans-serif;
+}

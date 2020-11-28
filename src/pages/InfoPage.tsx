@@ -28,8 +28,8 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
           <h1 className="app-page-header"> About Page</h1>
 
           <IonCard className="app-card">
-            <IonCardHeader>
-              <IonCardTitle className="app-card-title">Frost Data</IonCardTitle>
+            <IonCardHeader className="info-card-header">
+              <IonCardTitle className="app-card-title info-card-title">Frost Data</IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
               <p>
@@ -42,8 +42,8 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
           </IonCard>
 
           <IonCard className="app-card">
-            <IonCardHeader>
-              <IonCardTitle className="app-card-title">Location Data</IonCardTitle>
+            <IonCardHeader className="info-card-header">
+              <IonCardTitle className="app-card-title info-card-title">Location Data</IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
               <p>
@@ -58,8 +58,8 @@ const InfoPage: React.FC<ContainerProps> = ({ match, history }) => {
           </IonCard>
 
           <IonCard className="app-card">
-            <IonCardHeader>
-              <IonCardTitle className="app-card-title">Development Team</IonCardTitle>
+            <IonCardHeader className="info-card-header">
+              <IonCardTitle className="app-card-title info-card-title">Development Team</IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
               <p>
