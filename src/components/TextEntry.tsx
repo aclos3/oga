@@ -21,16 +21,6 @@ class EntryData {
   setText = (textEntry: any) => {
     this.textEntry = textEntry;
   }
-  @observable
-  cityName: any = ''
-  setCityName = (cityName: any) => {
-    this.cityName = cityName;
-  }
-  @observable
-  stateCode: any = ''
-  setStateCode = (stateCode: any) => {
-    this.stateCode = stateCode;
-  }
 }
 const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => { 
   const state = React.useRef(new EntryData()).current;
@@ -39,9 +29,9 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
   const [error, setError] = useState<DataError>({ showError: false });
   
   //called when the text entry is determined to be a zip code
-  const getZipCodeData = async () => {
+  const getZipCodeData = async (zip: string) => {
     setLoading(true);
-    const locationData: LocationData = await getZipCoordinates(state.textEntry); //gets the lat/long associated with this zipcode
+    const locationData: LocationData = await getZipCoordinates(zip); //gets the lat/long associated with this zipcode
     if (locationData.hasError) {
       console.log(locationData.errorMessage);
       alert('No results found for your entry. Please check the validity of your five digit zip code.');
@@ -51,10 +41,11 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     }
     setLoading(false);
   };
+
   //called when the text entry is determined to be a city, state
-  const getCityStateData = async () => {
+  const getCityStateData = async (cityName: string, stateCode: string) => {
     setLoading(true);
-    const locationData: LocationData = await getCityStateCoordinates(state.textEntry, state.cityName.toUpperCase(), state.stateCode.toUpperCase());
+    const locationData: LocationData = await getCityStateCoordinates(state.textEntry, cityName.toUpperCase(), stateCode.toUpperCase());
         
     if (locationData.hasError) {
       console.log(locationData.errorMessage);
@@ -65,6 +56,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     }
     setLoading(false);
   };
+
   //perform input validation on the user entered text and then determine if it is a zipcode or city, state
   const getValid = (data: any) => {
     state.setText(data.text);
@@ -85,7 +77,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         }
       } //get the city name and set state variable.
       for(let i = 0; i < idx; i++) { buildCityName += state.textEntry.charAt(i); }
-      state.setCityName(buildCityName);
+
       //remove spaces after comma
       for(let i = idx + 1; i < state.textEntry.length; i++) {
         if(state.textEntry.charAt(i) === ' ') {
@@ -95,15 +87,15 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         // add the character to the state code
         else { buildStateCode += state.textEntry.charAt(i).toUpperCase(); }
       }
-      state.setStateCode(buildStateCode);
     }
+    
     //determine if the entry is a city/state pair
     if(regExp.test(state.textEntry) && commaCount === 1) {
       state.setText(state.textEntry.replace(/,/g, ',+\''));
-      getCityStateData();
+      getCityStateData(buildCityName, buildStateCode);
     }
     //determine if entry is a valid zip code
-    else if(!(isNaN(state.textEntry)) && state.textEntry.length === 5) { getZipCodeData(); }
+    else if(!(isNaN(state.textEntry)) && state.textEntry.length === 5) { getZipCodeData(state.textEntry); }
     //check for more than two characters after comma
     else {alert('Entry is invalid, please try again. You must use the two letter postal abbreviation for the state.');}
   };
