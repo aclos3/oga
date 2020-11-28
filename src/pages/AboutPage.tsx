@@ -2,12 +2,12 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonBa
 import { RouteComponentProps } from 'react-router';
 import React from 'react';
 import '../App.css';
-import './InfoPage.css';
+import './AboutPage.css';
 
 type ContainerProps = RouteComponentProps<{
 }>
 
-const InfoPage: React.FC<ContainerProps> = () => { 
+const AboutPage: React.FC<ContainerProps> = () => { 
   return (
     <IonPage>
       <IonHeader>
@@ -74,4 +74,4 @@ const InfoPage: React.FC<ContainerProps> = () => {
     </IonPage>
   );
 };
-export default InfoPage;
+export default AboutPage;
