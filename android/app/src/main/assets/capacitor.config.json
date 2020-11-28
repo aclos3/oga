@@ -7,9 +7,6 @@
   "plugins": {
     "SplashScreen": {
       "backgroundColor:": "#D73F09",
-      "splashFullScreen": true,
-      "splashImmersive": true,
-      "launchAutoHide": false,
       "androidScaleType": "CENTER_CROP",
       "showSpinner": true
     }
