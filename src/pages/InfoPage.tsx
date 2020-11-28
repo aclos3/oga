@@ -1,14 +1,13 @@
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonText, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonItemDivider, IonIcon, IonTabButton, IonTabs, IonTabBar, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
-import React, { useState } from 'react';
+import React from 'react';
 import '../App.css';
 import './InfoPage.css';
-import { calendar, pulseSharp } from 'ionicons/icons';
 
 type ContainerProps = RouteComponentProps<{
 }>
 
-const InfoPage: React.FC<ContainerProps> = ({ match, history }) => { 
+const InfoPage: React.FC<ContainerProps> = () => { 
   return (
     <IonPage>
       <IonHeader>
