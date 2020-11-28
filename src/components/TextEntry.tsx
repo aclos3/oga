@@ -22,21 +22,6 @@ class EntryData {
     this.textEntry = textEntry;
   }
   @observable
-  lat: any = ''
-  setLat = (lat: any) => {
-    this.lat = lat;
-  }
-  @observable
-  long: any = ''
-  setLong = (long: any) => {
-    this.long = long;
-  }
-  @observable
-  elev: any = ''
-  setElev = (elev: any) => {
-    this.elev = elev;
-  }
-  @observable
   cityName: any = ''
   setCityName = (cityName: any) => {
     this.cityName = cityName;
@@ -52,7 +37,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
-    ;
+  
   //called when the text entry is determined to be a zip code
   const getZipCodeData = async () => {
     setLoading(true);
@@ -61,11 +46,8 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
       console.log(locationData.errorMessage);
       alert('No results found for your entry. Please check the validity of your five digit zip code.');
     }
-    else { 
-      state.setLat(locationData.latitude);
-      state.setLong(locationData.longitude);
-      state.setElev(locationData.elevation);
-      props.onSubmit(state.lat, state.long, state.elev);
+    else if (locationData.latitude && locationData.longitude && locationData.elevation) { 
+      props.onSubmit(locationData.latitude, locationData.longitude, locationData.elevation);
     }
     setLoading(false);
   };
@@ -78,11 +60,8 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
       console.log(locationData.errorMessage);
       alert('No results found for your entry. Please check the validity of your city/state pair.');
     }
-    else {
-      state.setLat(locationData.latitude);
-      state.setLong(locationData.longitude);
-      state.setElev(locationData.elevation);
-      props.onSubmit(state.lat, state.long, state.elev);
+    else if (locationData.latitude && locationData.longitude && locationData.elevation) {
+      props.onSubmit(locationData.latitude, locationData.longitude, locationData.elevation);
     }
     setLoading(false);
   };
