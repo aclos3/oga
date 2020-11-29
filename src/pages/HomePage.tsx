@@ -3,7 +3,7 @@ Some Source code for reference:
 https://stackblitz.com/edit/ionic-react-routing?file=src%2Fpages%2FDashboardPage.tsx
 https://www.sitepoint.com/onclick-html-attribute/
 */
-import React, { useState } from 'react';
+import React from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButtons, IonButton } from '@ionic/react';
 import { helpCircle, } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
