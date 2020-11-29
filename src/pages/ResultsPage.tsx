@@ -120,18 +120,26 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     else { return 'W';}
   };
   //this function makes sure only the first letter of each word remains capitalized and removes extraneous spaces at the end of the string
+  //the function also checks for certain words to omit and for some abbreviations to expand.
   const stringUpper = () => {
     let upWords = stationID.city.split(" ");
-    console.log(`upWords: `, upWords)
-    
     for (let i = 0; i < upWords.length; i++) {
       if(upWords[i] !== undefined && upWords[i] && upWords[i] !== " ") {
-        //Spell out "Airport"
+        //Spell out words like "Airport", "Center," "Field," etc.
         if(upWords[i] === 'AP') { upWords[i] = 'Airport '; }
-        //check for special ignored words
-        else if(IGNORE_WORDS.indexOf(upWords[i]) >= 0) { 
-            console.log(`ignore word found!`)
-            upWords[i] = ''}
+        else if (upWords[i] === 'FLD') {upWords[i] = 'Field ';}
+        else if (upWords[i] === 'STN') {upWords[i] = 'Station ';}
+        else if (upWords[i] === 'CTR') {upWords[i] = 'Center ';}
+        //check for special ignored words (N, E, S, W, HCN, etc)
+        else if(IGNORE_WORDS.indexOf(upWords[i]) >= 0) { upWords[i] = ''}
+        //check for 'Mc' or 'De'
+        else if(upWords[i][0] && upWords[i][1] && upWords[i][2]) {
+            if((upWords[i][0] === 'M' && upWords[i][1] === 'C') || (upWords[i][0] === 'D' && upWords[i][1] === 'E')) { 
+                upWords[i] = upWords[i][0] + upWords[i][1].toLowerCase() + upWords[i][2] + upWords[i].substr(3).toLowerCase() + ' ';
+            }
+            //otherwise lowercase all but the first character of the string
+            else { upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + ' ';}
+        }
         //otherwise lowercase all but the first character of the string
         else { upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + ' '; }
       }
