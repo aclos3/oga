@@ -10,6 +10,7 @@ import DisplayFrostDates from '../components/DisplayFrostDates';
 
 const METERS_TO_FEET = 3.28084;
 const KM_TO_MILES = 0.621371;
+const IGNORE_WORDS = ['HCN', 'N', 'E', 'S', 'W', 'NE', 'NW', 'SE', 'SW', 'NNE', 'NNW', 'SSE', 'SSW', 'ENE', 'WNW', 'ESE', 'WSW'];
 
 type ContainerProps = RouteComponentProps<{
     id: string;
@@ -126,9 +127,13 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     for (let i = 0; i < upWords.length; i++) {
       if(upWords[i] !== undefined && upWords[i] && upWords[i] !== " ") {
         //Spell out "Airport"
-        if(upWords[i] === 'AP') { upWords[i] = "Airport "; }
+        if(upWords[i] === 'AP') { upWords[i] = 'Airport '; }
+        //check for special ignored words
+        else if(IGNORE_WORDS.indexOf(upWords[i]) >= 0) { 
+            console.log(`ignore word found!`)
+            upWords[i] = ''}
         //otherwise lowercase all but the first character of the string
-        else { upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + " "; }
+        else { upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + ' '; }
       }
     }
     return upWords.join(" ").trim();
