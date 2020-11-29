@@ -42,7 +42,6 @@ export interface FrostDatesBySeverity {
 }
 
 const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => { 
-  const [userLatLongElev] = useState<string>(match.params.id);
   const [stationID, setStation] = useState<StationUsed>({stationID: '0', lat: 0, long: 0, elevation: 0, state: '0', city: '0', distance: 0});
   const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: '0', moderate: '0', severe: '0'});
   const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: '0', moderate: '0', severe: '0'});
@@ -51,8 +50,9 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   const [showPopover, setShowPopover] = useState(false);
   const [userElevation, setUserElevation] = useState<number>(0);
     
-  // fetches frost dates after station ID updates
+  // fetches frost dates after station ID updates (from history URL)
   useEffect( () => {
+    const userLatLongElev = match.params.id;
     //split out the lat/long
     const latLong = userLatLongElev.split(',');
     let stationIdx = -1;
@@ -103,7 +103,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
       }
       else { alert('Error: The station list is empty!');}
     }
-  }, [userLatLongElev]);
+  }, [match.params.id]);
     
   //these two helper functions are for styling purposes. To convert negative/positive lat and long
   //to North, East, South, or West
@@ -121,7 +121,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         <IonToolbar>
           <div className="app-toolbar">
             <IonButtons className="app-title-button app-left-title-button">
-              <IonButton href="/dashboard">
+              <IonButton routerLink="/dashboard">
                 <IonIcon icon={arrowBack} className="app-icon"> </IonIcon>
               </IonButton>
             </IonButtons>
