@@ -29,8 +29,10 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
       <IonHeader>
         <IonToolbar>
           <div className="app-toolbar">
-          <div className="app-title-button"></div>
-          <IonTitle className="app-title">Frost Date Finder</IonTitle>
+            <div className="app-title-button app-left-title-button">
+              <img className="logo" src="/assets/osu_crest.png" alt="Oregon State University Logo"/>
+            </div>
+            <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
               <IonButtons>
                 <IonButton onClick={e => {
