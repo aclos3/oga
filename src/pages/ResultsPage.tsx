@@ -54,14 +54,16 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   useEffect( () => {
     const userLatLongElev = match.params.id;
     //split out the lat/long
-    const latLong = userLatLongElev.split(',');
+    let lat: string, long: string, elevation: string;
+    [lat, long, elevation] = userLatLongElev.split(',');
     let stationIdx = -1;
+
     //make sure these values are not null or undefined
-    if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
+    if(lat && long) {
       //get a list of stations sorted by distance from the user.
-      const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])});
+      const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(lat), long: parseFloat(long)});
       //Set elevation
-      if(latLong[2] && latLong[2] !== undefined) { setUserElevation(parseFloat(latLong[2])* FEET_TO_METERS); }
+      if(elevation) { setUserElevation(parseFloat(elevation)* FEET_TO_METERS); }
       if(closestStation) {
         //get frost data list
         const frostData: FrostData[] = getFrostData();
