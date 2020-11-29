@@ -3,7 +3,7 @@ Some Source code for reference:
 https://stackblitz.com/edit/ionic-react-routing?file=src%2Fpages%2FDashboardPage.tsx
 https://www.sitepoint.com/onclick-html-attribute/
 */
-import React, { useState } from 'react';
+import React from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButtons, IonButton } from '@ionic/react';
 import { helpCircle, } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
@@ -17,20 +17,11 @@ export interface ExportStation {
 } 
 
 const HomePage: React.FC<RouteComponentProps> = ({history}) => {
-  const [lat, setLat] = useState<number>(0);
-  const [long, setLong] = useState<number>(0);
-  const [elev, setElev] = useState<number>(0);
-
   //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
   const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
-    //the incoming (new) lat/long/elevation are set to the state variables
-    setLat(newLat);
-    setLong(newLong);
-    setElev(newElev);
-    //the same three data types are combined into a string
-    const userLoc = newLat.toString() + ',' + newLong.toString() + ',' + newElev.toString();
+    const userLoc = `${newLat.toString()},${newLong.toString()},${newElev.toString()}`;
     //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
-    history.push('/dashboard/results/' + userLoc);
+    history.push(`/dashboard/results/${userLoc}`);
         
   };
   return (
@@ -38,8 +29,8 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
       <IonHeader>
         <IonToolbar>
           <div className="app-toolbar">
-            <div className="app-title-button"></div>
-            <IonTitle className="app-title">Frost Date Finder</IonTitle>
+          <div className="app-title-button"></div>
+          <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button">
               <IonButtons>
                 <IonButton onClick={e => {
@@ -64,9 +55,6 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
             </IonCardHeader>
             <IonCardContent>
               <DeviceLocation
-                initialLat={lat}
-                initialLong={long}
-                initialElev={elev}
                 onSubmit={onLatLongChange}
               ></DeviceLocation>
             </IonCardContent>
@@ -79,9 +67,6 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
             </IonCardHeader>
             <IonCardContent>
               <TextEntry
-                initialLat={lat}
-                initialLong={long}
-                initialElev={elev}
                 onSubmit={onLatLongChange}
               ></TextEntry>
             </IonCardContent>

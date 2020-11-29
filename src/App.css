@@ -37,16 +37,28 @@ ion-content {
     --background: var(--page-background);
 }
 
+ion-item{
+    align-items: center;
+    text-align: center; 
+}
+
 ion-title {
     background-color: var(--ion-color-primary);
     text-align: center;
     color: var(--ion-color-light);
     font-family: var(--title-font);
-    font-size: 1.6rem;
     padding: 0;
     margin: 0;
     width: 100%;
     height: 100%;
+}
+
+.md ion-title {
+    font-size: 1.6rem;
+}
+
+.ios ion-title {
+    font-size: 1.3rem;
 }
 
 .app-title-button {
@@ -82,6 +94,7 @@ ion-back-button {
 
 .app-icon {
     font-size: 1.8rem;
+    color: var(--ion-color-dark);
 }
 
 .app-page-container {
@@ -94,6 +107,20 @@ ion-back-button {
 .app-page-header {
     font-size: 1.4rem;
     font-family: var(--page-header-font), sans-serif;
+}
+
+.app-card-title {
+    font-size: 1rem;
+    color: var(--ion-color-dark);
+}
+
+.app-card {
+    width: 90%;
+    min-width: var(--card-min-width);
+    max-width: var(--card-max-width);
+    margin: 0.75rem auto;
+    font-family: var(--body-font), sans-serif;
+    color: var(--ion-color-dark);
 }
 
 /* small mobile devices */

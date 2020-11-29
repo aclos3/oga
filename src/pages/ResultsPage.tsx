@@ -43,7 +43,6 @@ export interface FrostDatesBySeverity {
 }
 
 const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => { 
-  const [userLatLongElev] = useState<string>(match.params.id);
   const [stationID, setStation] = useState<StationUsed>({stationID: '0', lat: 0, long: 0, elevation: 0, state: '0', city: '0', distance: 0});
   const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: '0', moderate: '0', severe: '0'});
   const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: '0', moderate: '0', severe: '0'});
@@ -52,17 +51,20 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   const [showPopover, setShowPopover] = useState(false);
   const [userElevation, setUserElevation] = useState<number>(0);
     
-  // fetches frost dates after station ID updates
+  // fetches frost dates after station ID updates (from history URL)
   useEffect( () => {
+    const userLatLongElev = match.params.id;
     //split out the lat/long
-    const latLong = userLatLongElev.split(',');
+    let lat: string, long: string, elevation: string;
+    [lat, long, elevation] = userLatLongElev.split(',');
     let stationIdx = -1;
+
     //make sure these values are not null or undefined
-    if(latLong[0] && latLong[1] && latLong[0] !== undefined && latLong[1] !== undefined) {
+    if(lat && long) {
       //get a list of stations sorted by distance from the user.
-      const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(latLong[0]), long: parseFloat(latLong[1])});
+      const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(lat), long: parseFloat(long)});
       //Set elevation
-      if(latLong[2] && latLong[2] !== undefined) { setUserElevation(parseFloat(latLong[2])); }
+      if(elevation) { setUserElevation(parseFloat(elevation)); }
       if(closestStation) {
         //get frost data list
         const frostData: FrostData[] = getFrostData();
@@ -104,7 +106,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
       }
       else { alert('Error: The station list is empty!');}
     }
-  }, [userLatLongElev]);
+  }, [match.params.id]);
     
   //these two helper functions are for styling purposes. To convert negative/positive lat and long
   //to North, East, South, or West
@@ -137,7 +139,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         <IonToolbar>
           <div className="app-toolbar">
             <IonButtons className="app-title-button app-left-title-button">
-              <IonButton href="/dashboard">
+              <IonButton routerLink="/dashboard">
                 <IonIcon icon={arrowBack} className="app-icon"> </IonIcon>
               </IonButton>
             </IonButtons>
