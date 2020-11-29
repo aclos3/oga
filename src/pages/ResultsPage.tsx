@@ -173,8 +173,8 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             <p>ID: {stationID.stationID}</p>
             <p>Station Lat: {Math.abs(parseFloat(stationID.lat.toPrecision(4)))}&#176;{isLatPositive()}</p>
             <p>Station Long: {Math.abs(parseFloat(stationID.long.toPrecision(5)))}&#176;{isLongPositive()}</p>
-            <p>Station Elevation: {stationID.elevation.toFixed(1)} feet</p>
-            <p>Local Elevation: {userElevation.toFixed(1)} feet</p>
+            <p>Station Elevation: {stationID.elevation.toFixed(0)} feet</p>
+            <p>Local Elevation: {userElevation.toFixed(0)} feet</p>
             <p>Distance: {Math.round(stationID.distance)} miles</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
