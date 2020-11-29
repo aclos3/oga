@@ -17,20 +17,11 @@ export interface ExportStation {
 } 
 
 const HomePage: React.FC<RouteComponentProps> = ({history}) => {
-  const [lat, setLat] = useState<number>(0);
-  const [long, setLong] = useState<number>(0);
-  const [elev, setElev] = useState<number>(0);
-
   //this function fires when either the "Use My Location" or "Submit" buttons on the homepage are clicked.
   const onLatLongChange =  (newLat: number, newLong: number, newElev: number) => {
-    //the incoming (new) lat/long/elevation are set to the state variables
-    setLat(newLat);
-    setLong(newLong);
-    setElev(newElev);
-    //the same three data types are combined into a string
-    const userLoc = newLat.toString() + ',' + newLong.toString() + ',' + newElev.toString();
+    const userLoc = `${newLat.toString()},${newLong.toString()},${newElev.toString()}`;
     //the string is pushed to the dashboard as part of the url to be used by the next page (results page)
-    history.push('/dashboard/results/' + userLoc);
+    history.push(`/dashboard/results/${userLoc}`);
         
   };
   return (
