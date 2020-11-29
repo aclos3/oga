@@ -6,10 +6,9 @@
   "webDir": "build",
   "plugins": {
     "SplashScreen": {
-      "backgroundColor:": "#3064b8",
-      "splashFullScreen": true,
-      "splashImmersive": true,
-      "autoHide": false
+      "backgroundColor:": "#D73F09",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": true
     }
   },
   "cordova": {}
