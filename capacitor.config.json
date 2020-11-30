@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "OregonGardening",
+  "appName": "Frost Date Finder",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
