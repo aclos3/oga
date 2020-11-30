@@ -44,7 +44,6 @@ const HomePage: React.FC<RouteComponentProps> = ({history}) => {
                 </IonButton>
               </IonButtons>
             </div>
-          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
