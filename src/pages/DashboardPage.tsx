@@ -18,7 +18,7 @@ const DashboardPage: React.FC<RouteComponentProps> = ({match}) => {
 
 DashboardPage.propTypes = {
   //I don't know if there is a better type definition than 'any'
-  match: PropTypes.any.isRequired,
+  match: PropTypes.any.isRequired
 };
 
 export default DashboardPage;

@@ -4,6 +4,7 @@ import { arrowBack, helpCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import '../App.css';
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates';
@@ -56,8 +57,11 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   useEffect( () => {
     const userLatLongElev = match.params.id;
     //split out the lat/long
-    let lat: string, long: string, elevation: string;
-    [lat, long, elevation] = userLatLongElev.split(',');
+    const values = userLatLongElev.split(',');
+    const lat: string = values[0];
+    const long: string = values[1];
+    const elevation: string = values[2];
+
     let stationIdx = -1;
 
     //make sure these values are not null or undefined
@@ -121,12 +125,12 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   };
   //this function makes sure only the first letter of each word remains capitalized and removes extraneous spaces at the end of the string
   const stringUpper = () => {
-    let upWords = stationID.city.split(" ");
+    let upWords = stationID.city.split(' ');
     console.log(`upWords: `, upWords)
     
     for (let i = 0; i < upWords.length; i++) {
-      if(upWords[i] !== undefined && upWords[i] && upWords[i] !== " ") {
-        //Spell out "Airport"
+      if(upWords[i] !== undefined && upWords[i] && upWords[i] !== ' ') {
+        //Spell out 'Airport'
         if(upWords[i] === 'AP') { upWords[i] = 'Airport '; }
         //check for special ignored words
         else if(IGNORE_WORDS.indexOf(upWords[i]) >= 0) { 
@@ -136,26 +140,26 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         else { upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + ' '; }
       }
     }
-    return upWords.join(" ").trim();
+    return upWords.join(' ').trim();
   }
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className="app-toolbar">
-            <IonButtons className="app-title-button app-left-title-button">
-              <IonButton routerLink="/dashboard">
-                <IonIcon icon={arrowBack} className="app-icon"> </IonIcon>
+          <div className='app-toolbar'>
+            <IonButtons className='app-title-button app-left-title-button'>
+              <IonButton routerLink='/dashboard'>
+                <IonIcon icon={arrowBack} className='app-icon'> </IonIcon>
               </IonButton>
             </IonButtons>
-            <IonTitle className="app-title">Frost Date Finder</IonTitle>
-            <div className="app-title-button app-right-title-button">
+            <IonTitle className='app-title'>Frost Date Finder</IonTitle>
+            <div className='app-title-button app-right-title-button'>
               <IonButtons>
                 <IonButton onClick={e => {
                   e.preventDefault();
                   history.push('/dashboard/info');
                 }}>
-                  <IonIcon icon={helpCircle} className="app-icon"></IonIcon>
+                  <IonIcon icon={helpCircle} className='app-icon'></IonIcon>
                 </IonButton>
               </IonButtons>
             </div>
@@ -163,7 +167,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className="app-page-container">
+        <div className='app-page-container'>
           <IonLoading
             isOpen={loading}
             onDidDismiss={() => setLoading(false)}
@@ -174,7 +178,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             cssClass='station-popover'
             onDidDismiss={e => setShowPopover(false)}
           >
-            <h5 className="station-popover-header">Station Information</h5>
+            <h5 className='station-popover-header'>Station Information</h5>
             <p>ID: {stationID.stationID}</p>
             <p>Station Lat: {Math.abs(parseFloat(stationID.lat.toPrecision(4)))}&#176;{isLatPositive()}</p>
             <p>Station Long: {Math.abs(parseFloat(stationID.long.toPrecision(5)))}&#176;{isLongPositive()}</p>
@@ -184,30 +188,30 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
-          <h1 className="app-page-header">Your Frost Dates</h1> 
+          <h1 className='app-page-header'>Your Frost Dates</h1> 
 
-          <div className="station-container">
-            <div className="station-col">
+          <div className='station-container'>
+            <div className='station-col'>
               <p>Station: {stringUpper()}, {stationID.state}</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
           <DisplayFrostDates
-            title="Light Freeze (32° F)"
+            title='Light Freeze (32° F)'
             springFrost={springFrostJulian.light}
             fallFrost={fallFrostJulian.light}
             frostFree={frostFreeJulian.light}
           >
           </DisplayFrostDates>
           <DisplayFrostDates
-            title="Moderate Freeze (28° F)"
+            title='Moderate Freeze (28° F)'
             springFrost={springFrostJulian.moderate}
             fallFrost={fallFrostJulian.moderate}
             frostFree={frostFreeJulian.moderate}
           >
           </DisplayFrostDates>
           <DisplayFrostDates
-            title="Severe Freeze (24° F)"
+            title='Severe Freeze (24° F)'
             springFrost={springFrostJulian.severe}
             fallFrost={fallFrostJulian.severe}
             frostFree={frostFreeJulian.severe}
@@ -218,4 +222,10 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     </IonPage>
   );
 };
+
+ResultsPage.propTypes = {
+  match: PropTypes.any.isRequired,
+  history: PropTypes.any.isRequired
+};
+
 export default ResultsPage;
