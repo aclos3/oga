@@ -125,23 +125,25 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   };
   //this function makes sure only the first letter of each word remains capitalized and removes extraneous spaces at the end of the string
   const stringUpper = () => {
-    let upWords = stationID.city.split(' ');
-    console.log(`upWords: `, upWords)
+    const upWords = stationID.city.split(' ');
+    console.log('upWords: ', upWords);
     
     for (let i = 0; i < upWords.length; i++) {
       if(upWords[i] !== undefined && upWords[i] && upWords[i] !== ' ') {
         //Spell out 'Airport'
-        if(upWords[i] === 'AP') { upWords[i] = 'Airport '; }
+        if(upWords[i] === 'AP') {
+          upWords[i] = 'Airport ';}
         //check for special ignored words
         else if(IGNORE_WORDS.indexOf(upWords[i]) >= 0) { 
-            console.log(`ignore word found!`)
-            upWords[i] = ''}
+          console.log('ignore word found!');
+          upWords[i] = '';}
         //otherwise lowercase all but the first character of the string
-        else { upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + ' '; }
+        else { 
+          upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + ' ';}
       }
     }
     return upWords.join(' ').trim();
-  }
+  };
   return (
     <IonPage>
       <IonHeader>
