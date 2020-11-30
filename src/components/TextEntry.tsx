@@ -78,15 +78,15 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         // add the character to the state code
         else { buildStateCode += textEntry.charAt(i).toUpperCase(); }
       }
-        //determine if the entry is a city/state pair
-        if(regExp.test(textEntry) && commaCount === 1) {
+      //determine if the entry is a city/state pair
+      if(regExp.test(textEntry) && commaCount === 1) {
         textEntry = textEntry.replace(/,/g, ',+\'');
         getCityStateData(buildCityName, buildStateCode);
-        }
-        //determine if entry is a valid zip code
-        else if(!(isNaN(parseInt(textEntry))) && textEntry.length === 5) { getZipCodeData(textEntry); }
-        //check for more than two characters after comma
-        else {alert('Entry is invalid, please try again. You must enter a five digit zip code or a city name followed by a comma and the two letter postal abbreviation of the state.');}
+      }
+      //determine if entry is a valid zip code
+      else if(!(isNaN(parseInt(textEntry))) && textEntry.length === 5) { getZipCodeData(textEntry); }
+      //check for more than two characters after comma
+      else {alert('Entry is invalid, please try again. You must enter a five digit zip code or a city name followed by a comma and the two letter postal abbreviation of the state.');}
     }
   };
 
