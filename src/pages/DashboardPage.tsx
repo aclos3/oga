@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import { IonRouterOutlet } from '@ionic/react';
 import HomePage from './HomePage';
@@ -14,4 +15,10 @@ const DashboardPage: React.FC<RouteComponentProps> = ({match}) => {
     </IonRouterOutlet>
   );
 };
+
+DashboardPage.propTypes = {
+  //I don't know if there is a better type definition than 'any'
+  match: PropTypes.any.isRequired
+};
+
 export default DashboardPage;

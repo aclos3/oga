@@ -27,6 +27,7 @@ ion-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 60px;
 }
 
 .app-title {
@@ -63,6 +64,7 @@ ion-title {
 
 .app-title-button {
     width: 10%;
+    height: 100%;
     margin: 0;
     padding: 0;
     font-size: 2rem;
@@ -79,6 +81,15 @@ ion-title {
 .app-right-title-button {
     justify-content: flex-end;
     margin-right: 0.25rem;
+}
+
+.logo {
+    height: 75%;
+    min-width: 35px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 2px 0;
+    z-index: 1;
 }
 
 ion-button {
@@ -127,6 +138,15 @@ ion-back-button {
 @media (max-width: 300px) {
     html, body {
         font-size: 13px;
+    }
+
+    .logo {
+        height: 50%;
+        min-width: 25px;
+        display: flex;
+        justify-content: flex-start;
+        padding: 2px 0;
+        z-index: 1;
     }
 }
 
