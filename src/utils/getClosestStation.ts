@@ -1,4 +1,4 @@
-import stationsJSON from '../data/station_lat_long.json';
+import stationsJSON from '../data/station_details.json';
 import frostJSON from '../data/frost_data.json';
 
 export interface Station {
