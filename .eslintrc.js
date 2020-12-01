@@ -28,6 +28,7 @@ module.exports = {
     "rules": {
         "semi": ["error", "always"],
         "quotes": ["error", "single"],
-        "indent": ["error", 2]
+        "indent": ["error", 2],
+        "jsx-quotes": ["error", "prefer-double"]
     }
 };
