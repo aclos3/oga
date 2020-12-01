@@ -1,5 +1,5 @@
 
-import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react';
+import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonButtons, IonPopover, IonButton, IonIcon, IonToast } from '@ionic/react';
 import { arrowBack, helpCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
@@ -43,6 +43,10 @@ export interface FrostDatesBySeverity {
   fallFrost: string;
   frostFree: string;
 }
+interface DataError {
+  showError: boolean;
+  message?: string;
+}
 
 const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => { 
   const [stationID, setStation] = useState<StationUsed>({stationID: '0', lat: 0, long: 0, elevation: 0, state: '0', city: '0', distance: 0});
@@ -52,6 +56,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showPopover, setShowPopover] = useState(false);
   const [userElevation, setUserElevation] = useState<number>(0);
+  const [error, setError] = useState<DataError>({ showError: false });
     
   // fetches frost dates after station ID updates (from history URL)
   useEffect( () => {
@@ -109,7 +114,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         });
         setLoading(false);
       }
-      else { alert('Error: The station list is empty!');}
+      else { setError({showError: true, message: 'No station was found. Try another location.'});}
     }
   }, [match.params.id]);
     
@@ -174,6 +179,12 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             isOpen={loading}
             onDidDismiss={() => setLoading(false)}
             message={'Getting Data...'}
+          />
+          <IonToast
+            isOpen={error.showError}
+            onDidDismiss={() => setError({ message: '', showError: false })}
+            message={error.message}
+            duration={3000} 
           />
           <IonPopover
             isOpen={showPopover}
