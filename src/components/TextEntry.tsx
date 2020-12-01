@@ -1,6 +1,7 @@
 //Source code:
 //https://stackoverflow.com/questions/43872975/regular-expression-to-match-u-s-cities-allowing-certain-special-characters
 import React, {useState} from 'react';
+import { Plugins } from '@capacitor/core';
 import './TextEntry.css';
 import { IonInput, IonItem, IonButton, IonLoading, IonToast } from '@ionic/react';
 import { Controller, useForm } from 'react-hook-form';
@@ -18,6 +19,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<DataError>({ showError: false });
+  const { Network } = Plugins; 
   
   //called when the text entry is determined to be a zip code
   const getZipCodeData = async (zip: string) => {
@@ -49,14 +51,20 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
   };
 
   //perform input validation on the user entered text and then determine if it is a zipcode or city, state
-  const getValid = (data: any) => {
+  const getValid = async (data: any) => {
     let textEntry = data.text;
     const regExp = /^[a-zA-Z',.\s-]+,[ ]?[A-Za-z]{2}$/; //regex to check if format is comma separated city state pair
     let commaCount = 0;
     let buildCityName = '';
     let buildStateCode = '';
+    let status = await Network.getStatus();
+
+    // error if device is offline
+    if (!status.connected) {
+      setError({showError: true, message: 'Error, device is offline. Use your location instead.'});
+    }
     //catch an empty string being passed
-    if(textEntry === undefined || textEntry === '') {
+    else if(textEntry === undefined || textEntry === '') {
       setError({showError: true, message: 'Error, input appears to be blank'});
     }
     else {  //find the comma index and count(there should be only 0 or 1 of them)
