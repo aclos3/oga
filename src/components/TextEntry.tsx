@@ -1,4 +1,4 @@
-//Source code:
+//Source code for reg expression:
 //https://stackoverflow.com/questions/43872975/regular-expression-to-match-u-s-cities-allowing-certain-special-characters
 import React, {useState} from 'react';
 import './TextEntry.css';
@@ -106,7 +106,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
       <form onSubmit={handleSubmit(getValid)}>
         <IonItem className="location-form">
           <Controller 
-            as={<IonInput placeholder="Example: Salem, OR" type="text" />}
+            as={<IonInput placeholder="Example: Corvallis, OR" type="text" />}
             name="text"
             control={control}
             onChangeName="onIonChange"
