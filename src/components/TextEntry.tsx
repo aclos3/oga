@@ -25,7 +25,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     const locationData: LocationData = await getZipCoordinates(zip); //gets the lat/long associated with this zipcode
     if (locationData.hasError) {
       console.log(locationData.errorMessage);
-      alert('No results found for your entry. Please check the validity of your five digit zip code.');
+      setError({showError: true, message: 'No results found for your entry. Please check the validity of your five digit zip code.'});
     }
     else if (locationData.latitude && locationData.longitude && locationData.elevation) { 
       props.onSubmit(locationData.latitude, locationData.longitude, locationData.elevation);
@@ -40,7 +40,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         
     if (locationData.hasError) {
       console.log(locationData.errorMessage);
-      alert('No results found for your entry. Please check the validity of your city/state pair.');
+      setError({showError: true, message: 'No results found for your entry. Please check the validity of your city/state pair.'});
     }
     else if (locationData.latitude && locationData.longitude && locationData.elevation) {
       props.onSubmit(locationData.latitude, locationData.longitude, locationData.elevation);
@@ -57,7 +57,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     let buildStateCode = '';
     //catch an empty string being passed
     if(textEntry === undefined || textEntry === '') {
-      alert('Error, input appears to be blank');
+      setError({showError: true, message: 'Error, input appears to be blank'});
     }
     else {  //find the comma index and count(there should be only 0 or 1 of them)
       let idx = 0;
@@ -86,7 +86,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
       //determine if entry is a valid zip code
       else if(!(isNaN(parseInt(textEntry))) && textEntry.length === 5) { getZipCodeData(textEntry); }
       //check for more than two characters after comma
-      else {alert('Entry is invalid, please try again. You must enter a five digit zip code or a city name followed by a comma and the two letter postal abbreviation of the state.');}
+      else {setError({showError: true, message: 'Entry is invalid, please try again. You must enter a five digit zip code or a city name followed by a comma and the two letter postal abbreviation of the state.'});}
     }
   };
 
@@ -98,7 +98,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
         message={'Getting Data...'}
       />
       <IonToast
-        isOpen={true}
+        isOpen={error.showError}
         onDidDismiss={() => setError({ message: '', showError: false })}
         message={error.message}
         duration={3000} 
