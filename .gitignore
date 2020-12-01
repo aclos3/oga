@@ -27,3 +27,5 @@ android/app/src/main/res/xml/config.xml
 android/app/src/main/res/xml/config.xml
 android/app/capacitor.build.gradle
 .eslintcache
+.firebase/hosting.YnVpbGQ.cache
+.firebaserc
