@@ -57,7 +57,7 @@ const TextEntry: React.FC<TextEntryProps> = (props: TextEntryProps) => {
     let commaCount = 0;
     let buildCityName = '';
     let buildStateCode = '';
-    let status = await Network.getStatus();
+    const status = await Network.getStatus();
 
     // error if device is offline
     if (!status.connected) {
