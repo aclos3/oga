@@ -82,19 +82,19 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         setLoading(true);
         //populate the frost data variables with data from the closest station
         setFallFrostJulian({
-          severe: frostData[stationIdx].fst_t24fp30,
-          moderate: frostData[stationIdx].fst_t28fp30,
-          light: frostData[stationIdx].fst_t32fp30
+          severe: frostData[stationIdx].fallSevere,
+          moderate: frostData[stationIdx].fallModerate,
+          light: frostData[stationIdx].fallLight
         });
         setSpringFrostJulian({
-          severe: frostData[stationIdx].lst_t24fp30,
-          moderate: frostData[stationIdx].lst_t28fp30,
-          light: frostData[stationIdx].lst_t32fp30
+          severe: frostData[stationIdx].springSevere,
+          moderate: frostData[stationIdx].springModerate,
+          light: frostData[stationIdx].springLight
         });
         setFrostFreeJulian({
-          severe: frostData[stationIdx].gsl_t24fp30,
-          moderate: frostData[stationIdx].gsl_t28fp30,
-          light: frostData[stationIdx].gsl_t32fp30
+          severe: frostData[stationIdx].frostFreeSevere,
+          moderate: frostData[stationIdx].frostFreeModerate,
+          light: frostData[stationIdx].frostFreeLight
         });
         setLoading(false);
       }

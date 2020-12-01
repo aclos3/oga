@@ -13,15 +13,15 @@ export interface Station {
 
 export interface FrostData {
   station: string;
-  fst_t24fp30: string;
-  fst_t28fp30: string;
-  fst_t32fp30: string;
-  lst_t24fp30: string;
-  lst_t28fp30: string;
-  lst_t32fp30: string;
-  gsl_t24fp30: string;
-  gsl_t28fp30: string;
-  gsl_t32fp30: string;
+  fallSevere: string;
+  fallModerate: string;
+  fallLight: string;
+  springSevere: string;
+  springModerate: string;
+  springLight: string;
+  frostFreeSevere: string;
+  frostFreeModerate: string;
+  frostFreeLight: string;
   quality: string;
 }
 
@@ -53,15 +53,15 @@ export function getFrostData(): FrostData[] {
   const frostData: FrostData[] = frostJSON.map( (data) => {
     return {
       station: data.station,
-      fst_t28fp30: data['ann-tmin-prbfst-t28Fp30'],
-      fst_t24fp30: data['ann-tmin-prbfst-t24Fp30'],
-      fst_t32fp30: data['ann-tmin-prbfst-t32Fp30'],
-      lst_t24fp30: data['ann-tmin-prblst-t24Fp30'],
-      lst_t28fp30: data['ann-tmin-prblst-t28Fp30'],
-      lst_t32fp30: data['ann-tmin-prblst-t32Fp30'],
-      gsl_t24fp30: data['ann-tmin-prbgsl-t24Fp30'],
-      gsl_t28fp30: data['ann-tmin-prbgsl-t28Fp30'],
-      gsl_t32fp30: data['ann-tmin-prbgsl-t32Fp30'],
+      fallSevere: data['ann-tmin-prbfst-t28Fp30'],
+      fallModerate: data['ann-tmin-prbfst-t24Fp30'],
+      fallLight: data['ann-tmin-prbfst-t32Fp30'],
+      springSevere: data['ann-tmin-prblst-t24Fp30'],
+      springModerate: data['ann-tmin-prblst-t28Fp30'],
+      springLight: data['ann-tmin-prblst-t32Fp30'],
+      frostFreeSevere: data['ann-tmin-prbgsl-t24Fp30'],
+      frostFreeModerate: data['ann-tmin-prbgsl-t28Fp30'],
+      frostFreeLight: data['ann-tmin-prbgsl-t32Fp30'],
       quality: data['quality']
     };
   });
