@@ -50,22 +50,25 @@ export function getWeatherStations(): Station[] {
 
 //get all station frost data from JSON file
 export function getFrostData(): FrostData[] {
-  const frostData: FrostData[] = frostJSON.map( (data) => {
-    return {
-      station: data.station,
-      fallSevere: data['ann-tmin-prbfst-t28Fp30'],
-      fallModerate: data['ann-tmin-prbfst-t24Fp30'],
-      fallLight: data['ann-tmin-prbfst-t32Fp30'],
-      springSevere: data['ann-tmin-prblst-t24Fp30'],
-      springModerate: data['ann-tmin-prblst-t28Fp30'],
-      springLight: data['ann-tmin-prblst-t32Fp30'],
-      frostFreeSevere: data['ann-tmin-prbgsl-t24Fp30'],
-      frostFreeModerate: data['ann-tmin-prbgsl-t28Fp30'],
-      frostFreeLight: data['ann-tmin-prbgsl-t32Fp30'],
-      quality: data['quality']
-    };
-  });
-  return frostData;
+  if (frostJSON instanceof Array) {
+    const frostData: FrostData[] = frostJSON.map( (data) => {
+      return {
+        station: data.station,
+        fallSevere: data['ann-tmin-prbfst-t28Fp30'],
+        fallModerate: data['ann-tmin-prbfst-t24Fp30'],
+        fallLight: data['ann-tmin-prbfst-t32Fp30'],
+        springSevere: data['ann-tmin-prblst-t24Fp30'],
+        springModerate: data['ann-tmin-prblst-t28Fp30'],
+        springLight: data['ann-tmin-prblst-t32Fp30'],
+        frostFreeSevere: data['ann-tmin-prbgsl-t24Fp30'],
+        frostFreeModerate: data['ann-tmin-prbgsl-t28Fp30'],
+        frostFreeLight: data['ann-tmin-prbgsl-t32Fp30'],
+        quality: data['quality']
+      };
+    });
+    return frostData;
+  }
+  return [];
 }
 
 // returns a list sorted by distance from the origin
