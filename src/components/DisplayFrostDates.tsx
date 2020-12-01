@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
-import { FrostDatesBySeverity } from '../pages/ResultsPage';
 import './DisplayFrostDates.css';
+
+interface FrostDatesBySeverity {
+  title: string;
+  springFrost: string;
+  fallFrost: string;
+  frostFree: string;
+}
 
 //these codes are defined in NOAA's "NORMAL_ANN_documentation.pdf"
 const checkApiReturn = (dayNum: any) => {

@@ -22,6 +22,7 @@ interface FrostDates {
   moderate: string;
   severe: string;
 }
+
 interface StationUsed {
   stationID: string;
   lat: number;
@@ -30,13 +31,6 @@ interface StationUsed {
   state: string;
   city: string;
   distance: number;
-}
-
-export interface FrostDatesBySeverity {
-  title: string;
-  springFrost: string;
-  fallFrost: string;
-  frostFree: string;
 }
 
 const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => { 
