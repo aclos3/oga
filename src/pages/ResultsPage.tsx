@@ -152,20 +152,20 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className='app-toolbar'>
-            <IonButtons className='app-title-button app-left-title-button'>
-              <IonButton routerLink='/dashboard'>
-                <IonIcon icon={arrowBack} className='app-icon'> </IonIcon>
+          <div className="app-toolbar">
+            <IonButtons className="app-title-button app-left-title-button">
+              <IonButton routerLink="/dashboard">
+                <IonIcon icon={arrowBack} className="app-icon"> </IonIcon>
               </IonButton>
             </IonButtons>
-            <IonTitle className='app-title'>Frost Date Finder</IonTitle>
-            <div className='app-title-button app-right-title-button'>
+            <IonTitle className="app-title">Frost Date Finder</IonTitle>
+            <div className="app-title-button app-right-title-button">
               <IonButtons>
                 <IonButton onClick={e => {
                   e.preventDefault();
                   history.push('/dashboard/info');
                 }}>
-                  <IonIcon icon={helpCircle} className='app-icon'></IonIcon>
+                  <IonIcon icon={helpCircle} className="app-icon"></IonIcon>
                 </IonButton>
               </IonButtons>
             </div>
@@ -173,7 +173,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className='app-page-container'>
+        <div className="app-page-container">
           <IonLoading
             isOpen={loading}
             onDidDismiss={() => setLoading(false)}
@@ -181,10 +181,10 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
           />
           <IonPopover
             isOpen={showPopover}
-            cssClass='station-popover'
+            cssClass="station-popover"
             onDidDismiss={e => setShowPopover(false)}
           >
-            <h5 className='station-popover-header'>Station Information</h5>
+            <h5 className="station-popover-header">Station Information</h5>
             <p>ID: {stationID.stationID}</p>
             <p>Station Lat: {Math.abs(parseFloat(stationID.lat.toPrecision(4)))}&#176;{isLatPositive()}</p>
             <p>Station Long: {Math.abs(parseFloat(stationID.long.toPrecision(5)))}&#176;{isLongPositive()}</p>
@@ -194,30 +194,30 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
-          <h1 className='app-page-header'>Your Frost Dates</h1> 
+          <h1 className="app-page-header">Your Frost Dates</h1> 
 
-          <div className='station-container'>
-            <div className='station-col'>
+          <div className="station-container">
+            <div className="station-col">
               <p>Station: {stringUpper()}, {stationID.state}</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
           <DisplayFrostDates
-            title='Light Freeze (32° F)'
+            title="Light Freeze (32° F)"
             springFrost={springFrostJulian.light}
             fallFrost={fallFrostJulian.light}
             frostFree={frostFreeJulian.light}
           >
           </DisplayFrostDates>
           <DisplayFrostDates
-            title='Moderate Freeze (28° F)'
+            title="Moderate Freeze (28° F)"
             springFrost={springFrostJulian.moderate}
             fallFrost={fallFrostJulian.moderate}
             frostFree={frostFreeJulian.moderate}
           >
           </DisplayFrostDates>
           <DisplayFrostDates
-            title='Severe Freeze (24° F)'
+            title="Severe Freeze (24° F)"
             springFrost={springFrostJulian.severe}
             fallFrost={fallFrostJulian.severe}
             frostFree={frostFreeJulian.severe}
