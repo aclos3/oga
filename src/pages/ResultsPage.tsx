@@ -102,7 +102,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         if (EXPAND_WORDS[word]) { upWords[i] = EXPAND_WORDS[word]; }
         else if (IGNORE_WORDS.includes(word)) { upWords[i] = '';}
         // capitalize names like McNary properly
-        else if (word.length >= 2 && ((word[0] === 'M' && word[1] === 'C') || (word[0] === 'D' && word[1] === 'E'))) {
+        else if (word.length >= 2 && ((word[0] === 'M' && word[1] === 'C'))) {
           upWords[i] = upWords[i][0] + upWords[i][1].toLowerCase() + upWords[i][2] + upWords[i].substr(3).toLowerCase();
         }
         else { upWords[i] = word[0] + word.substr(1).toLowerCase();}
