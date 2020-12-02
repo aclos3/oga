@@ -102,6 +102,7 @@ ion-button {
 ion-back-button {
     --icon-font-size: 1.8rem;
     --padding-start: 0;
+    --color: var(--ion-color-dark);
 }
 
 .app-icon {
