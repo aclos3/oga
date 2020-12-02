@@ -29,8 +29,45 @@ export interface Coordinates {
   lat: number;
   long: number;
 }
-//create a stations list
+
+const METERS_TO_FEET = 3.28084;
+const KM_TO_MILES = 0.621371;
+
+//create arrays for stations and frost datae data
 const stations: Station[] = getWeatherStations();
+const frostData: FrostData[] = getFrostData();
+
+// get closest station and its frost data
+export function getClosestStationAndFrostData(origin: Coordinates): [Station | null, FrostData | null] {
+  const stationsSortedByDistance: Station[] | null = getClosestStationList(origin);
+  let closestStation: Station | null = null;
+  let stationFrostData: FrostData | null = null;
+  let frostIdx = -1;
+
+  if (stationsSortedByDistance) {
+    //loop until a station with data is found, not all climate normals weather stations contain the frost data we're looking for
+    for (let i = 0; i < stationsSortedByDistance.length; i++) {
+      //compare the two lists to see if the station ID exists in both
+      frostIdx = frostData.findIndex(o => o.station === stationsSortedByDistance[i].station);
+      if (frostIdx >= 0) {  //matching station was found, stop i, populate station information
+        closestStation = {
+          station: stationsSortedByDistance[i].station,
+          latitude: stationsSortedByDistance[i].latitude,
+          longitude: stationsSortedByDistance[i].longitude,
+          elevation: stationsSortedByDistance[i].elevation * METERS_TO_FEET,
+          state: stationsSortedByDistance[i].state,
+          city: stationsSortedByDistance[i].city, 
+          distance: stationsSortedByDistance[i].distance * KM_TO_MILES
+        };
+
+        stationFrostData = frostData[frostIdx];
+        break;
+      }
+    }
+  }
+
+  return [closestStation, stationFrostData];
+}
 
 //get all weather stations from JSON file
 export function getWeatherStations(): Station[] {

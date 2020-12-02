@@ -2,15 +2,13 @@
 import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react';
 import { arrowBack, helpCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
-import { getClosestStationList, Station, getFrostData, FrostData } from '../utils/getClosestStation';
+import { Station, getClosestStationAndFrostData } from '../utils/getClosestStation';
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import '../App.css';
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates';
 
-const METERS_TO_FEET = 3.28084;
-const KM_TO_MILES = 0.621371;
 const IGNORE_WORDS = ['HCN', 'N', 'E', 'S', 'W', 'NE', 'NW', 'SE', 'SW', 'NNE', 'NNW', 'SSE', 'SSW', 'ENE', 'WNW', 'ESE', 'WSW'];
 
 type ContainerProps = RouteComponentProps<{
@@ -23,18 +21,8 @@ interface FrostDates {
   severe: string;
 }
 
-interface StationUsed {
-  stationID: string;
-  lat: number;
-  long: number;
-  elevation: number;
-  state: string;
-  city: string;
-  distance: number;
-}
-
 const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => { 
-  const [stationID, setStation] = useState<StationUsed>({stationID: '0', lat: 0, long: 0, elevation: 0, state: '0', city: '0', distance: 0});
+  const [station, setStation] = useState<Station>({station: '0', latitude: 0, longitude: 0, elevation: 0, state: '0', city: '0', distance: 0});
   const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: '0', moderate: '0', severe: '0'});
   const [fallFrostJulian, setFallFrostJulian] = useState<FrostDates>({light: '0', moderate: '0', severe: '0'});
   const [frostFreeJulian, setFrostFreeJulian] = useState<FrostDates>({light: '0', moderate: '0', severe: '0'});
@@ -51,50 +39,33 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     const long: string = values[1];
     const elevation: string = values[2];
 
-    let stationIdx = -1;
+    //Set elevation
+    if(elevation) { setUserElevation(parseFloat(elevation)); }
 
     //make sure these values are not null or undefined
     if(lat && long) {
       //get a list of stations sorted by distance from the user.
-      const closestStation: Station[] | null = getClosestStationList({lat: parseFloat(lat), long: parseFloat(long)});
-      //Set elevation
-      if(elevation) { setUserElevation(parseFloat(elevation)); }
-      if(closestStation) {
-        //get frost data list
-        const frostData: FrostData[] = getFrostData();
-        //loop until a station with data is found, not all climate normals weather stations contain the frost data we're looking for
-        for(let checking = 0; checking < closestStation.length; checking++) {
-          //compare the two lists to see if the station ID exists in both
-          stationIdx = frostData.findIndex(o => o.station === closestStation[checking].station);
-          if(stationIdx >= 0) {  //matching station was found, stop checking, populate station information
-            setStation({
-              stationID: closestStation[checking].station,
-              lat: closestStation[checking].latitude,
-              long: closestStation[checking].longitude,
-              elevation: closestStation[checking].elevation * METERS_TO_FEET,
-              state: closestStation[checking].state,
-              city: closestStation[checking].city, 
-              distance: closestStation[checking].distance * KM_TO_MILES
-            });
-            checking = closestStation.length; 
-          }
-        }
+      const [closestStation, stationFrostData] = getClosestStationAndFrostData({lat: parseFloat(lat), long: parseFloat(long)});
+
+      if(closestStation && stationFrostData) {
         setLoading(true);
-        //populate the frost data variables with data from the closest station
+
+        // population station and frost date variables
+        setStation(closestStation);
         setFallFrostJulian({
-          severe: frostData[stationIdx].fallSevere,
-          moderate: frostData[stationIdx].fallModerate,
-          light: frostData[stationIdx].fallLight
+          severe: stationFrostData.fallSevere,
+          moderate: stationFrostData.fallModerate,
+          light: stationFrostData.fallLight
         });
         setSpringFrostJulian({
-          severe: frostData[stationIdx].springSevere,
-          moderate: frostData[stationIdx].springModerate,
-          light: frostData[stationIdx].springLight
+          severe: stationFrostData.springSevere,
+          moderate: stationFrostData.springModerate,
+          light: stationFrostData.springLight
         });
         setFrostFreeJulian({
-          severe: frostData[stationIdx].frostFreeSevere,
-          moderate: frostData[stationIdx].frostFreeModerate,
-          light: frostData[stationIdx].frostFreeLight
+          severe: stationFrostData.frostFreeSevere,
+          moderate: stationFrostData.frostFreeModerate,
+          light: stationFrostData.frostFreeLight
         });
         setLoading(false);
       }
@@ -105,17 +76,17 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   //these two helper functions are for styling purposes. To convert negative/positive lat and long
   //to North, East, South, or West
   const isLatPositive = () => {
-    if(stationID.lat >= 0) { return 'N'; }
+    if(station.latitude >= 0) { return 'N'; }
     else { return 'S';}
   };
   const isLongPositive = () => {
-    if(stationID.long >= 0) { return 'E'; }
+    if(station.longitude >= 0) { return 'E'; }
     else { return 'W';}
   };
   //this function makes sure only the first letter of each word remains capitalized and removes extraneous spaces at the end of the string
   //the function also checks for certain words to omit and for some abbreviations to expand.
   const stringUpper = () => {
-    const upWords = stationID.city.split(' ');
+    const upWords = station.city.split(' ');
     for (let i = 0; i < upWords.length; i++) {
       if(upWords[i] !== undefined && upWords[i] && upWords[i] !== ' ') {
         //Spell out words like "Airport", "Center," "Field," etc.
@@ -174,12 +145,12 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             onDidDismiss={e => setShowPopover(false)}
           >
             <h5 className='station-popover-header'>Station Information</h5>
-            <p>ID: {stationID.stationID}</p>
-            <p>Station Lat: {Math.abs(parseFloat(stationID.lat.toPrecision(4)))}&#176;{isLatPositive()}</p>
-            <p>Station Long: {Math.abs(parseFloat(stationID.long.toPrecision(5)))}&#176;{isLongPositive()}</p>
-            <p>Station Elevation: {stationID.elevation.toFixed(0)} feet</p>
+            <p>ID: {station.station}</p>
+            <p>Station Lat: {Math.abs(parseFloat(station.latitude.toPrecision(4)))}&#176;{isLatPositive()}</p>
+            <p>Station Long: {Math.abs(parseFloat(station.longitude.toPrecision(5)))}&#176;{isLongPositive()}</p>
+            <p>Station Elevation: {station.elevation.toFixed(0)} feet</p>
             <p>Local Elevation: {userElevation.toFixed(0)} feet</p>
-            <p>Distance: {Math.round(stationID.distance)} miles</p>
+            <p>Distance: {Math.round(station.distance)} miles</p>
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
@@ -187,7 +158,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
 
           <div className='station-container'>
             <div className='station-col'>
-              <p>Station: {stringUpper()}, {stationID.state}</p>
+              <p>Station: {stringUpper()}, {station.state}</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
