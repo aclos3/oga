@@ -9,6 +9,15 @@ import '../App.css';
 import './ResultsPage.css';
 import DisplayFrostDates from '../components/DisplayFrostDates';
 
+// words in station names to expand or ignore
+const EXPAND_WORDS: {[key: string]: string} = {
+  'AP': 'Airport',
+  'FLD': 'Field',
+  'STN': 'Station',
+  'CTR': 'Center',
+  'RGNL': 'Regional',
+  'UNIV': 'University'
+};
 const IGNORE_WORDS = ['HCN', 'N', 'E', 'S', 'W', 'NE', 'NW', 'SE', 'SW', 'NNE', 'NNW', 'SSE', 'SSW', 'ENE', 'WNW', 'ESE', 'WSW'];
 
 type ContainerProps = RouteComponentProps<{
@@ -38,7 +47,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     //Set elevation
     if(elevation) { setUserElevation(parseFloat(elevation)); }
 
-    //make sure these values are not null or undefined
+    // if there's a lat long in the URL, get the closest station and its frost data and set the state variables to display
     if(lat && long) {
       //get a list of stations sorted by distance from the user.
       const [closestStation, stationFrostData] = getClosestStationAndFrostData({lat: parseFloat(lat), long: parseFloat(long)});
@@ -63,6 +72,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
           moderate: stationFrostData.frostFreeModerate,
           light: stationFrostData.frostFreeLight
         });
+
         setLoading(false);
       }
       else { alert('Error: The station list is empty!');}
@@ -75,29 +85,27 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
 
   //this function makes sure only the first letter of each word remains capitalized and removes extraneous spaces at the end of the string
   //the function also checks for certain words to omit and for some abbreviations to expand.
-  const stringUpper = () => {
-    const upWords = station.city.split(' ');
+  const capitalizeStationName = () => {
+    const upWords: string[] = station.city.split(' ');
+    let word: string = '';
+
     for (let i = 0; i < upWords.length; i++) {
-      if(upWords[i] !== undefined && upWords[i] && upWords[i] !== ' ') {
-        //Spell out words like "Airport", "Center," "Field," etc.
-        if(upWords[i] === 'AP') { upWords[i] = 'Airport '; }
-        else if (upWords[i] === 'FLD') {upWords[i] = 'Field ';}
-        else if (upWords[i] === 'STN') {upWords[i] = 'Station ';}
-        else if (upWords[i] === 'CTR') {upWords[i] = 'Center ';}
-        //check for special ignored words (N, E, S, W, HCN, etc)
-        else if(IGNORE_WORDS.indexOf(upWords[i]) >= 0) { upWords[i] = '';}
-        //check for 'Mc' or 'De'
-        else if(upWords[i][0] && upWords[i][1] && upWords[i][2]) {
-          if((upWords[i][0] === 'M' && upWords[i][1] === 'C') || (upWords[i][0] === 'D' && upWords[i][1] === 'E')) { 
-            upWords[i] = upWords[i][0] + upWords[i][1].toLowerCase() + upWords[i][2] + upWords[i].substr(3).toLowerCase() + ' ';
-          }
-          //otherwise lowercase all but the first character of the string
-          else { upWords[i] = upWords[i][0] + upWords[i].substr(1).toLowerCase() + ' ';}
+      word = upWords[i];
+
+      if(word && word !== ' ') {
+        if (EXPAND_WORDS[word]) { upWords[i] = EXPAND_WORDS[word]; }
+        else if (IGNORE_WORDS.includes(word)) { upWords[i] = '';}
+        // capitalize names like McNary properly
+        else if (word.length >= 2 && ((word[0] === 'M' && word[1] === 'C') || (word[0] === 'D' && word[1] === 'E'))) {
+          upWords[i] = upWords[i][0] + upWords[i][1].toLowerCase() + upWords[i][2] + upWords[i].substr(3).toLowerCase();
         }
+        else { upWords[i] = word[0] + word.substr(1).toLowerCase();}
       }
     }
+
     return upWords.join(' ').trim();
   };
+
   return (
     <IonPage>
       <IonHeader>
@@ -148,7 +156,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
 
           <div className='station-container'>
             <div className='station-col'>
-              <p>Station: {stringUpper()}, {station.state}</p>
+              <p>Station: {capitalizeStationName()}, {station.state}</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
           </div>
