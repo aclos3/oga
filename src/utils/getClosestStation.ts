@@ -11,29 +11,66 @@ export interface Station {
   distance: number;
 }
 
-export interface FrostData {
+interface FrostData {
   station: string;
-  fst_t24fp30: string;
-  fst_t28fp30: string;
-  fst_t32fp30: string;
-  lst_t24fp30: string;
-  lst_t28fp30: string;
-  lst_t32fp30: string;
-  gsl_t24fp30: string;
-  gsl_t28fp30: string;
-  gsl_t32fp30: string;
+  fallSevere: string;
+  fallModerate: string;
+  fallLight: string;
+  springSevere: string;
+  springModerate: string;
+  springLight: string;
+  frostFreeSevere: string;
+  frostFreeModerate: string;
+  frostFreeLight: string;
   quality: string;
 }
 
-export interface Coordinates {
+interface Coordinates {
   lat: number;
   long: number;
 }
-//create a stations list
+
+const METERS_TO_FEET = 3.28084;
+const KM_TO_MILES = 0.621371;
+
+//create arrays for stations and frost datae data
 const stations: Station[] = getWeatherStations();
+const frostData: FrostData[] = getFrostData();
+
+// get closest station and its frost data
+export function getClosestStationAndFrostData(origin: Coordinates): [Station | null, FrostData | null] {
+  const stationsSortedByDistance: Station[] | null = getClosestStationList(origin);
+  let closestStation: Station | null = null;
+  let stationFrostData: FrostData | null = null;
+  let frostIdx = -1;
+
+  if (stationsSortedByDistance) {
+    //loop until a station with data is found, not all climate normals weather stations contain the frost data we're looking for
+    for (let i = 0; i < stationsSortedByDistance.length; i++) {
+      //compare the two lists to see if the station ID exists in both
+      frostIdx = frostData.findIndex(o => o.station === stationsSortedByDistance[i].station);
+      if (frostIdx >= 0) {  //matching station was found, stop i, populate station information
+        closestStation = {
+          station: stationsSortedByDistance[i].station,
+          latitude: stationsSortedByDistance[i].latitude,
+          longitude: stationsSortedByDistance[i].longitude,
+          elevation: stationsSortedByDistance[i].elevation * METERS_TO_FEET,
+          state: stationsSortedByDistance[i].state,
+          city: stationsSortedByDistance[i].city, 
+          distance: stationsSortedByDistance[i].distance * KM_TO_MILES
+        };
+
+        stationFrostData = frostData[frostIdx];
+        break;
+      }
+    }
+  }
+
+  return [closestStation, stationFrostData];
+}
 
 //get all weather stations from JSON file
-export function getWeatherStations(): Station[] {
+function getWeatherStations(): Station[] {
   const stations: Station[] = stationsJSON.map( (data) => {
     return {
       station: data.id,
@@ -42,34 +79,37 @@ export function getWeatherStations(): Station[] {
       elevation: data.elevation,
       state: data.state,
       city: data.city,
-      distance: 999999
+      distance: Infinity
     };
   });
   return stations;
 }
 
 //get all station frost data from JSON file
-export function getFrostData(): FrostData[] {
-  const frostData: FrostData[] = frostJSON.map( (data) => {
-    return {
-      station: data.station,
-      fst_t28fp30: data['ann-tmin-prbfst-t28Fp30'],
-      fst_t24fp30: data['ann-tmin-prbfst-t24Fp30'],
-      fst_t32fp30: data['ann-tmin-prbfst-t32Fp30'],
-      lst_t24fp30: data['ann-tmin-prblst-t24Fp30'],
-      lst_t28fp30: data['ann-tmin-prblst-t28Fp30'],
-      lst_t32fp30: data['ann-tmin-prblst-t32Fp30'],
-      gsl_t24fp30: data['ann-tmin-prbgsl-t24Fp30'],
-      gsl_t28fp30: data['ann-tmin-prbgsl-t28Fp30'],
-      gsl_t32fp30: data['ann-tmin-prbgsl-t32Fp30'],
-      quality: data['quality']
-    };
-  });
-  return frostData;
+function getFrostData(): FrostData[] {
+  if (frostJSON instanceof Array) {
+    const frostData: FrostData[] = frostJSON.map( (data) => {
+      return {
+        station: data.station,
+        fallSevere: data['ann-tmin-prbfst-t28Fp30'],
+        fallModerate: data['ann-tmin-prbfst-t24Fp30'],
+        fallLight: data['ann-tmin-prbfst-t32Fp30'],
+        springSevere: data['ann-tmin-prblst-t24Fp30'],
+        springModerate: data['ann-tmin-prblst-t28Fp30'],
+        springLight: data['ann-tmin-prblst-t32Fp30'],
+        frostFreeSevere: data['ann-tmin-prbgsl-t24Fp30'],
+        frostFreeModerate: data['ann-tmin-prbgsl-t28Fp30'],
+        frostFreeLight: data['ann-tmin-prbgsl-t32Fp30'],
+        quality: data['quality']
+      };
+    });
+    return frostData;
+  }
+  return [];
 }
 
 // returns a list sorted by distance from the origin
-export function getClosestStationList(origin: Coordinates): Station[] | null {
+function getClosestStationList(origin: Coordinates): Station[] | null {
   //get station distances
   for (const station of stations) {
     station.distance = getDistanceFromLatLongInKm(origin, {lat: station.latitude, long: station.longitude});
@@ -78,26 +118,11 @@ export function getClosestStationList(origin: Coordinates): Station[] | null {
   stations.sort((a, b) => (a.distance > b.distance) ? 1 : -1);
   return stations;
 }
-// uses Haversine formula, which gives the great-circle distance between two latitude-longitude pairs
-// will have some inaccuracy from assuming that earth is a perfect sphere
-export const getClosestPoint = (origin: Coordinates, locations: Coordinates[]): Coordinates => {
-  let smallestDistance = Infinity;
-  let closestPosition: Coordinates = {
-    lat: 0,
-    long: 0
-  };
-  for (const location of locations) {
-    const distance: number = getDistanceFromLatLongInKm(origin, location);
-    if (distance < smallestDistance) {
-      smallestDistance = distance;
-      closestPosition = location;
-    }
-  }
-  return closestPosition;
-};
+
 const convertDegreesToRadians = (degree: number) => {
   return degree * (Math.PI / 180);
 }; 
+
 // haversine formula: https://en.wikipedia.org/wiki/Haversine_formula
 // variable names a and c come from formula
 // source of code: https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula/21623206#21623206

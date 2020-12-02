@@ -11,6 +11,7 @@ interface CityStateApiData {
     };
   } [];
 }
+
 //the format of the return from the opendatasoft 'zipcode lat/long' API call
 interface ZipCodeApiData {
   records: { 
@@ -20,6 +21,7 @@ interface ZipCodeApiData {
     };
   } [];
 }
+
 // if error from API: set hasError and enter string for errorMessage
 // if no error from API: set latitudea and longitude to appropriate values
 export interface LocationData {
@@ -34,11 +36,11 @@ export interface LocationData {
 // if API returns an error, the LocationData object will have hasError = true
 export async function getCityStateCoordinates(cityName: string, stateCode: string): Promise<LocationData> {
   const cityApiStr = `https://public.opendatasoft.com/api/records/1.0/search/?dataset=cities-and-towns-of-the-united-states&q=name=${cityName}&refine.state=${stateCode}`;
-  const data = await fetch(cityApiStr, {
+  const response = await fetch(cityApiStr, {
     method: 'GET',
   });
+  const json: CityStateApiData = await response.json();
 
-  const json: CityStateApiData = await data.json();
   // starts with error message--change if API returns valid response
   let locationData: LocationData = {
     hasError: true,
@@ -47,31 +49,35 @@ export async function getCityStateCoordinates(cityName: string, stateCode: strin
     longitude: null,
     elevation: null
   };
+
   try { //the api call may return several results, so loop through to match the city name and two character state code
-    for(let i = 0; i < json.records.length; i++) {
-      if(json.records[i].fields.name.toUpperCase() === cityName && json.records[i].fields.state.toUpperCase() === stateCode) {
-        if(json.records[i].fields.geo_point_2d[0] && json.records[i].fields.geo_point_2d[1]) {
+    for (const record of json.records) {
+      if(record.fields.name.toUpperCase() === cityName && record.fields.state.toUpperCase() === stateCode) {
+        if(record.fields.geo_point_2d[0] && record.fields.geo_point_2d[1]) {
           locationData =  {
             hasError: false,
             errorMessage: '',
-            latitude: json.records[i].fields.geo_point_2d[0],
-            longitude: json.records[i].fields.geo_point_2d[1],
-            elevation: json.records[i].fields.elev_in_ft
+            latitude: record.fields.geo_point_2d[0],
+            longitude: record.fields.geo_point_2d[1],
+            elevation: record.fields.elev_in_ft
           };
         }
       }
     }
-  } catch(error){ console.log(error); }
+  } 
+  catch(error) { console.log(error); }
+
   return locationData;
 }
 // gets latitude, longitude and elevation for a zip code pair (for example, 97365)
 // if API returns an error, the LocationData object will have hasError = true
 export async function getZipCoordinates(zipCode: string): Promise<LocationData> {
   const zipApiStr = `https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-zip-code-latitude-and-longitude&q=zip=${zipCode}`;
-  const data = await fetch(zipApiStr, {
+  const response = await fetch(zipApiStr, {
     method: 'GET',
   });
-  const json: ZipCodeApiData = await data.json();
+  const json: ZipCodeApiData = await response.json();
+
   // starts with error message--change if API returns valid response
   let locationData: LocationData = {
     hasError: true,
@@ -80,6 +86,7 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
     longitude: null,
     elevation: null
   };
+
   try {
     if(json.records[0].fields.latitude && json.records[0].fields.longitude) {
       const apiElev = await getElevation(json.records[0].fields.latitude, json.records[0].fields.longitude);
@@ -91,6 +98,8 @@ export async function getZipCoordinates(zipCode: string): Promise<LocationData> 
         elevation: apiElev
       };
     }
-  } catch(error){ console.log(error); }
+  } 
+  catch(error) { console.log(error); }
+
   return locationData;
 }

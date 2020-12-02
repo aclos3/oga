@@ -3,6 +3,8 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { getElevation } from '../utils/getUserElevation';
 
+const METERS_TO_FEET = 3.28084;
+
 interface DeviceLocationProps {
     onSubmit: (homeLat: number, homeLong: number, homeElev: number) => void;
 }
@@ -41,8 +43,8 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
         const apiElev = await getElevation(lat, long);
         elev = apiElev;
       }
-      else { //otherwise, use device's location
-        elev = position.coords.altitude;
+      else { //otherwise, use device's location (convert it from meters to feet)
+        elev = position.coords.altitude * METERS_TO_FEET;
       }
 
       props.onSubmit(lat, long, elev || 0);
