@@ -55,11 +55,11 @@ ion-title {
 }
 
 .md ion-title {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
 }
 
 .ios ion-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .app-title-button {
@@ -116,7 +116,7 @@ ion-back-button {
 }
 
 .app-page-header {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-family: var(--page-header-font), sans-serif;
 }
 
