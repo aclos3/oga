@@ -31,7 +31,8 @@ ion-toolbar {
 }
 
 .app-title {
-    width: 80%;
+    width: 70%;
+    z-index: 2;
 }
 
 ion-content {
@@ -63,7 +64,7 @@ ion-title {
 }
 
 .app-title-button {
-    width: 10%;
+    width: 15%;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -142,15 +143,6 @@ ion-back-button {
 
     .app-toolbar {
         height: 50px;
-    }
-
-    .logo {
-        height: 50%;
-        min-width: 25px;
-        display: flex;
-        justify-content: flex-start;
-        padding: 2px 0;
-        z-index: 1;
     }
 }
 
