@@ -140,6 +140,10 @@ ion-back-button {
         font-size: 13px;
     }
 
+    .app-toolbar {
+        height: 50px;
+    }
+
     .logo {
         height: 50%;
         min-width: 25px;
