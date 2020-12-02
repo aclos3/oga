@@ -15,7 +15,6 @@ interface LocationError {
 const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<LocationError>({ showError: false });
-  const [position, setPosition] = useState<Geoposition>();
   const geolocation = new Geolocation();
 
   let lat: number | null = 0;
@@ -32,7 +31,6 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
 
     try { //use the device geolocation to get coordinates and possibly elevation
       const position = await geolocation.getCurrentPosition(options);
-      setPosition(position);
       setLoading(false);
       setError({ showError: false });
       lat = position.coords.latitude;
@@ -50,7 +48,12 @@ const DeviceLocation: React.FC<DeviceLocationProps> = (props: DeviceLocationProp
       props.onSubmit(lat, long, elev || 0);
     } catch (e) {
       let msg = e.message;
-      if(msg === 'Timeout expired') {msg += '. Make sure your device location service is enabled.';}
+      if (msg === 'Timeout expired') {
+        msg = 'Error, make sure your device location service is enabled.';
+      }
+      else if (msg === 'Illegal Access') {
+        msg = 'Error, you must allow access to use your device\'s location.';
+      }
       setError({ showError: true, message: msg });
       setLoading(false);
     }

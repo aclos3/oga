@@ -1,5 +1,5 @@
 
-import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonButtons, IonPopover, IonButton, IonIcon } from '@ionic/react';
+import { IonPage, IonHeader, IonLoading, IonToolbar, IonTitle, IonContent, IonButtons, IonPopover, IonButton, IonIcon, IonToast } from '@ionic/react';
 import { arrowBack, helpCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { Station, getClosestStationAndFrostData } from '../utils/getClosestStation';
@@ -30,6 +30,11 @@ interface FrostDates {
   severe: string;
 }
 
+interface DataError {
+  showError: boolean;
+  message?: string;
+}
+
 const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => { 
   const [station, setStation] = useState<Station>({station: '0', latitude: 0, longitude: 0, elevation: 0, state: '0', city: '0', distance: 0});
   const [springFrostJulian, setSpringFrostJulian] = useState<FrostDates>({light: '0', moderate: '0', severe: '0'});
@@ -38,6 +43,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showPopover, setShowPopover] = useState(false);
   const [userElevation, setUserElevation] = useState<number>(0);
+  const [error, setError] = useState<DataError>({ showError: false });
     
   // fetches frost dates after station ID updates (from history URL)
   useEffect( () => {
@@ -75,7 +81,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
 
         setLoading(false);
       }
-      else { alert('Error: The station list is empty!');}
+      else { setError({showError: true, message: 'No station was found. Try another location.'});}
     }
   }, [match.params.id]);
     
@@ -110,20 +116,20 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className='app-toolbar'>
-            <IonButtons className='app-title-button app-left-title-button'>
-              <IonButton routerLink='/dashboard'>
-                <IonIcon icon={arrowBack} className='app-icon'> </IonIcon>
+          <div className="app-toolbar">
+            <IonButtons className="app-title-button app-left-title-button">
+              <IonButton routerLink="/dashboard">
+                <IonIcon icon={arrowBack} className="app-icon"> </IonIcon>
               </IonButton>
             </IonButtons>
-            <IonTitle className='app-title'>Frost Date Finder</IonTitle>
-            <div className='app-title-button app-right-title-button'>
+            <IonTitle className="app-title">Frost Date Finder</IonTitle>
+            <div className="app-title-button app-right-title-button">
               <IonButtons>
                 <IonButton onClick={e => {
                   e.preventDefault();
                   history.push('/dashboard/info');
                 }}>
-                  <IonIcon icon={helpCircle} className='app-icon'></IonIcon>
+                  <IonIcon icon={helpCircle} className="app-icon"></IonIcon>
                 </IonButton>
               </IonButtons>
             </div>
@@ -131,15 +137,21 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className='app-page-container'>
+        <div className="app-page-container">
           <IonLoading
             isOpen={loading}
             onDidDismiss={() => setLoading(false)}
             message={'Getting Data...'}
           />
+          <IonToast
+            isOpen={error.showError}
+            onDidDismiss={() => setError({ message: '', showError: false })}
+            message={error.message}
+            duration={3000} 
+          />
           <IonPopover
             isOpen={showPopover}
-            cssClass='station-popover'
+            cssClass="station-popover"
             onDidDismiss={e => setShowPopover(false)}
           >
             <h5 className='station-popover-header'>Station Information</h5>
@@ -152,8 +164,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             <IonButton onClick={() => setShowPopover(false)}>Close</IonButton>
           </IonPopover>
 
-          <h1 className='app-page-header'>Your Frost Dates</h1> 
-
+          <h1 className="app-page-header">Your Frost Dates</h1> 
           <div className='station-container'>
             <div className='station-col'>
               <p>Station: {capitalizeStationName()}, {station.state}</p>
@@ -161,21 +172,21 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             </div>
           </div>
           <DisplayFrostDates
-            title='Light Freeze (32° F)'
+            title="Light Freeze (32° F)"
             springFrost={springFrostJulian.light}
             fallFrost={fallFrostJulian.light}
             frostFree={frostFreeJulian.light}
           >
           </DisplayFrostDates>
           <DisplayFrostDates
-            title='Moderate Freeze (28° F)'
+            title="Moderate Freeze (28° F)"
             springFrost={springFrostJulian.moderate}
             fallFrost={fallFrostJulian.moderate}
             frostFree={frostFreeJulian.moderate}
           >
           </DisplayFrostDates>
           <DisplayFrostDates
-            title='Severe Freeze (24° F)'
+            title="Severe Freeze (24° F)"
             springFrost={springFrostJulian.severe}
             fallFrost={fallFrostJulian.severe}
             frostFree={frostFreeJulian.severe}
