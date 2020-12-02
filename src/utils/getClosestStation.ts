@@ -79,7 +79,7 @@ function getWeatherStations(): Station[] {
       elevation: data.elevation,
       state: data.state,
       city: data.city,
-      distance: 999999
+      distance: Infinity
     };
   });
   return stations;
