@@ -32,6 +32,7 @@ ion-toolbar {
 
 .app-title {
     width: 70%;
+    left: 8px;
 }
 
 ion-content {
