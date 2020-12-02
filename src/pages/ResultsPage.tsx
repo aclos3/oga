@@ -69,16 +69,10 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     }
   }, [match.params.id]);
     
-  //these two helper functions are for styling purposes. To convert negative/positive lat and long
-  //to North, East, South, or West
-  const isLatPositive = () => {
-    if(station.latitude >= 0) { return 'N'; }
-    else { return 'S';}
-  };
-  const isLongPositive = () => {
-    if(station.longitude >= 0) { return 'E'; }
-    else { return 'W';}
-  };
+  //these two helper functions are for styling purposes. To convert negative/positive lat and long to N/S/E/W
+  const isLatPositive = () => { return station.latitude >= 0 ? 'N' : 'S'; };
+  const isLongPositive = () => { return station.longitude >= 0 ? 'E' : 'W'; };
+
   //this function makes sure only the first letter of each word remains capitalized and removes extraneous spaces at the end of the string
   //the function also checks for certain words to omit and for some abbreviations to expand.
   const stringUpper = () => {
