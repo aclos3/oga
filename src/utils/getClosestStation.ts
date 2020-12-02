@@ -11,7 +11,7 @@ export interface Station {
   distance: number;
 }
 
-export interface FrostData {
+interface FrostData {
   station: string;
   fallSevere: string;
   fallModerate: string;
@@ -25,7 +25,7 @@ export interface FrostData {
   quality: string;
 }
 
-export interface Coordinates {
+interface Coordinates {
   lat: number;
   long: number;
 }
@@ -70,7 +70,7 @@ export function getClosestStationAndFrostData(origin: Coordinates): [Station | n
 }
 
 //get all weather stations from JSON file
-export function getWeatherStations(): Station[] {
+function getWeatherStations(): Station[] {
   const stations: Station[] = stationsJSON.map( (data) => {
     return {
       station: data.id,
@@ -86,7 +86,7 @@ export function getWeatherStations(): Station[] {
 }
 
 //get all station frost data from JSON file
-export function getFrostData(): FrostData[] {
+function getFrostData(): FrostData[] {
   if (frostJSON instanceof Array) {
     const frostData: FrostData[] = frostJSON.map( (data) => {
       return {
@@ -109,7 +109,7 @@ export function getFrostData(): FrostData[] {
 }
 
 // returns a list sorted by distance from the origin
-export function getClosestStationList(origin: Coordinates): Station[] | null {
+function getClosestStationList(origin: Coordinates): Station[] | null {
   //get station distances
   for (const station of stations) {
     station.distance = getDistanceFromLatLongInKm(origin, {lat: station.latitude, long: station.longitude});
@@ -118,26 +118,11 @@ export function getClosestStationList(origin: Coordinates): Station[] | null {
   stations.sort((a, b) => (a.distance > b.distance) ? 1 : -1);
   return stations;
 }
-// uses Haversine formula, which gives the great-circle distance between two latitude-longitude pairs
-// will have some inaccuracy from assuming that earth is a perfect sphere
-export const getClosestPoint = (origin: Coordinates, locations: Coordinates[]): Coordinates => {
-  let smallestDistance = Infinity;
-  let closestPosition: Coordinates = {
-    lat: 0,
-    long: 0
-  };
-  for (const location of locations) {
-    const distance: number = getDistanceFromLatLongInKm(origin, location);
-    if (distance < smallestDistance) {
-      smallestDistance = distance;
-      closestPosition = location;
-    }
-  }
-  return closestPosition;
-};
+
 const convertDegreesToRadians = (degree: number) => {
   return degree * (Math.PI / 180);
 }; 
+
 // haversine formula: https://en.wikipedia.org/wiki/Haversine_formula
 // variable names a and c come from formula
 // source of code: https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula/21623206#21623206
