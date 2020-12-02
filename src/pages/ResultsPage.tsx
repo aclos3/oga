@@ -93,7 +93,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
   //the function also checks for certain words to omit and for some abbreviations to expand.
   const capitalizeStationName = () => {
     const upWords: string[] = station.city.split(' ');
-    let word: string = '';
+    let word = '';
 
     for (let i = 0; i < upWords.length; i++) {
       word = upWords[i];
@@ -154,7 +154,7 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
             cssClass="station-popover"
             onDidDismiss={e => setShowPopover(false)}
           >
-            <h5 className='station-popover-header'>Station Information</h5>
+            <h5 className="station-popover-header">Station Information</h5>
             <p>ID: {station.station}</p>
             <p>Station Lat: {Math.abs(parseFloat(station.latitude.toPrecision(4)))}&#176;{isLatPositive()}</p>
             <p>Station Long: {Math.abs(parseFloat(station.longitude.toPrecision(5)))}&#176;{isLongPositive()}</p>
@@ -165,8 +165,8 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
           </IonPopover>
 
           <h1 className="app-page-header">Your Frost Dates</h1> 
-          <div className='station-container'>
-            <div className='station-col'>
+          <div className="station-container">
+            <div className="station-col">
               <p>Station: {capitalizeStationName()}, {station.state}</p>
               <IonButton onClick={() => setShowPopover(true)}>More Information</IonButton>
             </div>
