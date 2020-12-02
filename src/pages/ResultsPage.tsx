@@ -32,12 +32,8 @@ const ResultsPage: React.FC<ContainerProps> = ({ match, history }) => {
     
   // fetches frost dates after station ID updates (from history URL)
   useEffect( () => {
-    const userLatLongElev = match.params.id;
-    //split out the lat/long
-    const values = userLatLongElev.split(',');
-    const lat: string = values[0];
-    const long: string = values[1];
-    const elevation: string = values[2];
+    const urlLatLongElev = match.params.id;
+    const [lat, long, elevation] = urlLatLongElev.split(',');
 
     //Set elevation
     if(elevation) { setUserElevation(parseFloat(elevation)); }
