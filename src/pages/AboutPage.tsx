@@ -1,7 +1,7 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import React from 'react';
-import { arrowBack, helpCircle} from 'ionicons/icons';
+import { arrowBack } from 'ionicons/icons';
 import '../App.css';
 import './AboutPage.css';
 
