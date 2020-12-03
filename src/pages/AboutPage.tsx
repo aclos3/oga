@@ -1,6 +1,7 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import React from 'react';
+import { arrowBack } from 'ionicons/icons';
 import '../App.css';
 import './AboutPage.css';
 
@@ -14,7 +15,7 @@ const AboutPage: React.FC<ContainerProps> = () => {
         <IonToolbar>
           <div className="app-toolbar">
             <IonButtons className="app-title-button app-left-title-button">
-              <IonBackButton></IonBackButton>
+              <IonBackButton icon={arrowBack} text="" className="app-icon"></IonBackButton>
             </IonButtons>
             <IonTitle className="app-title">Frost Date Finder</IonTitle>
             <div className="app-title-button app-right-title-button"></div>
