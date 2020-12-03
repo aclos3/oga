@@ -31,3 +31,5 @@ android/app/capacitor.build.gradle
 .firebaserc
 .firebase/hosting.YnVpbGQ.cache
 *.gradle
+.firebase/hosting.YnVpbGQ.cache
+.firebaserc
