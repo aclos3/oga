@@ -91,8 +91,8 @@ function getFrostData(): FrostData[] {
     const frostData: FrostData[] = frostJSON.map( (data) => {
       return {
         station: data.station,
-        fallSevere: data['ann-tmin-prbfst-t28Fp30'],
-        fallModerate: data['ann-tmin-prbfst-t24Fp30'],
+        fallSevere: data['ann-tmin-prbfst-t24Fp30'],
+        fallModerate: data['ann-tmin-prbfst-t28Fp30'],
         fallLight: data['ann-tmin-prbfst-t32Fp30'],
         springSevere: data['ann-tmin-prblst-t24Fp30'],
         springModerate: data['ann-tmin-prblst-t28Fp30'],
