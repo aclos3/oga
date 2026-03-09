@@ -1,0 +1,30 @@
+.station-container {
+  margin: 0 auto;
+  padding: 0.4rem;
+  width: 90%;
+  min-width: var(--card-min-width);
+  max-width: var(--card-max-width);
+  border: 1px solid black;
+  border-radius: 4px;
+  font-family: var(--body-font), sans-serif;
+}
+
+.station-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;;
+  align-items: center;
+}
+
+.station-col p {
+  margin: 0.2rem;
+  margin-bottom: .4rem;
+}
+
+.station-popover {
+  text-align: center;
+}
+
+.station-popover-header {
+  font-family: var(--card-title-font), sans-serif;
+}

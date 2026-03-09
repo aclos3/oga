@@ -1,0 +1,12 @@
+.text-entry {
+    --background: var(--ion-color-tertiary);
+}
+
+.location-form {
+    --background: var(--ion-color-light);
+    --color: var(--ion-color-primary);
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: 1px solid black;
+}

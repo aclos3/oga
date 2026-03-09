@@ -1,0 +1,299 @@
+Complete alphabetical listing of 1981-2010 Supplemental Normals files
+
+The below list provides a synopsis of each product file.  For a more general
+description of the file naming conventions used for all files, see the
+readme-supp.txt file in this directory.
+
+ann-*.txt (annual) files
+
+ann-grdd-base40.txt  Long-term averages of annual growing degree days with base 40F
+ann-grdd-base45.txt  Long-term averages of annual growing degree days with base 45F
+ann-grdd-base50.txt  Long-term averages of annual growing degree days with base 50F
+ann-grdd-base55.txt  Long-term averages of annual growing degree days with base 55F
+ann-grdd-base57.txt  Long-term averages of annual growing degree days with base 57F
+ann-grdd-base60.txt  Long-term averages of annual growing degree days with base 60F
+ann-grdd-base65.txt  Long-term averages of annual growing degree days with base 65F
+ann-grdd-base70.txt  Long-term averages of annual growing degree days with base 70F
+ann-grdd-base72.txt  Long-term averages of annual growing degree days with base 72F
+ann-grdd-tb4886.txt  Long-term averages of annual growing degree days with truncated
+                     bases 48F and 86F
+ann-grdd-tb5086.txt  Long-term averages of annual growing degree days with truncated
+                     bases 50F and 86F
+
+ann-tmin-prbfst-t16Fp10.txt  10% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t16Fp20.txt  20% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t16Fp30.txt  30% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t16Fp40.txt  40% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t16Fp50.txt  50% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t16Fp60.txt  60% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t16Fp70.txt  70% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t16Fp80.txt  80% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t16Fp90.txt  90% probability date of first 16F occurrence or earlier
+ann-tmin-prbfst-t20Fp10.txt  10% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t20Fp20.txt  20% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t20Fp30.txt  30% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t20Fp40.txt  40% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t20Fp50.txt  50% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t20Fp60.txt  60% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t20Fp70.txt  70% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t20Fp80.txt  80% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t20Fp90.txt  90% probability date of first 20F occurrence or earlier
+ann-tmin-prbfst-t24Fp10.txt  10% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t24Fp20.txt  20% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t24Fp30.txt  30% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t24Fp40.txt  40% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t24Fp50.txt  50% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t24Fp60.txt  60% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t24Fp70.txt  70% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t24Fp80.txt  80% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t24Fp90.txt  90% probability date of first 24F occurrence or earlier
+ann-tmin-prbfst-t28Fp10.txt  10% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t28Fp20.txt  20% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t28Fp30.txt  30% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t28Fp40.txt  40% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t28Fp50.txt  50% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t28Fp60.txt  60% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t28Fp70.txt  70% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t28Fp80.txt  80% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t28Fp90.txt  90% probability date of first 28F occurrence or earlier
+ann-tmin-prbfst-t32Fp10.txt  10% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t32Fp20.txt  20% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t32Fp30.txt  30% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t32Fp40.txt  40% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t32Fp50.txt  50% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t32Fp60.txt  60% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t32Fp70.txt  70% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t32Fp80.txt  80% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t32Fp90.txt  90% probability date of first 32F occurrence or earlier
+ann-tmin-prbfst-t36Fp10.txt  10% probability date of first 36F occurrence or earlier
+ann-tmin-prbfst-t36Fp20.txt  20% probability date of first 36F occurrence or earlier
+ann-tmin-prbfst-t36Fp30.txt  30% probability date of first 36F occurrence or earlier
+ann-tmin-prbfst-t36Fp40.txt  40% probability date of first 36F occurrence or earlier
+ann-tmin-prbfst-t36Fp50.txt  50% probability date of first 36F occurrence or earlier
+ann-tmin-prbfst-t36Fp60.txt  60% probability date of first 36F occurrence or earlier
+ann-tmin-prbfst-t36Fp70.txt  70% probability date of first 36F occurrence or earlier
+ann-tmin-prbfst-t36Fp80.txt  80% probability date of first 36F occurrence or earlier
+ann-tmin-prbfst-t36Fp90.txt  90% probability date of first 36F occurrence or earlier
+ann-tmin-prbgsl-t16Fp10.txt  10% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t16Fp20.txt  20% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t16Fp30.txt  30% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t16Fp40.txt  40% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t16Fp50.txt  50% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t16Fp60.txt  60% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t16Fp70.txt  70% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t16Fp80.txt  80% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t16Fp90.txt  90% probability of 16F growing season length or longer
+ann-tmin-prbgsl-t20Fp10.txt  10% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t20Fp20.txt  20% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t20Fp30.txt  30% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t20Fp40.txt  40% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t20Fp50.txt  50% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t20Fp60.txt  60% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t20Fp70.txt  70% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t20Fp80.txt  80% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t20Fp90.txt  90% probability of 20F growing season length or longer
+ann-tmin-prbgsl-t24Fp10.txt  10% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t24Fp20.txt  20% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t24Fp30.txt  30% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t24Fp40.txt  40% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t24Fp50.txt  50% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t24Fp60.txt  60% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t24Fp70.txt  70% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t24Fp80.txt  80% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t24Fp90.txt  90% probability of 24F growing season length or longer
+ann-tmin-prbgsl-t28Fp10.txt  10% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t28Fp20.txt  20% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t28Fp30.txt  30% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t28Fp40.txt  40% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t28Fp50.txt  50% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t28Fp60.txt  60% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t28Fp70.txt  70% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t28Fp80.txt  80% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t28Fp90.txt  90% probability of 28F growing season length or longer
+ann-tmin-prbgsl-t32Fp10.txt  10% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t32Fp20.txt  20% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t32Fp30.txt  30% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t32Fp40.txt  40% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t32Fp50.txt  50% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t32Fp60.txt  60% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t32Fp70.txt  70% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t32Fp80.txt  80% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t32Fp90.txt  90% probability of 32F growing season length or longer
+ann-tmin-prbgsl-t36Fp10.txt  10% probability of 36F growing season length or longer
+ann-tmin-prbgsl-t36Fp20.txt  20% probability of 36F growing season length or longer
+ann-tmin-prbgsl-t36Fp30.txt  30% probability of 36F growing season length or longer
+ann-tmin-prbgsl-t36Fp40.txt  40% probability of 36F growing season length or longer
+ann-tmin-prbgsl-t36Fp50.txt  50% probability of 36F growing season length or longer
+ann-tmin-prbgsl-t36Fp60.txt  60% probability of 36F growing season length or longer
+ann-tmin-prbgsl-t36Fp70.txt  70% probability of 36F growing season length or longer
+ann-tmin-prbgsl-t36Fp80.txt  80% probability of 36F growing season length or longer
+ann-tmin-prbgsl-t36Fp90.txt  90% probability of 36F growing season length or longer
+ann-tmin-prblst-t16Fp10.txt  10% probability date of last 16F occurrence or later
+ann-tmin-prblst-t16Fp20.txt  20% probability date of last 16F occurrence or later
+ann-tmin-prblst-t16Fp30.txt  30% probability date of last 16F occurrence or later
+ann-tmin-prblst-t16Fp40.txt  40% probability date of last 16F occurrence or later
+ann-tmin-prblst-t16Fp50.txt  50% probability date of last 16F occurrence or later
+ann-tmin-prblst-t16Fp60.txt  60% probability date of last 16F occurrence or later
+ann-tmin-prblst-t16Fp70.txt  70% probability date of last 16F occurrence or later
+ann-tmin-prblst-t16Fp80.txt  80% probability date of last 16F occurrence or later
+ann-tmin-prblst-t16Fp90.txt  90% probability date of last 16F occurrence or later
+ann-tmin-prblst-t20Fp10.txt  10% probability date of last 20F occurrence or later
+ann-tmin-prblst-t20Fp20.txt  20% probability date of last 20F occurrence or later
+ann-tmin-prblst-t20Fp30.txt  30% probability date of last 20F occurrence or later
+ann-tmin-prblst-t20Fp40.txt  40% probability date of last 20F occurrence or later
+ann-tmin-prblst-t20Fp50.txt  50% probability date of last 20F occurrence or later
+ann-tmin-prblst-t20Fp60.txt  60% probability date of last 20F occurrence or later
+ann-tmin-prblst-t20Fp70.txt  70% probability date of last 20F occurrence or later
+ann-tmin-prblst-t20Fp80.txt  80% probability date of last 20F occurrence or later
+ann-tmin-prblst-t20Fp90.txt  90% probability date of last 20F occurrence or later
+ann-tmin-prblst-t24Fp10.txt  10% probability date of last 24F occurrence or later
+ann-tmin-prblst-t24Fp20.txt  20% probability date of last 24F occurrence or later
+ann-tmin-prblst-t24Fp30.txt  30% probability date of last 24F occurrence or later
+ann-tmin-prblst-t24Fp40.txt  40% probability date of last 24F occurrence or later
+ann-tmin-prblst-t24Fp50.txt  50% probability date of last 24F occurrence or later
+ann-tmin-prblst-t24Fp60.txt  60% probability date of last 24F occurrence or later
+ann-tmin-prblst-t24Fp70.txt  70% probability date of last 24F occurrence or later
+ann-tmin-prblst-t24Fp80.txt  80% probability date of last 24F occurrence or later
+ann-tmin-prblst-t24Fp90.txt  90% probability date of last 24F occurrence or later
+ann-tmin-prblst-t28Fp10.txt  10% probability date of last 28F occurrence or later
+ann-tmin-prblst-t28Fp20.txt  20% probability date of last 28F occurrence or later
+ann-tmin-prblst-t28Fp30.txt  30% probability date of last 28F occurrence or later
+ann-tmin-prblst-t28Fp40.txt  40% probability date of last 28F occurrence or later
+ann-tmin-prblst-t28Fp50.txt  50% probability date of last 28F occurrence or later
+ann-tmin-prblst-t28Fp60.txt  60% probability date of last 28F occurrence or later
+ann-tmin-prblst-t28Fp70.txt  70% probability date of last 28F occurrence or later
+ann-tmin-prblst-t28Fp80.txt  80% probability date of last 28F occurrence or later
+ann-tmin-prblst-t28Fp90.txt  90% probability date of last 28F occurrence or later
+ann-tmin-prblst-t32Fp10.txt  10% probability date of last 32F occurrence or later
+ann-tmin-prblst-t32Fp20.txt  20% probability date of last 32F occurrence or later
+ann-tmin-prblst-t32Fp30.txt  30% probability date of last 32F occurrence or later
+ann-tmin-prblst-t32Fp40.txt  40% probability date of last 32F occurrence or later
+ann-tmin-prblst-t32Fp50.txt  50% probability date of last 32F occurrence or later
+ann-tmin-prblst-t32Fp60.txt  60% probability date of last 32F occurrence or later
+ann-tmin-prblst-t32Fp70.txt  70% probability date of last 32F occurrence or later
+ann-tmin-prblst-t32Fp80.txt  80% probability date of last 32F occurrence or later
+ann-tmin-prblst-t32Fp90.txt  90% probability date of last 32F occurrence or later
+ann-tmin-prblst-t36Fp10.txt  10% probability date of last 36F occurrence or later
+ann-tmin-prblst-t36Fp20.txt  20% probability date of last 36F occurrence or later
+ann-tmin-prblst-t36Fp30.txt  30% probability date of last 36F occurrence or later
+ann-tmin-prblst-t36Fp40.txt  40% probability date of last 36F occurrence or later
+ann-tmin-prblst-t36Fp50.txt  50% probability date of last 36F occurrence or later
+ann-tmin-prblst-t36Fp60.txt  60% probability date of last 36F occurrence or later
+ann-tmin-prblst-t36Fp70.txt  70% probability date of last 36F occurrence or later
+ann-tmin-prblst-t36Fp80.txt  80% probability date of last 36F occurrence or later
+ann-tmin-prblst-t36Fp90.txt  90% probability date of last 36F occurrence or later
+ann-tmin-prbocc-lsth016.txt  probability of 16F or below at least once in the year
+ann-tmin-prbocc-lsth020.txt  probability of 20F or below at least once in the year
+ann-tmin-prbocc-lsth024.txt  probability of 24F or below at least once in the year
+ann-tmin-prbocc-lsth028.txt  probability of 28F or below at least once in the year
+ann-tmin-prbocc-lsth032.txt  probability of 32F or below at least once in the year
+ann-tmin-prbocc-lsth036.txt  probability of 36F or below at least once in the year
+
+
+djf-*.txt (December-February) files
+
+djf-grdd-base40.txt  Long-term averages of winter growing degree days with base 40F	
+djf-grdd-base45.txt  Long-term averages of winter growing degree days with base 45F
+djf-grdd-base50.txt  Long-term averages of winter growing degree days with base 50F
+djf-grdd-base55.txt  Long-term averages of winter growing degree days with base 55F
+djf-grdd-base57.txt  Long-term averages of winter growing degree days with base 57F
+djf-grdd-base60.txt  Long-term averages of winter growing degree days with base 60F
+djf-grdd-base65.txt  Long-term averages of winter growing degree days with base 65F
+djf-grdd-base70.txt  Long-term averages of winter growing degree days with base 70F
+djf-grdd-base72.txt  Long-term averages of winter growing degree days with base 72F
+djf-grdd-tb4886.txt  Long-term averages of winter growing degree days with truncated
+                     bases 48F and 86F
+djf-grdd-tb5086.txt  Long-term averages of winter growing degree days with truncated
+                     bases 50F and 86F
+
+
+dly-*.txt (daily) files
+
+dly-grdd-base40.txt  Long-term averages of daily growing degree days with base 40F
+dly-grdd-base45.txt  Long-term averages of daily growing degree days with base 45F
+dly-grdd-base50.txt  Long-term averages of daily growing degree days with base 50F
+dly-grdd-base55.txt  Long-term averages of daily growing degree days with base 55F
+dly-grdd-base57.txt  Long-term averages of daily growing degree days with base 57F
+dly-grdd-base60.txt  Long-term averages of daily growing degree days with base 60F
+dly-grdd-base65.txt  Long-term averages of daily growing degree days with base 65F
+dly-grdd-base70.txt  Long-term averages of daily growing degree days with base 70F
+dly-grdd-base72.txt  Long-term averages of daily growing degree days with base 72F
+dly-grdd-tb4886.txt  Long-term averages of daily growing degree days with truncated
+                     bases 48F and 86F
+dly-grdd-tb5086.txt  Long-term averages of daily growing degree days with truncated
+                     bases 50F and 86F
+
+
+jja-*.txt (June-August) files
+
+jja-grdd-base40.txt  Long-term averages of summer growing degree days with base 40F
+jja-grdd-base45.txt  Long-term averages of summer growing degree days with base 45F
+jja-grdd-base50.txt  Long-term averages of summer growing degree days with base 50F
+jja-grdd-base55.txt  Long-term averages of summer growing degree days with base 55F
+jja-grdd-base57.txt  Long-term averages of summer growing degree days with base 57F
+jja-grdd-base60.txt  Long-term averages of summer growing degree days with base 60F
+jja-grdd-base65.txt  Long-term averages of summer growing degree days with base 65F
+jja-grdd-base70.txt  Long-term averages of summer growing degree days with base 70F
+jja-grdd-base72.txt  Long-term averages of summer growing degree days with base 72F
+jja-grdd-tb4886.txt  Long-term averages of summer growing degree days with truncated
+                     bases 48F and 86F
+jja-grdd-tb5086.txt  Long-term averages of summer growing degree days with truncated
+                     bases 50F and 86F
+
+
+mam-*.txt (March-May) files
+
+mam-grdd-base40.txt  Long-term averages of spring growing degree days with base 40F
+mam-grdd-base45.txt  Long-term averages of spring growing degree days with base 45F
+mam-grdd-base50.txt  Long-term averages of spring growing degree days with base 50F
+mam-grdd-base55.txt  Long-term averages of spring growing degree days with base 55F
+mam-grdd-base57.txt  Long-term averages of spring growing degree days with base 57F
+mam-grdd-base60.txt  Long-term averages of spring growing degree days with base 60F
+mam-grdd-base65.txt  Long-term averages of spring growing degree days with base 65F
+mam-grdd-base70.txt  Long-term averages of spring growing degree days with base 70F
+mam-grdd-base72.txt  Long-term averages of spring growing degree days with base 72F
+mam-grdd-tb4886.txt  Long-term averages of summer growing degree days with truncated
+                     bases 48F and 86F
+mam-grdd-tb5086.txt  Long-term averages of summer growing degree days with truncated
+                     bases 50F and 86F
+
+
+mly-*.txt (monthly) files
+
+mly-grdd-base40.txt  Long-term averages of monthly growing degree days with base 40F
+mly-grdd-base45.txt  Long-term averages of monthly growing degree days with base 45F
+mly-grdd-base50.txt  Long-term averages of monthly growing degree days with base 50F
+mly-grdd-base55.txt  Long-term averages of monthly growing degree days with base 55F
+mly-grdd-base57.txt  Long-term averages of monthly growing degree days with base 57F
+mly-grdd-base60.txt  Long-term averages of monthly growing degree days with base 60F
+mly-grdd-base65.txt  Long-term averages of monthly growing degree days with base 65F
+mly-grdd-base70.txt  Long-term averages of monthly growing degree days with base 70F
+mly-grdd-base72.txt  Long-term averages of monthly growing degree days with base 72F
+mly-grdd-tb4886.txt  Long-term averages of monthly growing degree days with
+                     truncated bases 48F and 86F
+mly-grdd-tb5086.txt  Long-term averages of monthly growing degree days with
+                     truncated bases 50F and 86F
+
+mly-tmin-prbocc-lsth016.txt  probability of 16F or below at least once in the month
+mly-tmin-prbocc-lsth020.txt  probability of 20F or below at least once in the month
+mly-tmin-prbocc-lsth024.txt  probability of 24F or below at least once in the month
+mly-tmin-prbocc-lsth028.txt  probability of 28F or below at least once in the month
+mly-tmin-prbocc-lsth032.txt  probability of 32F or below at least once in the month
+mly-tmin-prbocc-lsth036.txt  probability of 36F or below at least once in the month
+
+
+son-*.txt (September-November) files
+
+son-grdd-base40.txt  Long-term averages of fall growing degree days with base 40F
+son-grdd-base45.txt  Long-term averages of fall growing degree days with base 45F
+son-grdd-base50.txt  Long-term averages of fall growing degree days with base 50F
+son-grdd-base55.txt  Long-term averages of fall growing degree days with base 55F
+son-grdd-base57.txt  Long-term averages of fall growing degree days with base 57F
+son-grdd-base60.txt  Long-term averages of fall growing degree days with base 60F
+son-grdd-base65.txt  Long-term averages of fall growing degree days with base 65F
+son-grdd-base70.txt  Long-term averages of fall growing degree days with base 70F
+son-grdd-base72.txt  Long-term averages of fall growing degree days with base 72F
+son-grdd-tb4886.txt  Long-term averages of summer growing degree days with truncated
+                     bases 48F and 86F
+son-grdd-tb5086.txt  Long-term averages of summer growing degree days with truncated
+                     bases 50F and 86F

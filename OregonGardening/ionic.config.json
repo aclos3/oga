@@ -1,0 +1,7 @@
+{
+  "name": "Frost Date Finder",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
