@@ -1,0 +1,31 @@
+V. SPECIAL VALUES
+
+    -9999: missing or insufficient data; values cannot be computed
+    -8888: date not defined (e.g. February 30, September 31) - used in daily
+           files to achieve fixed-length records 
+    -7777: a non-zero growing degree day value that would round to zero
+    -6666: parameter undefined; used in probabilities of first/last events to
+           indicate the event is too infrequent to estimate dates, as well as
+	   AFI return periods that cannot be computed because too few years have
+	   non-zero seasonal AFI values; "too warm to compute"
+    -4444: indicates year-round risk of frost-freeze; "too cold to compute"
+
+VI. FLAGS
+
+    Flags accompany every Normals value and indicate the completeness of the data 
+    record used to compute each value. There are six flag options described 
+    generally below. 
+ 	
+   C = complete (all 30 years used)
+   S = standard (no more than 5 years missing and no more than 3 consecutive 
+       years missing among the sufficiently complete years)
+   R = representative (observed record utilized incomplete, but value was scaled
+       or based on filled values to be representative of the full period of
+       record)
+   P = provisional (at least 10 years used, but not sufficiently complete to be 
+       labeled as standard or representative).
+   Q = quasi-normal (at least 2 years per month, but not sufficiently complete to 
+       be labeled as provisional or any other higher flag code). The associated
+       value was computed using a pseudonormals approach or derived from monthly
+       pseudonormals.
+   Blank = the data value is reported as a special value such as -8888

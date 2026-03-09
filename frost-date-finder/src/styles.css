@@ -1,0 +1,316 @@
+/* ── Theme Variables ── */
+:root {
+  --page-background: #f5f2ed;
+  --title-font: 'Open Sans', sans-serif;
+  --body-font: 'Open Sans', sans-serif;
+  --card-title-font: 'Open Sans', sans-serif;
+  --page-header-font: 'Open Sans', sans-serif;
+  --card-min-width: 220px;
+  --card-max-width: 500px;
+
+  --color-primary: #D73F09;
+  --color-primary-dark: #bd3708;
+  --color-secondary: #0D5257;
+  --color-tertiary: #C6DAE7;
+  --color-dark: #000000;
+  --color-light: #ffffff;
+  --color-medium: #92949c;
+}
+
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: var(--body-font);
+  background: var(--page-background);
+  color: var(--color-dark);
+}
+
+a { color: var(--color-secondary); }
+
+/* ── Toolbar ── */
+.toolbar {
+  background-color: var(--color-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.toolbar-title {
+  text-align: center;
+  color: var(--color-light);
+  font-family: var(--title-font);
+  font-weight: 700;
+  font-size: 1.4rem;
+  flex: 1;
+}
+
+.toolbar-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-dark);
+  font-size: 1.6rem;
+  padding: 0;
+  text-decoration: none;
+}
+
+.toolbar-logo {
+  height: 40px;
+  width: auto;
+}
+
+/* ── Page Layout ── */
+.page-container {
+  text-align: center;
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 600px;
+}
+
+.page-header {
+  font-size: 1.2rem;
+  font-family: var(--page-header-font);
+  font-weight: 600;
+}
+
+/* ── Cards ── */
+.card {
+  width: 90%;
+  min-width: var(--card-min-width);
+  max-width: var(--card-max-width);
+  margin: 0.75rem auto;
+  font-family: var(--body-font);
+  color: var(--color-dark);
+  background: var(--color-light);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 0.75rem 1rem;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-content {
+  padding: 0.5rem 1rem 1rem;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  background: var(--color-primary);
+  color: var(--color-light);
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--body-font);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.btn:hover { background: var(--color-primary-dark); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+  background: var(--color-primary);
+  color: var(--color-light);
+}
+
+/* ── Form ── */
+.text-entry {
+  background: var(--color-tertiary);
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.location-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.location-input {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  font-family: var(--body-font);
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: var(--color-light);
+}
+
+/* ── Loading Spinner ── */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.loading-box {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  font-family: var(--body-font);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  z-index: 200;
+  max-width: 90%;
+  text-align: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Frost Date Cards ── */
+.frost-card {
+  width: 90%;
+  min-width: var(--card-min-width);
+  max-width: var(--card-max-width);
+  padding: 0;
+  margin: 0.75rem auto;
+  background: var(--color-light);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.frost-card-header {
+  padding: 0.6rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.frost-card-title {
+  font-family: var(--card-title-font);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.frost-card-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.frost-card-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 0.25rem;
+  border-right: 1px solid #ddd;
+}
+
+.frost-card-col:last-child { border-right: none; }
+
+.frost-card-col-header { font-weight: 700; }
+
+.card-item { padding: 0.2rem; }
+
+/* ── Station Info ── */
+.station-container {
+  margin: 0 auto;
+  padding: 0.5rem;
+  width: 90%;
+  min-width: var(--card-min-width);
+  max-width: var(--card-max-width);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: var(--body-font);
+  background: var(--color-light);
+  text-align: center;
+}
+
+.station-container p { margin: 0.2rem 0 0.4rem; }
+
+/* ── Popover / Modal ── */
+.popover-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.popover {
+  background: white;
+  border-radius: 8px;
+  padding: 1.25rem;
+  min-width: 260px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+
+.popover h5 {
+  margin: 0 0 0.75rem;
+  font-family: var(--card-title-font);
+}
+
+.popover p { margin: 0.25rem 0; font-size: 0.9rem; }
+
+/* ── About Page ── */
+.info-card-header { padding-bottom: 0.3rem; }
+.info-card-title { font-family: var(--card-title-font); }
+
+/* ── Responsive ── */
+@media (max-width: 300px) {
+  html, body { font-size: 13px; }
+  .toolbar { height: 50px; }
+}
+
+@media (min-width: 481px) {
+  html, body { font-size: 18px; }
+  .toolbar-title { font-size: 1.3rem; }
+}
